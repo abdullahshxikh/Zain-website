@@ -47,7 +47,7 @@ export default function SolutionSection() {
   if (!mounted) return null;
 
   return (
-    <section className="relative py-20 px-6 lg:px-16 overflow-hidden" style={{
+    <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden" style={{
       backgroundColor: '#e8dcc8',
     }}>
 

@@ -53,7 +53,7 @@ export default function HowItWorksNewsletterSection() {
 
   return (
     <section 
-      className="relative py-16 sm:py-20 px-6 lg:px-16 overflow-hidden" 
+      className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden" 
       style={{
         backgroundColor: '#4a6b54',
       }}

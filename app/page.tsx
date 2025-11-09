@@ -15,9 +15,9 @@ export default function Home() {
       <VantaBackground />
       <main className="relative z-10 min-h-screen">
         <HeroSection />
+        <ProductPricingSection />
         <IngredientsSection />
         <BeforeAfterSection />
-        <ProductPricingSection />
         <HairLossSection />
         <SolutionSection />
         <HowItWorksNewsletterSection />

@@ -37,21 +37,21 @@ export default function BeforeAfterSection() {
     >
 
 
-      <div className="relative z-10 max-w-4xl mx-auto">
+      <div className="relative z-10 max-w-4xl mx-auto w-full">
         {/* Header */}
         <motion.div
-          className="text-center mb-6 sm:mb-8"
+          className="text-center mb-4 sm:mb-6 md:mb-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
             <span className="text-white">Real Results, </span>
             <span className="text-[#bb9c30]">Real People</span>
           </h2>
           <motion.p
-            className="text-sm text-gray-300 max-w-xl mx-auto"
+            className="text-xs sm:text-sm text-gray-300 max-w-xl mx-auto px-4"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -62,9 +62,9 @@ export default function BeforeAfterSection() {
         </motion.div>
 
         {/* Slideshow Container */}
-        <div className="relative max-w-2xl mx-auto">
+        <div className="relative max-w-2xl mx-auto px-2 sm:px-0">
           {/* Main Image Display */}
-          <div className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-xl bg-black/20">
+          <div className="relative aspect-[4/3] rounded-lg sm:rounded-xl overflow-hidden shadow-xl bg-black/20">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}

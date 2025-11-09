@@ -65,7 +65,7 @@ export default function IngredientsSection() {
   if (!mounted) return null;
 
   return (
-    <section className="relative py-20 px-6 lg:px-16 overflow-hidden" style={{
+    <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden" style={{
       backgroundColor: '#f5f1e8',
     }}>
 
@@ -78,10 +78,10 @@ export default function IngredientsSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-[#bb9c30]" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 text-[#bb9c30]" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             8 Powerful Ingredients
           </h2>
-          <p className="text-lg text-[#bb9c30] max-w-3xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg text-[#bb9c30] max-w-3xl mx-auto px-4">
             Nature's finest oils scientifically formulated for maximum hair growth and vitality.
           </p>
         </motion.div>
