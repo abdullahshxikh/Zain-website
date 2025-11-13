@@ -3,7 +3,6 @@ import HeroSection from '@/components/HeroSection';
 import ProductPricingSection from '@/components/ProductPricingSection';
 import BeforeAfterGallery from '@/components/BeforeAfterGallery';
 import IngredientsSection from '@/components/IngredientsSection';
-import GirlIngredientsSection from '@/components/GirlIngredientsSection';
 import ProductVideoSection from '@/components/ProductVideoSection';
 import HairLossSection from '@/components/HairLossSection';
 import SolutionSection from '@/components/SolutionSection';
@@ -19,7 +18,6 @@ export default function Home() {
         <HeroSection />
         <ProductPricingSection />
         <IngredientsSection />
-        <GirlIngredientsSection />
         <BeforeAfterGallery />
         <HairLossSection />
         <ProductVideoSection />
