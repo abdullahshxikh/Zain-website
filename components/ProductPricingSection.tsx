@@ -4,55 +4,26 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-const bundles = [
-  {
-    id: 1,
-    bottles: 1,
-    label: '1 Bottle',
-    originalPrice: 79.99,
-    salePrice: 39.99,
-    savings: 40.00,
-    savingsPercent: 50,
-    badge: null,
-    freeShipping: false,
-  },
-  {
-    id: 2,
-    bottles: 2,
-    label: '2 Bottles',
-    originalPrice: 119.98,
-    salePrice: 59.99,
-    savings: 59.99,
-    savingsPercent: 50,
-    badge: 'MOST POPULAR',
-    freeShipping: true,
-  },
-  {
-    id: 3,
-    bottles: 3,
-    label: '3 Bottles',
-    originalPrice: 179.97,
-    salePrice: 89.99,
-    savings: 89.98,
-    savingsPercent: 50,
-    badge: 'BEST VALUE',
-    freeShipping: true,
-  },
-];
-
-const trustBadges = [
-  { icon: '🏆', text: 'Crafted in GMP-certified facilities' },
-  { icon: '🔬', text: 'Third-party tested for purity & potency' },
-  { icon: '⭐', text: 'Backed by science, loved by thousands' },
+const bulletPoints = [
+  'A nourishing blend that supports growth, restores natural shine, and helps reduce hair fall.',
+  'With all Natural Ingredients: Mustard · Coconut · Black Seed · Castor · Pumpkin · Rosemary · Vitamin E Oil',
+  'For All Hair Types · No Greasy Residue · 30 mL Dropper + 10 mL Roll On',
 ];
 
 export default function ProductPricingSection() {
   const [mounted, setMounted] = useState(false);
-  const [selectedBundle, setSelectedBundle] = useState(2);
+  const [firstName, setFirstName] = useState('');
+  const [email, setEmail] = useState('');
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission
+    console.log('Early signup:', { firstName, email });
+  };
 
   if (!mounted) return null;
 
@@ -60,12 +31,11 @@ export default function ProductPricingSection() {
     <section 
       className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden" 
       style={{
-        backgroundColor: '#d4a574',
+        backgroundColor: '#0a0a0a',
       }}
     >
-
       <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
           {/* Left Side - Product Image */}
           <motion.div
             className="flex justify-center items-center"
@@ -74,181 +44,106 @@ export default function ProductPricingSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <motion.div
-              className="relative"
-              animate={{
-                y: [0, -20, 0],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              {/* Glow effect */}
-              <motion.div
-                className="absolute inset-0 -m-8 rounded-full bg-[#6b8d5b]/20 blur-3xl"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.6, 0.3],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
+            <div className="relative w-full max-w-md">
               <Image
-                src="/product-image.png"
-                alt="Zumfali 7-in-1 Hair Oil"
-                width={500}
-                height={400}
-                className="relative z-10 drop-shadow-2xl"
+                src="/product-bundle.png"
+                alt="Zumfali 7-in-1 Hair Oil Duo"
+                width={600}
+                height={600}
+                className="relative z-10 w-full h-auto"
                 priority
               />
-            </motion.div>
+            </div>
           </motion.div>
 
-          {/* Right Side - Pricing */}
+          {/* Right Side - Product Details & Signup */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
+            className="space-y-6"
           >
-            {/* Trust Badges */}
-            <div className="space-y-4 mb-8">
-              {trustBadges.map((badge, index) => (
-                <motion.div
-                  key={badge.text}
-                  className="flex items-center gap-3"
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                >
-                  <span className="text-2xl">{badge.icon}</span>
-                  <span className="text-white text-sm sm:text-base">{badge.text}</span>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Bundle & Save Header */}
-            <motion.div
-              className="mb-6"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            >
-              <div className="flex items-center gap-4 mb-2">
-                <div className="flex-1 h-px" style={{ backgroundColor: '#bb9c30', opacity: 0.3 }}></div>
-                <h3 className="text-2xl sm:text-3xl font-bold text-[#bb9c30]">BUNDLE & SAVE</h3>
-                <div className="flex-1 h-px" style={{ backgroundColor: '#bb9c30', opacity: 0.3 }}></div>
-              </div>
-            </motion.div>
-
-            {/* Bundle Options */}
-            <div className="space-y-4 mb-8">
-              {bundles.map((bundle, index) => (
-                <motion.div
-                  key={bundle.id}
-                  className="relative"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-                >
-                  {/* Badge */}
-                  {bundle.badge && (
-                    <div className={`absolute -top-3 right-4 px-4 py-1 rounded-full text-xs font-bold text-white z-10 ${
-                      bundle.badge === 'MOST POPULAR' ? 'bg-[#bb9c30]' : 'bg-[#6b8d5b]'
-                    }`}>
-                      {bundle.badge}
-                    </div>
-                  )}
-
-                  <motion.button
-                    onClick={() => setSelectedBundle(bundle.id)}
-                    className={`w-full p-6 rounded-2xl border-2 transition-all ${
-                      selectedBundle === bundle.id
-                        ? 'border-[#bb9c30] bg-[#bb9c30]/10 shadow-xl'
-                        : 'border-white/20 bg-black/40 hover:border-[#bb9c30]/50'
-                    }`}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <div className="flex items-center justify-between">
-                      {/* Radio + Label */}
-                      <div className="flex items-center gap-4">
-                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                          selectedBundle === bundle.id ? 'border-[#bb9c30]' : 'border-white/40'
-                        }`}>
-                          {selectedBundle === bundle.id && (
-                            <div className="w-3 h-3 rounded-full bg-[#bb9c30]"></div>
-                          )}
-                        </div>
-                        <div className="text-left">
-                          <div className="text-white font-bold text-lg sm:text-xl">{bundle.label}</div>
-                          {bundle.freeShipping && (
-                            <div className="text-[#6b8d5b] text-xs sm:text-sm font-semibold mt-1 flex items-center gap-1">
-                              <span>✓</span> FREE SHIPPING
-                            </div>
-                          )}
-                          <div className="text-gray-400 text-sm mt-1">
-                            Save ${bundle.savings.toFixed(2)} ({bundle.savingsPercent}%)
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Pricing */}
-                      <div className="text-right">
-                        <div className="text-gray-400 line-through text-sm sm:text-base">
-                          ${bundle.originalPrice.toFixed(2)}
-                        </div>
-                        <div className="text-[#bb9c30] font-bold text-2xl sm:text-3xl">
-                          ${bundle.salePrice.toFixed(2)}
-                        </div>
-                      </div>
-                    </div>
-                  </motion.button>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Add to Cart Button */}
-            <motion.button
-              className="w-full group relative px-8 py-5 overflow-hidden rounded-full shadow-2xl text-xl font-bold"
-              style={{
-                backgroundColor: '#6b8d5b',
-              }}
-              whileHover={{ scale: 1.03, boxShadow: "0 20px 60px rgba(107, 141, 91, 0.5)" }}
-              whileTap={{ scale: 0.97 }}
+            {/* Product Title */}
+            <motion.h2
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.7 }}
+              transition={{ duration: 0.6 }}
             >
-              <span className="relative z-10 text-white flex items-center justify-center gap-3">
-                Add to Cart
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </span>
-            </motion.button>
+              Zumfali 7-in-1 Hair Oil Duo — Premium Bundle
+            </motion.h2>
 
-            {/* Guarantee */}
+            {/* Bullet Points */}
             <motion.div
-              className="mt-6 text-center"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              className="space-y-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.8 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="flex items-center justify-center gap-2 text-gray-300 text-sm">
-                <span className="text-[#6b8d5b]">✓</span>
-                <span>30-Day Money-Back Guarantee</span>
-              </div>
+              {bulletPoints.map((point, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <div className="flex-shrink-0 mt-1">
+                    <svg className="w-5 h-5 text-[#6b8d5b]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <p className="text-gray-300 text-base sm:text-lg leading-relaxed">{point}</p>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* Early Signup Offer Box */}
+            <motion.div
+              className="relative mt-8 p-6 sm:p-8 rounded-2xl border-2"
+              style={{
+                backgroundColor: 'rgba(107, 141, 91, 0.1)',
+                borderColor: '#6b8d5b',
+              }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <h3 className="text-xl sm:text-2xl font-bold text-white text-center mb-4">
+                Be the first to get this bundle when it launches.
+              </h3>
+              
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <input
+                  type="text"
+                  placeholder="First name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="w-full px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#6b8d5b] transition-all"
+                  required
+                />
+                
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#6b8d5b] transition-all"
+                  required
+                />
+                
+                <motion.button
+                  type="submit"
+                  className="w-full py-4 rounded-lg font-bold text-lg text-white transition-all"
+                  style={{ backgroundColor: '#6b8d5b' }}
+                  whileHover={{ scale: 1.02, backgroundColor: '#7da66c' }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Get Early Access + Free Comb
+                </motion.button>
+              </form>
+
+              <p className="text-gray-400 text-sm text-center mt-4">
+                Sign up early and receive an exclusive code for this bundle plus a complimentary premium comb!
+              </p>
             </motion.div>
           </motion.div>
         </div>

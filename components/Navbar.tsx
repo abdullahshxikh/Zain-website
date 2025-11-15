@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 export default function Navbar() {
@@ -24,9 +25,9 @@ export default function Navbar() {
   return (
     <>
       <motion.nav
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        className="fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300"
         style={{
-          backgroundColor: scrolled ? 'rgba(26, 47, 35, 0.95)' : 'rgba(26, 47, 35, 0.8)',
+          backgroundColor: scrolled ? 'rgba(26, 47, 35, 0.98)' : 'rgba(26, 47, 35, 0.92)',
           backdropFilter: 'blur(10px)',
         }}
         initial={{ y: -100 }}
@@ -34,14 +35,21 @@ export default function Navbar() {
         transition={{ duration: 0.5 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">
-          <div className="flex items-center justify-between h-16 sm:h-20">
+          <div className="flex items-center justify-between h-16 sm:h-18">
             {/* Logo */}
             <motion.div
-              className="text-xl sm:text-2xl font-bold"
-              style={{ color: '#bb9c30' }}
+              className="flex items-center"
               whileHover={{ scale: 1.05 }}
             >
-              Zumfali
+              <Image
+                src="/Logo1.png"
+                alt="Zumfali"
+                width={140}
+                height={40}
+                className="h-8 sm:h-10 w-auto"
+                priority
+              />
+              <span className="sr-only">Zumfali</span>
             </motion.div>
 
             {/* Desktop Navigation */}

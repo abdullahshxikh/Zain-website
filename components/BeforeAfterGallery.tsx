@@ -99,17 +99,17 @@ export default function BeforeAfterGallery() {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
           <span className="text-neutral-900 dark:text-white">Real Results, </span>
           <span className="text-[#bb9c30]">Real People</span>
         </h2>
-        <p className="text-sm text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+        <p className="text-base md:text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
           See the transformation. Experience the difference. Join thousands who've rediscovered their confidence.
         </p>
       </motion.div>
 
       {/* Carousel of Sliders */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4">
+      <div className="relative z-10 w-full mx-auto px-4 lg:px-8">
         <Swiper
           modules={[Navigation, Pagination, EffectCoverflow]}
           effect="coverflow"
@@ -119,9 +119,9 @@ export default function BeforeAfterGallery() {
           spaceBetween={80}
           coverflowEffect={{
             rotate: 0,
-            stretch: 0,
+            stretch: 240,
             depth: 200,
-            modifier: 2,
+            modifier: 1.5,
             slideShadows: false,
           }}
           navigation
@@ -131,16 +131,16 @@ export default function BeforeAfterGallery() {
           className="before-after-swiper"
         >
           {pairs.map(([a, b], i) => (
-            <SwiperSlide key={i} className="!w-[380px]">
+            <SwiperSlide key={i} className="!w-[380px] md:!w-[440px] lg:!w-[500px]">
               <div className="swiper-no-swiping">
                 <BeforeAfterSlider
                   beforeSrc={`/before-after/${a}.jpg`}
                   afterSrc={`/before-after/${b}.jpg`}
                   beforeLabel="Before"
                   afterLabel="After"
-                  height={500}
+                  height={520}
                   initial={50}
-                  className="rounded-2xl shadow-lg overflow-hidden"
+                  className="rounded-2xl shadow-xl overflow-hidden"
                 />
               </div>
             </SwiperSlide>
@@ -157,16 +157,16 @@ export default function BeforeAfterGallery() {
         transition={{ duration: 0.8, delay: 0.4 }}
       >
         <div>
-          <div className="text-2xl font-bold text-[#bb9c30] mb-1">10,000+</div>
-          <div className="text-neutral-600 dark:text-neutral-400 text-xs">Happy Customers</div>
+          <div className="text-3xl md:text-4xl font-bold text-[#bb9c30] mb-1">10,000+</div>
+          <div className="text-neutral-600 dark:text-neutral-400 text-sm md:text-base">Happy Customers</div>
         </div>
         <div>
-          <div className="text-2xl font-bold text-[#6b8d5b] mb-1">94%</div>
-          <div className="text-neutral-600 dark:text-neutral-400 text-xs">See Results in 30 Days</div>
+          <div className="text-3xl md:text-4xl font-bold text-[#6b8d5b] mb-1">94%</div>
+          <div className="text-neutral-600 dark:text-neutral-400 text-sm md:text-base">See Results in 30 Days</div>
         </div>
         <div>
-          <div className="text-2xl font-bold text-[#bb9c30] mb-1">4.9★</div>
-          <div className="text-neutral-600 dark:text-neutral-400 text-xs">Average Rating</div>
+          <div className="text-3xl md:text-4xl font-bold text-[#bb9c30] mb-1">4.9★</div>
+          <div className="text-neutral-600 dark:text-neutral-400 text-sm md:text-base">Average Rating</div>
         </div>
       </motion.div>
 
@@ -176,7 +176,7 @@ export default function BeforeAfterGallery() {
         }
         .before-after-swiper .swiper-slide {
           opacity: 0.4;
-          transition: opacity 0.3s;
+          transition: opacity 0.3s, transform 0.3s;
         }
         .before-after-swiper .swiper-slide-active {
           opacity: 1;
@@ -184,14 +184,14 @@ export default function BeforeAfterGallery() {
         .before-after-swiper .swiper-button-next,
         .before-after-swiper .swiper-button-prev {
           color: #bb9c30;
-          background: rgba(0, 0, 0, 0.5);
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
+          background: rgba(0, 0, 0, 0.6);
+          width: 48px;
+          height: 48px;
+          border-radius: 999px;
         }
         .before-after-swiper .swiper-button-next:after,
         .before-after-swiper .swiper-button-prev:after {
-          font-size: 18px;
+          font-size: 20px;
         }
         .before-after-swiper .swiper-pagination-bullet {
           background: #bb9c30;
