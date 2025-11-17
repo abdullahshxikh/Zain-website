@@ -24,7 +24,7 @@ export default function Navbar() {
         className="w-full py-2 text-center text-white text-sm font-semibold relative"
         style={{ backgroundColor: '#2d4a38' }}
       >
-        Subscribe & Get 20% OFF Your First Order Today!
+        Sign up today and receive a free gift on us!
       </div>
 
       {/* Main Navbar */}
@@ -63,9 +63,9 @@ export default function Navbar() {
               <Image
                 src="/Logo1.png"
                 alt="Zumfali"
-                width={220}
-                height={80}
-                className="h-12 sm:h-16 w-auto"
+                width={320}
+                height={110}
+                className="h-16 sm:h-24 md:h-28 w-auto"
                 priority
               />
               <span className="sr-only">Zumfali</span>

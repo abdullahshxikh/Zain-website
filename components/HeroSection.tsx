@@ -24,9 +24,9 @@ export default function HeroSection() {
         quality={100}
       />
       
-      {/* CTA Button - Bottom Left */}
-          <motion.div
-        className="absolute bottom-20 left-8 sm:bottom-28 sm:left-12 md:bottom-32 md:left-16 z-20"
+      {/* CTA Button - Adjusted Position */}
+      <motion.div
+        className="absolute bottom-44 left-0 sm:bottom-52 sm:left-4 md:bottom-56 md:left-10 z-20"
         initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.5 }}
