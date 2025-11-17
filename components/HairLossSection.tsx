@@ -191,7 +191,7 @@ export default function HairLossSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-                Hair loss affects over <span className="font-bold text-[#bb9c30]">50% of men by age 50</span>. 
+                Hair loss affects over <span className="font-bold text-[#bb9c30]">50% of men and women by age 50</span>. 
                 Stress, poor nutrition, environmental toxins, and hormonal imbalances are destroying natural 
                 hair follicle health at an alarming rate.
               </motion.p>

@@ -31,7 +31,7 @@ export default function ProductPricingSection() {
     <section 
       className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden" 
       style={{
-        backgroundColor: '#0a0a0a',
+        backgroundColor: '#f5f5dc',
       }}
     >
       <div className="relative z-10 max-w-7xl mx-auto">
@@ -44,12 +44,12 @@ export default function ProductPricingSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="relative w-full max-w-md">
+            <div className="relative w-full max-w-lg lg:max-w-xl">
               <Image
                 src="/product-bundle.png"
                 alt="Zumfali 7-in-1 Hair Oil Duo"
-                width={600}
-                height={600}
+                width={800}
+                height={800}
                 className="relative z-10 w-full h-auto"
                 priority
               />
@@ -66,7 +66,7 @@ export default function ProductPricingSection() {
           >
             {/* Product Title */}
             <motion.h2
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight"
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -90,7 +90,7 @@ export default function ProductPricingSection() {
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  <p className="text-gray-300 text-base sm:text-lg leading-relaxed">{point}</p>
+                  <p className="text-gray-700 text-base sm:text-lg leading-relaxed">{point}</p>
                 </div>
               ))}
             </motion.div>
@@ -107,7 +107,7 @@ export default function ProductPricingSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <h3 className="text-xl sm:text-2xl font-bold text-white text-center mb-4">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 text-center mb-4">
                 Be the first to get this bundle when it launches.
               </h3>
               

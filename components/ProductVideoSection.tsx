@@ -60,6 +60,54 @@ const customerReviews: CustomerReview[] = [
     comment: "Worth every penny! My confidence is back thanks to Zumfali.",
     location: "Austin, TX",
     avatar: "AP"
+  },
+  {
+    id: 7,
+    name: "Rachel H.",
+    rating: 5,
+    comment: "I've tried so many products, but this is the only one that delivered real results!",
+    location: "Boston, MA",
+    avatar: "RH"
+  },
+  {
+    id: 8,
+    name: "James W.",
+    rating: 5,
+    comment: "My hair loss stopped after 6 weeks. Can't believe the transformation!",
+    location: "Denver, CO",
+    avatar: "JW"
+  },
+  {
+    id: 9,
+    name: "Lisa G.",
+    rating: 5,
+    comment: "Natural ingredients that actually work. My scalp feels healthier than ever.",
+    location: "Portland, OR",
+    avatar: "LG"
+  },
+  {
+    id: 10,
+    name: "Marcus B.",
+    rating: 5,
+    comment: "Visible new growth in just one month. This stuff is incredible!",
+    location: "Atlanta, GA",
+    avatar: "MB"
+  },
+  {
+    id: 11,
+    name: "Sofia N.",
+    rating: 5,
+    comment: "My confidence is through the roof. Thank you Zumfali for giving me my hair back!",
+    location: "San Diego, CA",
+    avatar: "SN"
+  },
+  {
+    id: 12,
+    name: "Tyler C.",
+    rating: 5,
+    comment: "Game changer for my thinning hair. Wish I found this years ago!",
+    location: "Phoenix, AZ",
+    avatar: "TC"
   }
 ];
 
@@ -67,20 +115,20 @@ export default function ProductVideoSection() {
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
   const [showReview, setShowReview] = useState(false);
 
-  // Cycle through reviews every 4 seconds
+  // Cycle through reviews every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setShowReview(false);
       setTimeout(() => {
         setCurrentReviewIndex((prev) => (prev + 1) % customerReviews.length);
         setShowReview(true);
-      }, 300);
-    }, 4000);
+      }, 250);
+    }, 3000);
 
-    // Show first review after 2 seconds
+    // Show first review after 1 second
     const initialTimeout = setTimeout(() => {
       setShowReview(true);
-    }, 2000);
+    }, 1000);
 
     return () => {
       clearInterval(interval);

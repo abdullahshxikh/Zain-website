@@ -65,9 +65,13 @@ export default function IngredientsSection() {
   if (!mounted) return null;
 
   return (
-    <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden" style={{
-      backgroundColor: '#f5f1e8',
-    }}>
+    <section 
+      className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden" 
+      style={{
+        backgroundColor: '#f5f1e8',
+        boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.08)',
+      }}
+    >
 
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Header */}

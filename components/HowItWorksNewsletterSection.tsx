@@ -55,7 +55,7 @@ export default function HowItWorksNewsletterSection() {
     <section 
       className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden" 
       style={{
-        backgroundColor: '#4a6b54',
+        backgroundColor: '#f5f5dc',
       }}
     >
 
@@ -69,12 +69,12 @@ export default function HowItWorksNewsletterSection() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3">
-            <span className="text-white">How Does </span>
+            <span className="text-gray-900">How Does </span>
             <span className="text-[#bb9c30]">Zumfali</span>
-            <span className="text-white"> Work?</span>
+            <span className="text-gray-900"> Work?</span>
           </h2>
           <motion.p
-            className="text-base text-gray-300 max-w-2xl mx-auto"
+            className="text-base text-gray-700 max-w-2xl mx-auto"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -119,7 +119,7 @@ export default function HowItWorksNewsletterSection() {
                       DAY {phase.day}
                     </span>
                   </motion.div>
-                  <h3 className="text-white text-xl sm:text-2xl font-bold">
+                  <h3 className="text-gray-900 text-xl sm:text-2xl font-bold">
                     {phase.title}
                   </h3>
                 </div>
@@ -128,7 +128,7 @@ export default function HowItWorksNewsletterSection() {
                   {phase.benefits.map((benefit, i) => (
                     <motion.li
                       key={i}
-                      className="flex items-start gap-2 text-gray-300 text-xs sm:text-sm"
+                      className="flex items-start gap-2 text-gray-700 text-xs sm:text-sm"
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
@@ -179,11 +179,11 @@ export default function HowItWorksNewsletterSection() {
               ✉️
             </motion.div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-              <span className="text-white">Join the </span>
+              <span className="text-gray-900">Join the </span>
               <span className="text-[#bb9c30]">Zumfali</span>
-              <span className="text-white"> Community</span>
+              <span className="text-gray-900"> Community</span>
             </h2>
-            <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-gray-700 max-w-2xl mx-auto">
               Get exclusive hair care tips, early access to new products, and special discounts delivered straight to your inbox.
             </p>
           </motion.div>
@@ -199,7 +199,7 @@ export default function HowItWorksNewsletterSection() {
               <motion.input
                 type="email"
                 placeholder="Enter your email address"
-                className="flex-1 px-6 py-4 bg-black/40 backdrop-blur-sm border-2 border-[#bb9c30]/30 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-[#bb9c30] transition-colors"
+                className="flex-1 px-6 py-4 bg-white border-2 border-gray-300 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:border-[#bb9c30] transition-colors"
                 whileFocus={{ scale: 1.02 }}
               />
               <motion.button
@@ -218,7 +218,7 @@ export default function HowItWorksNewsletterSection() {
           </motion.div>
 
           <motion.div
-            className="mt-8 flex flex-wrap justify-center items-center gap-6 text-sm text-gray-400"
+            className="mt-8 flex flex-wrap justify-center items-center gap-6 text-sm text-gray-600"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}

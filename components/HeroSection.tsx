@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 export default function HeroSection() {
@@ -22,6 +23,28 @@ export default function HeroSection() {
         priority
         quality={100}
       />
+      
+      {/* CTA Button - Bottom Left */}
+          <motion.div
+        className="absolute bottom-20 left-8 sm:bottom-28 sm:left-12 md:bottom-32 md:left-16 z-20"
+        initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+      >
+            <motion.button
+          className="px-8 sm:px-10 md:px-12 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg md:text-xl text-black shadow-2xl"
+          style={{
+            background: 'linear-gradient(135deg, #bb9c30 0%, #d4b554 100%)',
+          }}
+          whileHover={{ 
+            scale: 1.05,
+            boxShadow: '0 25px 50px rgba(187, 156, 48, 0.5)',
+          }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Shop Now
+            </motion.button>
+          </motion.div>
     </section>
   );
 }

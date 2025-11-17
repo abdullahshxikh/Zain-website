@@ -3,7 +3,7 @@
 import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, EffectCoverflow } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 import Image from 'next/image';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -25,7 +25,7 @@ const pairs = [
 
 export default function BeforeAfterGallery() {
   return (
-    <section className="relative py-16 bg-neutral-50 dark:bg-neutral-900 overflow-hidden">
+    <section className="relative py-16 overflow-hidden" style={{ backgroundColor: '#f5f5dc' }}>
       {/* Decorative Tree Elements */}
       <motion.div
         className="absolute top-10 left-5 opacity-20 dark:opacity-10 pointer-events-none"
@@ -100,47 +100,45 @@ export default function BeforeAfterGallery() {
         transition={{ duration: 0.8 }}
       >
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
-          <span className="text-neutral-900 dark:text-white">Real Results, </span>
+          <span className="text-gray-900">Real Results, </span>
           <span className="text-[#bb9c30]">Real People</span>
         </h2>
-        <p className="text-base md:text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+        <p className="text-base md:text-lg text-gray-700 max-w-2xl mx-auto">
           See the transformation. Experience the difference. Join thousands who've rediscovered their confidence.
         </p>
       </motion.div>
 
       {/* Carousel of Sliders */}
-      <div className="relative z-10 w-full mx-auto px-4 lg:px-8">
+      <div className="relative z-10 w-full mx-auto px-2 sm:px-4 lg:px-8">
         <Swiper
-          modules={[Navigation, Pagination, EffectCoverflow]}
-          effect="coverflow"
+          modules={[Navigation, Pagination]}
           grabCursor={true}
           centeredSlides={true}
-          slidesPerView="auto"
-          spaceBetween={80}
-          coverflowEffect={{
-            rotate: 0,
-            stretch: 240,
-            depth: 200,
-            modifier: 1.5,
-            slideShadows: false,
-          }}
+          slidesPerView={1.3}
+          spaceBetween={18}
           navigation
           pagination={{ clickable: true }}
           touchStartPreventDefault={false}
           allowTouchMove={true}
+          breakpoints={{
+            640: { slidesPerView: 1.45, spaceBetween: 20 },
+            768: { slidesPerView: 1.7, spaceBetween: 26 },
+            1024: { slidesPerView: 2.1, spaceBetween: 30 },
+            1400: { slidesPerView: 2.4, spaceBetween: 34 },
+          }}
           className="before-after-swiper"
         >
           {pairs.map(([a, b], i) => (
-            <SwiperSlide key={i} className="!w-[380px] md:!w-[440px] lg:!w-[500px]">
-              <div className="swiper-no-swiping">
+            <SwiperSlide key={i} className="!flex !h-auto items-center justify-center px-2">
+              <div className="swiper-no-swiping w-full mx-auto max-w-[70vw] md:max-w-[45vw] lg:max-w-[38vw]">
                 <BeforeAfterSlider
                   beforeSrc={`/before-after/${a}.jpg`}
                   afterSrc={`/before-after/${b}.jpg`}
                   beforeLabel="Before"
                   afterLabel="After"
-                  height={520}
+                  height={540}
                   initial={50}
-                  className="rounded-2xl shadow-xl overflow-hidden"
+                  className="rounded-3xl shadow-2xl overflow-hidden bg-black/10"
                 />
               </div>
             </SwiperSlide>
@@ -158,33 +156,35 @@ export default function BeforeAfterGallery() {
       >
         <div>
           <div className="text-3xl md:text-4xl font-bold text-[#bb9c30] mb-1">10,000+</div>
-          <div className="text-neutral-600 dark:text-neutral-400 text-sm md:text-base">Happy Customers</div>
+          <div className="text-gray-700 text-sm md:text-base">Happy Customers</div>
         </div>
         <div>
           <div className="text-3xl md:text-4xl font-bold text-[#6b8d5b] mb-1">94%</div>
-          <div className="text-neutral-600 dark:text-neutral-400 text-sm md:text-base">See Results in 30 Days</div>
+          <div className="text-gray-700 text-sm md:text-base">See Results in 30 Days</div>
         </div>
         <div>
           <div className="text-3xl md:text-4xl font-bold text-[#bb9c30] mb-1">4.9★</div>
-          <div className="text-neutral-600 dark:text-neutral-400 text-sm md:text-base">Average Rating</div>
+          <div className="text-gray-700 text-sm md:text-base">Average Rating</div>
         </div>
       </motion.div>
 
       <style jsx global>{`
         .before-after-swiper {
-          padding: 40px 0 60px;
+          padding: 30px 0 60px;
         }
         .before-after-swiper .swiper-slide {
-          opacity: 0.4;
           transition: opacity 0.3s, transform 0.3s;
+          opacity: 0.6;
+          transform: scale(0.95);
         }
         .before-after-swiper .swiper-slide-active {
           opacity: 1;
+          transform: scale(1);
         }
         .before-after-swiper .swiper-button-next,
         .before-after-swiper .swiper-button-prev {
           color: #bb9c30;
-          background: rgba(0, 0, 0, 0.6);
+          background: rgba(0, 0, 0, 0.4);
           width: 48px;
           height: 48px;
           border-radius: 999px;
