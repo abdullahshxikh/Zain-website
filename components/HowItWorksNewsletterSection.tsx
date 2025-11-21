@@ -55,7 +55,7 @@ export default function HowItWorksNewsletterSection() {
     <section 
       className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden" 
       style={{
-        backgroundColor: '#f5f5dc',
+        background: 'linear-gradient(135deg, #0b2618 0%, #123624 50%, #0b2618 100%)',
       }}
     >
 
@@ -69,12 +69,12 @@ export default function HowItWorksNewsletterSection() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3">
-            <span className="text-gray-900">How Does </span>
-            <span className="text-[#bb9c30]">Zumfali</span>
-            <span className="text-gray-900"> Work?</span>
+            <span className="text-emerald-100">How Does </span>
+            <span className="text-emerald-300">Zumfali</span>
+            <span className="text-emerald-100"> Work?</span>
           </h2>
           <motion.p
-            className="text-base text-gray-700 max-w-2xl mx-auto"
+            className="text-base text-emerald-100/80 max-w-2xl mx-auto"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -95,7 +95,7 @@ export default function HowItWorksNewsletterSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
             >
-              <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-[#bb9c30]/20 shadow-2xl h-full">
+              <div className="relative bg-emerald-900/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-emerald-400/30 shadow-2xl h-full">
                 <motion.div
                   className="text-4xl sm:text-5xl mb-4 text-center"
                   animate={{
@@ -115,11 +115,11 @@ export default function HowItWorksNewsletterSection() {
                     className="inline-flex items-center gap-2 mb-1"
                     whileHover={{ scale: 1.05 }}
                   >
-                    <span className="text-[#bb9c30] text-xl sm:text-2xl font-bold">
+                    <span className="text-emerald-300 text-xl sm:text-2xl font-bold">
                       DAY {phase.day}
                     </span>
                   </motion.div>
-                  <h3 className="text-gray-900 text-xl sm:text-2xl font-bold">
+                  <h3 className="text-emerald-50 text-xl sm:text-2xl font-bold">
                     {phase.title}
                   </h3>
                 </div>
@@ -128,13 +128,13 @@ export default function HowItWorksNewsletterSection() {
                   {phase.benefits.map((benefit, i) => (
                     <motion.li
                       key={i}
-                      className="flex items-start gap-2 text-gray-700 text-xs sm:text-sm"
+                      className="flex items-start gap-2 text-emerald-50/90 text-xs sm:text-sm"
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.5, delay: index * 0.2 + i * 0.1 }}
                     >
-                      <span className="text-[#bb9c30] mt-1 flex-shrink-0">•</span>
+                      <span className="text-emerald-300 mt-1 flex-shrink-0">•</span>
                       <span>{benefit}</span>
                     </motion.li>
                   ))}
@@ -145,7 +145,7 @@ export default function HowItWorksNewsletterSection() {
               {index < timeline.length - 1 && (
                 <motion.div
                   className="hidden md:block absolute top-20 -right-6 lg:-right-12 w-6 lg:w-12 h-0.5"
-                  style={{ backgroundColor: '#bb9c30', transformOrigin: 'left' }}
+                  style={{ backgroundColor: '#34d399', transformOrigin: 'left' }}
                   initial={{ scaleX: 0 }}
                   whileInView={{ scaleX: 1 }}
                   viewport={{ once: true }}
@@ -179,11 +179,11 @@ export default function HowItWorksNewsletterSection() {
               ✉️
             </motion.div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-              <span className="text-gray-900">Join the </span>
-              <span className="text-[#bb9c30]">Zumfali</span>
-              <span className="text-gray-900"> Community</span>
+              <span className="text-emerald-50">Join the </span>
+              <span className="text-emerald-300">Zumfali</span>
+              <span className="text-emerald-50"> Community</span>
             </h2>
-            <p className="text-base sm:text-lg text-gray-700 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-emerald-100/80 max-w-2xl mx-auto">
               Get exclusive hair care tips, early access to new products, and special discounts delivered straight to your inbox.
             </p>
           </motion.div>
@@ -199,13 +199,13 @@ export default function HowItWorksNewsletterSection() {
               <motion.input
                 type="email"
                 placeholder="Enter your email address"
-                className="flex-1 px-6 py-4 bg-white border-2 border-gray-300 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:border-[#bb9c30] transition-colors"
+                className="flex-1 px-6 py-4 bg-emerald-900/40 border-2 border-emerald-400/40 rounded-full text-emerald-50 placeholder-emerald-100/60 focus:outline-none focus:border-emerald-300 transition-colors"
                 whileFocus={{ scale: 1.02 }}
               />
               <motion.button
                 className="group relative px-8 sm:px-10 py-4 overflow-hidden rounded-full shadow-2xl font-bold"
                 style={{
-                  backgroundColor: '#bb9c30',
+                  backgroundColor: '#34d399',
                 }}
                 whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(187, 156, 48, 0.5)" }}
                 whileTap={{ scale: 0.95 }}
@@ -218,22 +218,22 @@ export default function HowItWorksNewsletterSection() {
           </motion.div>
 
           <motion.div
-            className="mt-8 flex flex-wrap justify-center items-center gap-6 text-sm text-gray-600"
+            className="mt-8 flex flex-wrap justify-center items-center gap-6 text-sm text-emerald-100/80"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <div className="flex items-center gap-2">
-              <span className="text-[#bb9c30]">✓</span>
+              <span className="text-emerald-300">✓</span>
               <span>10,000+ subscribers</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[#bb9c30]">✓</span>
+              <span className="text-emerald-300">✓</span>
               <span>No spam, ever</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[#bb9c30]">✓</span>
+              <span className="text-emerald-300">✓</span>
               <span>Unsubscribe anytime</span>
             </div>
           </motion.div>

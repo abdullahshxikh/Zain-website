@@ -107,7 +107,7 @@ export default function SolutionSection() {
             </div>
           </motion.div>
 
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
             <span className="text-white">Your Hair Deserves </span>
             <span 
               className="bg-gradient-to-r from-[#bb9c30] via-[#d4b554] to-[#bb9c30] bg-clip-text text-transparent"

@@ -10,18 +10,32 @@ const rightNavItems = ['Search', 'Account', 'Cart'];
 export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (typeof window === 'undefined') return;
+      setScrolled(window.scrollY > 0);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   if (!mounted) return null;
 
   return (
-    <>
+    <div className="fixed inset-x-0 top-0 z-50">
       {/* Top Banner */}
-      <div 
-        className="w-full py-2 text-center text-white text-sm font-semibold relative"
+      <div
+        className="w-full py-2 text-center text-white text-sm font-semibold"
         style={{ backgroundColor: '#2d4a38' }}
       >
         Sign up today and receive a free gift on us!
@@ -29,10 +43,12 @@ export default function Navbar() {
 
       {/* Main Navbar */}
       <motion.nav
-        className="relative w-full z-40 transition-all duration-300"
+        className="w-full transition-all duration-300"
         style={{
           backgroundColor: '#f5f5dc',
-          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+          boxShadow: scrolled
+            ? '0 4px 20px rgba(0, 0, 0, 0.15)'
+            : '0 2px 10px rgba(0, 0, 0, 0.1)',
         }}
         initial={{ y: -60 }}
         animate={{ y: 0 }}
@@ -56,8 +72,13 @@ export default function Navbar() {
             </div>
 
             {/* Center Logo */}
-            <motion.div
-              className="flex-1 flex items-center justify-center"
+            <motion.button
+              type="button"
+              onClick={() =>
+                typeof window !== 'undefined' &&
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }
+              className="flex-1 flex items-center justify-center focus:outline-none"
               whileHover={{ scale: 1.05 }}
             >
               <Image
@@ -69,7 +90,7 @@ export default function Navbar() {
                 priority
               />
               <span className="sr-only">Zumfali</span>
-            </motion.div>
+            </motion.button>
 
             {/* Right Icons/Links */}
             <div className="hidden lg:flex items-center gap-6 flex-1 justify-end">
@@ -134,7 +155,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div 
+            <div
               className="absolute inset-0 bg-black/50"
               onClick={() => setMobileMenuOpen(false)}
             />
@@ -146,12 +167,12 @@ export default function Navbar() {
               exit={{ x: '100%' }}
               transition={{ type: 'tween' }}
             >
-              <div className="flex flex-col p-6 pt-24 gap-4">
+              <div className="flex flex-col gap-4 p-6 pt-24">
                 {[...leftNavItems, ...rightNavItems].map((item) => (
                   <a
                     key={item}
                     href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
-                    className="text-base font-medium text-gray-800 hover:text-[#2d4a38] transition-colors py-2"
+                    className="py-2 text-base font-medium text-gray-800 transition-colors hover:text-[#2d4a38]"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item}
@@ -162,7 +183,7 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 }
 

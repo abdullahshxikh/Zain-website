@@ -44,7 +44,7 @@ export default function ProductPricingSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="relative w-full max-w-xl lg:max-w-2xl xl:max-w-3xl">
+            <div className="relative w-full max-w-3xl lg:max-w-3xl">
               <Image
                 src="/product-bundle.png"
                 alt="Zumfali 7-in-1 Hair Oil Duo"
