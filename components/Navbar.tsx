@@ -36,7 +36,7 @@ export default function Navbar() {
     <div className="fixed inset-x-0 top-0 z-50">
       {/* Top Banner */}
       <div
-        className="w-full py-2 text-center text-white text-sm font-semibold"
+        className="w-full py-1.5 text-center text-white text-sm font-semibold"
         style={{ backgroundColor: '#2d4a38' }}
       >
         Sign up today and receive a free gift on us!
@@ -56,7 +56,7 @@ export default function Navbar() {
         transition={{ duration: 0.5 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <div className="flex items-center h-16 sm:h-20 gap-4">
+          <div className="flex items-center h-14 sm:h-16 gap-4">
             {/* Left Navigation */}
             <div className="hidden lg:flex items-center gap-8 flex-1">
               {leftNavItems.map((item) => (
@@ -85,7 +85,7 @@ export default function Navbar() {
                   alt="Zumfali"
                   width={320}
                   height={110}
-                  className="h-16 sm:h-24 md:h-28 w-auto"
+                  className="h-14 sm:h-20 md:h-24 w-auto"
                   priority
                 />
                 <span className="sr-only">Zumfali</span>

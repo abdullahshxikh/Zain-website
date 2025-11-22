@@ -15,43 +15,70 @@ export default function HeroSection() {
   if (!mounted) return null;
 
   return (
-    <section className="relative w-full h-[100dvh] sm:h-screen overflow-hidden bg-[#dccdbb]">
-      {/* Image Wrapper to push it below navbar */}
-      <div className="absolute inset-0 top-20 sm:top-24">
-        <Image
-          src="/Screenshot 2025-11-14 at 11.42.37 PM.png"
-          alt="10,000 Women Can't be Wrong - Transform Dry, Damaged Strands into Nourished Hair"
-          fill
-          className="object-cover"
-          style={{ objectPosition: 'center top' }}
-          priority
-          quality={100}
-        />
-      </div>
+    <section className="relative w-full min-h-[100dvh] bg-[#BCA379] flex flex-col lg:flex-row overflow-hidden pt-24 lg:pt-0">
+      {/* Mobile: Image on Top. Desktop: Image on Right (order-2) */}
       
-      {/* CTA Button */}
-      <motion.div
-        className="absolute top-[75%] sm:top-[70%] left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-12 md:left-20 z-20 w-full sm:w-auto flex justify-center sm:block px-4 sm:px-0"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
-      >
-        <Link href="/shop">
-          <motion.button
-            className="w-full sm:w-auto px-8 sm:px-10 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg tracking-wide text-white shadow-[0_10px_30px_rgba(0,0,0,0.2)] backdrop-blur-sm border border-white/20"
-            style={{
-              background: 'linear-gradient(135deg, #bb9c30 0%, #d4b554 100%)',
-            }}
-            whileHover={{ 
-              scale: 1.05,
-              boxShadow: '0 15px 40px rgba(187, 156, 48, 0.4)',
-            }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Shop Now
-          </motion.button>
-        </Link>
-      </motion.div>
+      {/* Image Section */}
+      <div className="relative w-full lg:w-[45%] h-[50vh] lg:h-[90vh] lg:absolute lg:right-0 lg:bottom-0 order-1 lg:order-2 flex items-end justify-end">
+        <div className="relative w-full h-full">
+          <Image
+            src="/Screenshot 2025-11-22 at 5.35.59 PM.png"
+            alt="Zumfali Hair Oil Transformation"
+            fill
+            className="object-contain object-bottom lg:object-contain lg:object-bottom"
+            priority
+            quality={100}
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
+      </div>
+
+      {/* Text Section */}
+      <div className="relative z-20 w-full lg:w-[55%] flex flex-col justify-start lg:justify-center px-6 sm:px-12 lg:pl-16 lg:pr-0 pb-12 lg:pb-0 order-2 lg:order-1 min-h-[50vh] lg:h-screen pt-12 lg:pt-0">
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-4xl mx-auto lg:mx-0 text-center lg:text-left mt-10 lg:mt-0"
+        >
+          {/* Top Label */}
+          <div className="mb-3">
+            <span className="text-[#E5D178] font-bold text-2xl sm:text-3xl font-serif">10,000 </span>
+            <span className="text-[#1a1a1a] font-bold text-2xl sm:text-3xl font-serif tracking-wide">Women Can't be Wrong.</span>
+          </div>
+
+          {/* Main Headline */}
+          <h1 className="text-[2.2rem] sm:text-[2.8rem] lg:text-[3.5rem] font-serif font-bold text-[#0A0A0A] leading-[1.1] mb-6 tracking-tight whitespace-normal sm:whitespace-nowrap">
+            TRANSFORM DRY, DAMAGED <br />
+            STRANDS INTO, NOURISHED <br />
+            HAIR
+          </h1>
+
+          {/* Subline / Tagline - Fixed "Grease", Single Line */}
+          <p className="text-[#1a1a1a] text-base sm:text-lg font-serif font-bold mb-8 w-full lg:w-auto inline-block tracking-wide opacity-90 whitespace-normal lg:whitespace-nowrap">
+            Without the Grease, Without the Chemicals, Without the Disappointment
+          </p>
+
+          {/* CTA Button */}
+          <div>
+            <Link href="/shop">
+              <motion.button
+                className="px-10 py-4 rounded-full font-bold text-sm sm:text-base tracking-widest text-white shadow-lg uppercase"
+                style={{
+                  backgroundColor: '#d9c063',
+                }}
+                whileHover={{ 
+                  scale: 1.05,
+                  backgroundColor: '#ccb358'
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Shop Now
+              </motion.button>
+            </Link>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 }

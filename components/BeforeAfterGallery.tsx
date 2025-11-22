@@ -49,6 +49,7 @@ export default function BeforeAfterGallery() {
           modules={[Navigation, Pagination]}
           grabCursor={true}
           centeredSlides={true}
+          loop={true}
           slidesPerView={1.3}
           spaceBetween={18}
           navigation

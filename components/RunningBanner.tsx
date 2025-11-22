@@ -9,7 +9,7 @@ const messages = [
   'Free shipping on orders over $30',
   'Made with 8 powerful natural ingredients',
   'Limited launch spots – reserve yours now',
-];
+]; 
 
 export default function RunningBanner() {
   const [mounted, setMounted] = useState(false);
@@ -35,22 +35,22 @@ export default function RunningBanner() {
           <div className="pointer-events-none z-10 absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-[#1a2f23] to-transparent" />
 
           <motion.div
-            className="flex gap-12 whitespace-nowrap px-4"
+            className="flex gap-24 whitespace-nowrap px-4"
             animate={{ x: ['0%', '-50%'] }}
             transition={{
               repeat: Infinity,
               repeatType: 'loop',
-              duration: 30,
+              duration: 40,
               ease: 'linear',
             }}
           >
             {[...messages, ...messages].map((msg, index) => (
               <div
                 key={`${msg}-${index}`}
-                className="flex items-center gap-3 text-sm font-medium tracking-wide text-white/90"
+                className="flex items-center gap-4 text-lg font-bold tracking-wide text-white"
               >
-                <span className="text-[#bb9c30] text-xs">✦</span>
-                <span className="uppercase tracking-widest text-xs">{msg}</span>
+                <span className="text-[#bb9c30] text-base">✦</span>
+                <span className="uppercase tracking-widest">{msg}</span>
               </div>
             ))}
           </motion.div>
