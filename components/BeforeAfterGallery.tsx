@@ -25,72 +25,8 @@ const pairs = [
 
 export default function BeforeAfterGallery() {
   return (
-    <section className="relative py-16 overflow-hidden" style={{ backgroundColor: '#f5f5dc' }}>
-      {/* Decorative Tree Elements */}
-      <motion.div
-        className="absolute top-10 left-5 opacity-20 dark:opacity-10 pointer-events-none"
-        initial={{ opacity: 0, x: -50 }}
-        whileInView={{ opacity: 0.2, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-      >
-        <Image
-          src="/tree-element.png"
-          alt=""
-          width={200}
-          height={200}
-          className="rotate-12"
-        />
-      </motion.div>
-
-      <motion.div
-        className="absolute top-20 right-10 opacity-15 dark:opacity-10 pointer-events-none"
-        initial={{ opacity: 0, x: 50 }}
-        whileInView={{ opacity: 0.15, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.2 }}
-      >
-        <Image
-          src="/tree-element.png"
-          alt=""
-          width={180}
-          height={180}
-          className="-rotate-45 scale-x-[-1]"
-        />
-      </motion.div>
-
-      <motion.div
-        className="absolute bottom-32 left-10 opacity-10 dark:opacity-5 pointer-events-none hidden lg:block"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 0.1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.4 }}
-      >
-        <Image
-          src="/tree-element.png"
-          alt=""
-          width={150}
-          height={150}
-          className="-rotate-12"
-        />
-      </motion.div>
-
-      <motion.div
-        className="absolute bottom-40 right-5 opacity-10 dark:opacity-5 pointer-events-none hidden lg:block"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 0.1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.6 }}
-      >
-        <Image
-          src="/tree-element.png"
-          alt=""
-          width={160}
-          height={160}
-          className="rotate-45 scale-x-[-1]"
-        />
-      </motion.div>
-
+    <section className="relative py-16 overflow-hidden" style={{ backgroundColor: '#FAFAF9' }}>
+      
       {/* Header */}
       <motion.div
         className="relative z-10 text-center mb-12 px-4"
@@ -99,11 +35,10 @@ export default function BeforeAfterGallery() {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
-          <span className="text-gray-900">Real Results, </span>
-          <span className="text-[#bb9c30]">Real People</span>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 text-[#1a2f23]">
+          Real Results, <span className="italic text-[#bb9c30]">Real People</span>
         </h2>
-        <p className="text-base md:text-lg text-gray-700 max-w-2xl mx-auto">
+        <p className="text-base md:text-lg text-gray-600 font-light max-w-2xl mx-auto">
           See the transformation. Experience the difference. Join thousands who've rediscovered their confidence.
         </p>
       </motion.div>

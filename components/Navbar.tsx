@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -43,12 +44,12 @@ export default function Navbar() {
 
       {/* Main Navbar */}
       <motion.nav
-        className="w-full transition-all duration-300"
+        className="w-full transition-all duration-300 border-b border-white/20"
         style={{
-          backgroundColor: '#f5f5dc',
+          backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.9)' : 'rgba(245, 245, 220, 0.95)',
           boxShadow: scrolled
-            ? '0 4px 20px rgba(0, 0, 0, 0.15)'
-            : '0 2px 10px rgba(0, 0, 0, 0.1)',
+            ? '0 4px 20px rgba(0, 0, 0, 0.05)'
+            : 'none',
         }}
         initial={{ y: -60 }}
         animate={{ y: 0 }}
@@ -59,45 +60,44 @@ export default function Navbar() {
             {/* Left Navigation */}
             <div className="hidden lg:flex items-center gap-8 flex-1">
               {leftNavItems.map((item) => (
-                <motion.a
+                <Link
                   key={item}
-                  href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
-                  className="text-sm font-medium transition-colors text-gray-800 hover:text-[#2d4a38]"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  href={item === 'Shop Now' ? '/shop' : item === 'Home' ? '/' : `/#${item.toLowerCase().replace(/\s+/g, '-')}`}
                 >
-                  {item}
-                </motion.a>
+                  <motion.span
+                    className="text-sm font-medium transition-colors text-gray-800 hover:text-[#bb9c30] cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {item}
+                  </motion.span>
+                </Link>
               ))}
             </div>
 
             {/* Center Logo */}
-            <motion.button
-              type="button"
-              onClick={() =>
-                typeof window !== 'undefined' &&
-                window.scrollTo({ top: 0, behavior: 'smooth' })
-              }
-              className="flex-1 flex items-center justify-center focus:outline-none"
-              whileHover={{ scale: 1.05 }}
-            >
-              <Image
-                src="/Logo1.png"
-                alt="Zumfali"
-                width={320}
-                height={110}
-                className="h-16 sm:h-24 md:h-28 w-auto"
-                priority
-              />
-              <span className="sr-only">Zumfali</span>
-            </motion.button>
+            <Link href="/" className="flex-1 flex items-center justify-center focus:outline-none">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+              >
+                <Image
+                  src="/Logo1.png"
+                  alt="Zumfali"
+                  width={320}
+                  height={110}
+                  className="h-16 sm:h-24 md:h-28 w-auto"
+                  priority
+                />
+                <span className="sr-only">Zumfali</span>
+              </motion.div>
+            </Link>
 
             {/* Right Icons/Links */}
             <div className="hidden lg:flex items-center gap-6 flex-1 justify-end">
               {rightNavItems.map((item) => (
                 <motion.button
                   key={item}
-                  className="text-gray-800 hover:text-[#2d4a38] transition-colors"
+                  className="text-gray-800 hover:text-[#bb9c30] transition-colors"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label={item}
@@ -169,14 +169,15 @@ export default function Navbar() {
             >
               <div className="flex flex-col gap-4 p-6 pt-24">
                 {[...leftNavItems, ...rightNavItems].map((item) => (
-                  <a
+                  <Link
                     key={item}
-                    href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
-                    className="py-2 text-base font-medium text-gray-800 transition-colors hover:text-[#2d4a38]"
+                    href={item === 'Shop Now' ? '/shop' : item === 'Home' ? '/' : `/#${item.toLowerCase().replace(/\s+/g, '-')}`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {item}
-                  </a>
+                    <span className="py-2 text-base font-medium text-gray-800 transition-colors hover:text-[#2d4a38] block">
+                      {item}
+                    </span>
+                  </Link>
                 ))}
               </div>
             </motion.div>

@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -66,131 +67,87 @@ export default function IngredientsSection() {
 
   return (
     <section 
-      className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden" 
-      style={{
-        backgroundColor: '#f5f1e8',
-        boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.08)',
-      }}
+      className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-16 overflow-hidden bg-white" 
     >
-
       <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="relative rounded-3xl bg-white/60 shadow-[0_30px_120px_rgba(0,0,0,0.35)] px-4 sm:px-8 py-10 sm:py-14 backdrop-blur-sm">
-          {/* Header */}
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-[#bb9c30]" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-              8 Powerful Ingredients
-            </h2>
-            <p className="text-sm sm:text-base md:text-lg text-[#bb9c30] max-w-3xl mx-auto px-4">
-              Nature's finest oils scientifically formulated for maximum hair growth and vitality.
-            </p>
-          </motion.div>
+        {/* Header */}
+        <motion.div
+          className="text-center mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#1a2f23] mb-6">
+            8 Powerful Ingredients
+          </h2>
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto font-light">
+            Nature's finest oils scientifically formulated for maximum hair growth and vitality.
+          </p>
+        </motion.div>
 
-          {/* Ingredients Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {ingredients.map((ingredient, index) => (
-              <motion.div
-                key={ingredient.name}
-                className="group relative h-64 sm:h-80 lg:h-[320px] rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer shadow-2xl shadow-black/40"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ scale: 1.03, y: -5 }}
-              >
-                {/* Background Image */}
-                <div className="absolute inset-0">
-                  <img
-                    src={ingredient.image}
-                    alt={ingredient.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  {/* Dark overlay gradient */}
-                  <div className="absolute inset-0" style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }} />
-                </div>
-
-                {/* Content */}
-                <div className="relative z-10 h-full flex flex-col justify-between p-6">
-                  {/* Title */}
-                  <div>
-                    <h3 
-                      className="text-2xl md:text-3xl font-bold text-[#bb9c30] mb-3 leading-tight"
-                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: '700' }}
-                    >
-                      {ingredient.name}
-                    </h3>
-                    
-                    {/* Description */}
-                    <p 
-                      className="text-[#bb9c30] text-sm md:text-base leading-relaxed opacity-95"
-                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: '400' }}
-                    >
-                      {ingredient.description}
-                    </p>
-                  </div>
-                  
-                  {/* Dosage Badge */}
-                  <motion.div
-                    className="inline-flex items-center self-start px-4 py-2 rounded-full"
-                    style={{ backgroundColor: '#bb9c30' }}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <span 
-                      className="text-black text-sm font-semibold"
-                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                    >
-                      {ingredient.dosage}
-                    </span>
-                  </motion.div>
-                </div>
-
-                {/* Hover effect border */}
-                <motion.div
-                  className="absolute inset-0 border-2 border-[#bb9c30] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  initial={false}
-                />
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Bottom CTA */}
-          <motion.div
-            className="text-center mt-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <motion.button
-              className="group relative px-12 py-5 overflow-hidden rounded-full shadow-2xl text-lg font-bold"
-              style={{
-                backgroundColor: '#bb9c30',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-              }}
-              whileHover={{ scale: 1.05, boxShadow: "0 20px 60px rgba(187, 156, 48, 0.5)" }}
-              whileTap={{ scale: 0.95 }}
+        {/* Ingredients Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {ingredients.map((ingredient, index) => (
+            <motion.div
+              key={ingredient.name}
+              className="group relative aspect-[3/4] rounded-xl overflow-hidden cursor-pointer bg-gray-100 shadow-lg"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <span className="relative z-10 text-black flex items-center gap-3">
-                Shop Now
-                <motion.svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </motion.svg>
-              </span>
-            </motion.button>
-          </motion.div>
+              {/* Background Image */}
+              <div className="absolute inset-0">
+                <img
+                  src={ingredient.image}
+                  alt={ingredient.name}
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+              </div>
+
+              {/* Content */}
+              <div className="absolute inset-0 p-6 flex flex-col justify-end text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                <h3 className="text-2xl font-serif mb-2 font-medium">
+                  {ingredient.name}
+                </h3>
+                <p className="text-sm text-white/90 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 line-clamp-2">
+                  {ingredient.description}
+                </p>
+                <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                  <span className="text-[#bb9c30] text-xs font-bold tracking-wider uppercase bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
+                    {ingredient.dosage}
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
+
+        {/* Bottom CTA */}
+        <motion.div
+          className="text-center mt-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <Link href="/shop">
+            <motion.button
+            className="group relative px-12 py-5 bg-[#1a2f23] text-white rounded-full text-lg font-medium overflow-hidden shadow-2xl shadow-[#1a2f23]/30 hover:shadow-[#1a2f23]/50 transition-all duration-300"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <span className="relative z-10 flex items-center gap-3">
+              Discover the Formula
+              <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </span>
+          </motion.button>
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

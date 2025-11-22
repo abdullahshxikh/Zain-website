@@ -29,13 +29,10 @@ export default function ProductPricingSection() {
 
   return (
     <section 
-      className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden" 
-      style={{
-        backgroundColor: '#f5f5dc',
-      }}
+      className="relative py-20 lg:py-32 px-4 sm:px-6 lg:px-16 overflow-hidden bg-[#FAFAF9]"
     >
       <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
           {/* Left Side - Product Image */}
           <motion.div
             className="flex justify-center items-center"
@@ -44,13 +41,12 @@ export default function ProductPricingSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="relative w-full max-w-3xl lg:max-w-3xl">
+            <div className="relative w-full max-w-xl aspect-square bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border border-gray-100/50">
               <Image
                 src="/product-bundle.png"
                 alt="Zumfali 7-in-1 Hair Oil Duo"
-                width={1200}
-                height={1200}
-                className="relative z-10 w-full h-auto"
+                fill
+                className="object-contain p-12 hover:scale-105 transition-transform duration-700"
                 priority
               />
             </div>
@@ -62,18 +58,21 @@ export default function ProductPricingSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="space-y-6"
+            className="space-y-8"
           >
             {/* Product Title */}
-            <motion.h2
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight"
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              Zumfali 7-in-1 Hair Oil Duo — Premium Bundle
-            </motion.h2>
+              <span className="block text-[#bb9c30] font-medium tracking-widest uppercase text-sm mb-3">Limited Edition</span>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-medium text-gray-900 leading-[1.1]">
+                The 7-in-1 Duo <br />
+                <span className="text-gray-400 italic">Premium Bundle</span>
+              </h2>
+            </motion.div>
 
             {/* Bullet Points */}
             <motion.div
@@ -84,65 +83,60 @@ export default function ProductPricingSection() {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               {bulletPoints.map((point, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <div className="flex-shrink-0 mt-1">
-                    <svg className="w-5 h-5 text-[#6b8d5b]" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
+                <div key={index} className="flex items-start gap-4 group">
+                  <div className="flex-shrink-0 mt-1.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#bb9c30] group-hover:scale-150 transition-transform duration-300" />
                   </div>
-                  <p className="text-gray-700 text-base sm:text-lg leading-relaxed">{point}</p>
+                  <p className="text-gray-600 text-lg leading-relaxed font-light">{point}</p>
                 </div>
               ))}
             </motion.div>
 
             {/* Early Signup Offer Box */}
             <motion.div
-              className="relative mt-8 p-6 sm:p-8 rounded-2xl border-2"
-              style={{
-                backgroundColor: 'rgba(107, 141, 91, 0.1)',
-                borderColor: '#6b8d5b',
-              }}
+              className="relative mt-10 p-8 sm:p-10 rounded-2xl bg-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] border border-gray-100"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 text-center mb-4">
-                Be the first to get this bundle when it launches.
+              <h3 className="text-2xl font-serif text-gray-900 text-center mb-6">
+                Reserve Your Bundle
               </h3>
               
               <form onSubmit={handleSubmit} className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="First name"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#6b8d5b] transition-all"
-                  required
-                />
-                
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#6b8d5b] transition-all"
-                  required
-                />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    placeholder="First name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className="w-full px-4 py-4 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#bb9c30] focus:border-[#bb9c30] transition-all"
+                    required
+                  />
+                  <input
+                    type="email"
+                    placeholder="Email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-4 py-4 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#bb9c30] focus:border-[#bb9c30] transition-all"
+                    required
+                  />
+                </div>
                 
                 <motion.button
                   type="submit"
-                  className="w-full py-4 rounded-lg font-bold text-lg text-white transition-all"
-                  style={{ backgroundColor: '#6b8d5b' }}
-                  whileHover={{ scale: 1.02, backgroundColor: '#7da66c' }}
+                  className="w-full py-4 rounded-xl font-medium text-lg text-white shadow-lg shadow-[#bb9c30]/20 transition-all"
+                  style={{ background: 'linear-gradient(135deg, #bb9c30 0%, #d4b554 100%)' }}
+                  whileHover={{ scale: 1.01, shadow: '0 20px 40px -10px rgba(187, 156, 48, 0.4)' }}
                   whileTap={{ scale: 0.98 }}
                 >
                   Get Early Access + Free Comb
                 </motion.button>
               </form>
 
-              <p className="text-gray-400 text-sm text-center mt-4">
-                Sign up early and receive an exclusive code for this bundle plus a complimentary premium comb!
+              <p className="text-gray-400 text-xs text-center mt-4 tracking-wide uppercase">
+                Limited spots available for launch
               </p>
             </motion.div>
           </motion.div>

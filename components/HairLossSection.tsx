@@ -156,7 +156,7 @@ export default function HairLossSection() {
 
   return (
     <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden" style={{
-      backgroundColor: '#2c3e36',
+      backgroundColor: '#FAFAF9',
     }}>
 
       <div className="relative z-10 max-w-7xl mx-auto">
@@ -168,9 +168,8 @@ export default function HairLossSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            <span className="text-white">The Decline of Hair Health: </span>
-            <span className="text-[#bb9c30]">A Modern Epidemic</span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 font-serif text-[#1a2f23]">
+            The Decline of Hair Health: <span className="text-[#bb9c30]">A Modern Epidemic</span>
           </h2>
         </motion.div>
 
@@ -185,19 +184,19 @@ export default function HairLossSection() {
           >
             <div className="space-y-6">
               <motion.p
-                className="text-white text-lg leading-relaxed"
+                className="text-gray-700 text-lg leading-relaxed font-light"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-                Hair loss affects over <span className="font-bold text-[#bb9c30]">50% of men and women by age 50</span>. 
+                Hair loss affects over <span className="font-bold text-[#1a2f23]">50% of men and women by age 50</span>. 
                 Stress, poor nutrition, environmental toxins, and hormonal imbalances are destroying natural 
                 hair follicle health at an alarming rate.
               </motion.p>
 
               <motion.p
-                className="text-white text-lg leading-relaxed"
+                className="text-gray-700 text-lg leading-relaxed font-light"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
@@ -215,8 +214,8 @@ export default function HairLossSection() {
                 transition={{ duration: 0.8, delay: 0.5 }}
               >
                 <p className="text-lg leading-relaxed">
-                  <span className="text-[#bb9c30] font-bold text-xl">The good news:</span>
-                  <span className="text-white"> Zumfali helps you reclaim your hair health with natural, 
+                  <span className="text-[#1a2f23] font-bold text-xl font-serif">The good news:</span>
+                  <span className="text-gray-700 font-light"> Zumfali helps you reclaim your hair health with natural, 
                   scientifically-backed ingredients for strength, growth, and vitality.</span>
                 </p>
               </motion.div>
@@ -231,16 +230,16 @@ export default function HairLossSection() {
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-[#bb9c30] mb-2">87%</div>
-                <div className="text-xs sm:text-sm text-gray-400">Saw Growth</div>
+                <div className="text-3xl sm:text-4xl font-bold text-[#bb9c30] mb-2 font-serif">87%</div>
+                <div className="text-xs sm:text-sm text-gray-500 uppercase tracking-wide">Saw Growth</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-[#6b8d5b] mb-2">3x</div>
-                <div className="text-xs sm:text-sm text-gray-400">Stronger Hair</div>
+                <div className="text-3xl sm:text-4xl font-bold text-[#1a2f23] mb-2 font-serif">3x</div>
+                <div className="text-xs sm:text-sm text-gray-500 uppercase tracking-wide">Stronger Hair</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-[#bb9c30] mb-2">92%</div>
-                <div className="text-xs sm:text-sm text-gray-400">Satisfaction</div>
+                <div className="text-3xl sm:text-4xl font-bold text-[#bb9c30] mb-2 font-serif">92%</div>
+                <div className="text-xs sm:text-sm text-gray-500 uppercase tracking-wide">Satisfaction</div>
               </div>
             </motion.div>
           </motion.div>
@@ -253,16 +252,16 @@ export default function HairLossSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <div className="relative bg-black/40 backdrop-blur-sm rounded-3xl p-8 border border-[#6b8d5b]/20 shadow-2xl">
+            <div className="relative bg-white rounded-3xl p-8 border border-gray-100 shadow-xl">
               {/* Chart Legend */}
               <div className="flex justify-end gap-6 mb-6">
                 <div className="flex items-center gap-2">
                   <div className="w-12 h-1 bg-[#bb9c30] rounded"></div>
-                  <span className="text-sm text-[#bb9c30] font-semibold">WITH ZUMFALI</span>
+                  <span className="text-xs font-bold text-[#1a2f23] tracking-wider">WITH ZUMFALI</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-12 h-1 bg-[#cbc7b7] rounded"></div>
-                  <span className="text-sm text-[#cbc7b7] font-semibold">NORMAL DECLINE</span>
+                  <span className="text-xs font-bold text-gray-400 tracking-wider">NORMAL DECLINE</span>
                 </div>
               </div>
 
@@ -270,8 +269,6 @@ export default function HairLossSection() {
               <div className="h-[300px] sm:h-[350px] md:h-[400px]">
                 <Line data={chartData} options={chartOptions} />
               </div>
-
-              {/* Decorative corner accent */}
             </div>
           </motion.div>
         </div>
