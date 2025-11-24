@@ -2,9 +2,13 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import {
+  isShopifyLoggedIn,
+  redirectToShopifySignup,
+} from '@/lib/shopifyAuth';
 
 type BundleOption = {
   id: number;
@@ -52,6 +56,125 @@ const bundles: BundleOption[] = [
 export default function ShopPage() {
   const [selectedBundle, setSelectedBundle] = useState<number>(2);
   const [subscribeMode, setSubscribeMode] = useState(false);
+  const [shopifyClient, setShopifyClient] = useState<any | null>(null);
+  const [shopifyProduct, setShopifyProduct] = useState<any | null>(null);
+  const [accountLoggedIn, setAccountLoggedIn] = useState(false);
+
+  // Minimal Shopify integration: load SDK once, fetch product once, no embedded UI
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const scriptURL =
+      'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+
+    function ShopifyBuyInit() {
+      const ShopifyBuy = (window as any).ShopifyBuy;
+      if (!ShopifyBuy) return;
+
+      const client = ShopifyBuy.buildClient({
+        domain: 'avw1pr-qj.myshopify.com',
+        storefrontAccessToken: '74472e64ff2b3cc2204f58c4d56eb5bb',
+      });
+
+      // Fetch all products and keep only the one we care about
+      client.product.fetchAll().then((products: any[]) => {
+        const target = products.find((p: any) => {
+          const numericId = String(p.id).split('/').pop();
+          return numericId === '9848343953705';
+        });
+
+        setShopifyClient(client);
+        setShopifyProduct(target || null);
+      });
+    }
+
+    function loadScript() {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = scriptURL;
+      (document.head || document.body).appendChild(script);
+      script.onload = ShopifyBuyInit;
+    }
+
+    const ShopifyBuy = (window as any).ShopifyBuy;
+    if (ShopifyBuy) {
+      ShopifyBuyInit();
+    } else {
+      loadScript();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    setAccountLoggedIn(isShopifyLoggedIn());
+  }, []);
+
+  const handleBuyNow = async () => {
+    if (!accountLoggedIn) {
+      // Users must be signed up before purchasing; send them to Shopify signup.
+      redirectToShopifySignup();
+      return;
+    }
+
+    if (!shopifyClient || !shopifyProduct) return;
+
+    const variants = shopifyProduct.variants || [];
+    if (!variants.length) return;
+
+    // Map bundle selection to variant title text
+    const bundleText: Record<number, string> = {
+      1: '1 Bottle',
+      2: '2 Bottles',
+      3: '3 Bottles',
+    };
+
+    const baseText = bundleText[selectedBundle];
+    let targetVariant: any | null = null;
+
+    if (baseText) {
+      // If subscribe mode, prefer a subscription variant first
+      if (subscribeMode) {
+        targetVariant = variants.find((v: any) => {
+          const t = String(v.title).toLowerCase();
+          return t.includes(baseText.toLowerCase()) &&
+                 (t.includes('subscribe') || t.includes('subscription'));
+        });
+      }
+
+      // Fallback to regular variant matching the bundle text
+      if (!targetVariant) {
+        targetVariant = variants.find((v: any) =>
+          String(v.title).toLowerCase().includes(baseText.toLowerCase())
+        );
+      }
+    }
+
+    if (!targetVariant) {
+      targetVariant = variants[0];
+    }
+
+    try {
+      const checkout = await shopifyClient.checkout.create();
+      const lineItems = [
+        {
+          variantId: targetVariant.id,
+          quantity: 1,
+        },
+      ];
+
+      const updatedCheckout = await shopifyClient.checkout.addLineItems(
+        checkout.id,
+        lineItems
+      );
+
+      // Redirect in the same tab to Shopify checkout
+      if (updatedCheckout && updatedCheckout.webUrl) {
+        window.location.href = updatedCheckout.webUrl;
+      }
+    } catch (err) {
+      console.error('Error creating Shopify checkout', err);
+    }
+  };
 
   return (
     <>
@@ -287,13 +410,29 @@ export default function ShopPage() {
                 </div>
               </div>
 
-              {/* CTA Button */}
-              <motion.button
-                className="w-full py-5 bg-[#1a2f23] text-white rounded-full font-bold text-xl uppercase tracking-widest shadow-xl shadow-[#1a2f23]/20 hover:bg-[#2d4a38] transition-all transform hover:-translate-y-1"
-                whileTap={{ scale: 0.98 }}
-              >
-                ADD TO CART
-              </motion.button>
+            {/* CTA Button - single, clean, Shopify-powered */}
+            <motion.button
+              onClick={handleBuyNow}
+              className="w-full py-5 bg-[#1a2f23] text-white rounded-full font-bold text-xl uppercase tracking-[0.25em] shadow-xl shadow-[#1a2f23]/20 hover:bg-[#2d4a38] transition-all transform hover:-translate-y-1"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              Buy Now
+            </motion.button>
+
+              <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <p className="text-xs text-gray-500">
+                  You&apos;ll need a free Shopify customer account to manage your
+                  orders.
+                </p>
+                <button
+                  type="button"
+                  onClick={redirectToShopifySignup}
+                  className="inline-flex items-center justify-center px-4 py-2 rounded-full border border-[#1a2f23] text-[#1a2f23] text-xs font-semibold tracking-wide hover:bg-[#1a2f23] hover:text-white transition-colors"
+                >
+                  Sign up / Log in with Shopify
+                </button>
+              </div>
 
               <p className="text-center text-xs text-gray-400 mt-6 flex items-center justify-center gap-2">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
