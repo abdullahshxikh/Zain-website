@@ -1,30 +1,11 @@
 const SHOPIFY_ACCOUNT_BASE = 'https://shopify.com/91374911785/account';
 const SHOPIFY_LOGIN_URL = `${SHOPIFY_ACCOUNT_BASE}/login`;
 const SHOPIFY_SIGNUP_URL = `${SHOPIFY_ACCOUNT_BASE}/register`;
-
-function getSiteBaseUrl() {
-  if (typeof window !== 'undefined') {
-    const hostname = window.location.hostname;
-    const isLocalhost =
-      hostname === 'localhost' ||
-      hostname === '127.0.0.1' ||
-      hostname === '[::1]';
-
-    return isLocalhost
-      ? 'http://localhost:3000'
-      : 'https://zain-website-eight.vercel.app';
-  }
-
-  const isProd = process.env.NODE_ENV === 'production';
-  return isProd
-    ? 'https://zain-website-eight.vercel.app'
-    : 'http://localhost:3000';
-}
+const SHOPIFY_RETURN_URL = 'https://zain-website-eight.vercel.app/account';
 
 export function getAccountReturnUrl() {
-  const baseUrl = getSiteBaseUrl();
-  // Clean URL required by Shopify customer accounts (no query params).
-  return `${baseUrl}/account`;
+  // Clean production URL required by Shopify customer accounts (no query params).
+  return SHOPIFY_RETURN_URL;
 }
 
 export function redirectToShopifyLogin() {

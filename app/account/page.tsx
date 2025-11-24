@@ -1,50 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import {
-  isShopifyLoggedIn,
-  markShopifyLoggedIn,
-  redirectToShopifyLogin,
-} from '@/lib/shopifyAuth';
+import { markShopifyLoggedIn } from '@/lib/shopifyAuth';
 
 export default function AccountPage() {
-  const router = useRouter();
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [checking, setChecking] = useState(true);
-
+  // Mark the user as "logged in" locally whenever they reach /account.
+  // This is a simple side-effect only; the page always renders normally.
   useEffect(() => {
-    const isLoggedInNow = isShopifyLoggedIn();
-
-    // If the user is returning from Shopify, the referrer will be the Shopify
-    // customer accounts domain. We can use this as a signal to mark them
-    // logged in locally without relying on any query parameters.
-    const fromShopify =
-      typeof document !== 'undefined' &&
-      /shopify\.com\/91374911785\/account/.test(document.referrer);
-
-    if (fromShopify && !isLoggedInNow) {
-      markShopifyLoggedIn();
-      setLoggedIn(true);
-      setChecking(false);
-      return;
-    }
-
-    if (!isLoggedInNow) {
-      // User tried to access /account directly; send them through Shopify login.
-      redirectToShopifyLogin();
-      return;
-    }
-
-    setLoggedIn(true);
-    setChecking(false);
-  }, [router]);
-
-  if (checking || !loggedIn) {
-    return null;
-  }
+    markShopifyLoggedIn();
+  }, []);
 
   const handleOpenShopifyDashboard = () => {
     if (typeof window === 'undefined') return;
@@ -76,5 +42,4 @@ export default function AccountPage() {
     </>
   );
 }
-
 
