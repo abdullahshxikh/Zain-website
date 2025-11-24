@@ -50,10 +50,8 @@ export default function AccountPage() {
               className="lg:col-span-1 bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 h-fit"
             >
               <div className="flex items-center gap-4 mb-8">
-                <div className="w-16 h-16 rounded-full bg-[#1a2f23]/5 flex items-center justify-center text-[#1a2f23]">
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
+                <div className="w-16 h-16 rounded-full bg-[#1a2f23]/5 flex items-center justify-center text-[#1a2f23] overflow-hidden p-3">
+                  <img src="/shopify-logo-png-transparent.png" alt="Shopify Secure" className="w-full h-full object-contain opacity-80" />
                 </div>
                 <div>
                   <h2 className="font-serif text-xl text-[#1a2f23]">My Account</h2>
@@ -89,23 +87,30 @@ export default function AccountPage() {
             >
               {/* Order History Card */}
               <div className="bg-white rounded-[2rem] p-8 shadow-lg shadow-[#1a2f23]/5 border border-gray-100 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[#bb9c30]/5 rounded-full blur-3xl -mr-32 -mt-32 transition-transform group-hover:scale-110" />
-                
+                {/* Background Decoration */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#96bf48]/10 rounded-full blur-3xl -mr-32 -mt-32 transition-transform group-hover:scale-110" />
+                <div className="absolute bottom-0 right-0 opacity-[0.03] w-48 h-48 translate-x-10 translate-y-10 rotate-12 pointer-events-none">
+                  <img src="/shopify-logo-png-transparent.png" alt="" className="w-full h-full object-contain grayscale" />
+                </div>
+
                 <div className="relative">
                   <div className="flex items-center justify-between mb-6">
                     <h3 className="text-2xl font-serif text-[#1a2f23]">Order History</h3>
-                    <span className="bg-[#1a2f23]/5 text-[#1a2f23] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
-                      Shopify Secure
-                    </span>
+                    <div className="flex items-center gap-2 bg-[#96bf48]/10 px-3 py-1.5 rounded-full border border-[#96bf48]/20">
+                      <img src="/shopify-logo-png-transparent.png" alt="Shopify" className="h-3 w-auto opacity-80" />
+                      <span className="text-[#2d4a38] text-[10px] font-bold uppercase tracking-wider">
+                        Secure
+                      </span>
+                    </div>
                   </div>
                   
-                  <p className="text-gray-500 mb-8 leading-relaxed">
+                  <p className="text-gray-500 mb-8 leading-relaxed max-w-lg">
                     View your past orders, check shipment status, and manage your returns directly through our secure Shopify portal.
                   </p>
 
                   <button
                     onClick={handleOpenShopifyDashboard}
-                    className="inline-flex items-center gap-2 px-8 py-4 bg-[#1a2f23] text-white rounded-xl font-medium shadow-xl shadow-[#1a2f23]/20 hover:bg-[#2d4a38] hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                    className="inline-flex items-center gap-2 px-8 py-4 bg-[#1a2f23] text-white rounded-xl font-medium shadow-xl shadow-[#1a2f23]/20 hover:bg-[#2d4a38] hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group-hover:shadow-green-900/20"
                   >
                     <span>Go to Order Dashboard</span>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
