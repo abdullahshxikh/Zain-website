@@ -1,48 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import {
-  isShopifyLoggedIn,
-  markShopifyLoggedIn,
-  redirectToShopifyLogin,
-  redirectToShopifyLogout,
-} from '@/lib/shopifyAuth';
+import { markShopifyLoggedIn, redirectToShopifyLogout } from '@/lib/shopifyAuth';
 
 export default function AccountPage() {
-  const [checking, setChecking] = useState(true);
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  // Treat /account as a protected page:
-  // - If no local Shopify login flag, send user to Shopify hosted login.
-  // - If coming back from Shopify, mark them as logged in and render UI.
+  // Simple success page for Shopify Hosted Customer Accounts.
+  // We do NOT redirect back to login from here; Shopify just needs this
+  // route to load successfully after login.
   useEffect(() => {
-    const currentLoggedIn = isShopifyLoggedIn();
-
-    const fromShopify =
-      typeof document !== 'undefined' &&
-      document.referrer.startsWith('https://shopify.com/91374911785/account');
-
-    if (fromShopify && !currentLoggedIn) {
-      markShopifyLoggedIn();
-      setLoggedIn(true);
-      setChecking(false);
-      return;
-    }
-
-    if (!currentLoggedIn) {
-      redirectToShopifyLogin();
-      return;
-    }
-
-    setLoggedIn(true);
-    setChecking(false);
+    // Any time a user reaches /account, treat them as "logged in" locally
+    // so the navbar icon and flows behave consistently.
+    markShopifyLoggedIn();
   }, []);
-
-  if (checking || !loggedIn) {
-    return null;
-  }
 
   const handleOpenShopifyDashboard = () => {
     if (typeof window === 'undefined') return;
@@ -90,5 +61,6 @@ export default function AccountPage() {
     </>
   );
 }
+
 
 
