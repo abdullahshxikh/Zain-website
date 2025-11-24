@@ -1,105 +1,78 @@
-// Shopify Hosted Customer Accounts Configuration
 const SHOPIFY_ACCOUNT_BASE = 'https://shopify.com/91374911785/account';
+const SHOPIFY_LOGIN_URL = `${SHOPIFY_ACCOUNT_BASE}/login`;
+const SHOPIFY_SIGNUP_URL = `${SHOPIFY_ACCOUNT_BASE}/register`;
+const SHOPIFY_LOGOUT_URL = `${SHOPIFY_ACCOUNT_BASE}/logout`;
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://zumfali.co';
+const SHOPIFY_RETURN_URL = `${SITE_URL}/account`;
 
-// Local storage and cookie key for login state
-const LOGIN_STATE_KEY = 'shopify_logged_in';
-const LOGIN_STATE_VALUE = 'true';
-const COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
-
-/**
- * Checks if code is running in a browser environment
- */
-const isBrowser = (): boolean => typeof window !== 'undefined';
-
-/**
- * Builds Shopify redirect URL with encoded return URL
- */
-const buildShopifyUrl = (path: string, returnUrl: string): string => {
-  return `${SHOPIFY_ACCOUNT_BASE}${path}?return_url=${encodeURIComponent(returnUrl)}`;
-};
-
-/**
- * Gets the account page return URL for Shopify redirects
- */
-export function getAccountReturnUrl(): string {
-  return `${SITE_URL}/account`;
+export function getAccountReturnUrl() {
+  // Clean production URL required by Shopify customer accounts (no query params).
+  return SHOPIFY_RETURN_URL;
 }
 
-/**
- * Redirects user to Shopify hosted login page
- */
-export function redirectToShopifyLogin(): void {
-  if (!isBrowser()) return;
-  window.location.href = buildShopifyUrl('/login', getAccountReturnUrl());
+export function redirectToShopifyLogin() {
+  if (typeof window === 'undefined') return;
+  const returnUrl = encodeURIComponent(getAccountReturnUrl());
+  window.location.href = `${SHOPIFY_LOGIN_URL}?return_url=${returnUrl}`;
 }
 
-/**
- * Redirects user to Shopify hosted signup page
- */
-export function redirectToShopifySignup(): void {
-  if (!isBrowser()) return;
-  window.location.href = buildShopifyUrl('/register', getAccountReturnUrl());
+export function redirectToShopifySignup() {
+  if (typeof window === 'undefined') return;
+  const returnUrl = encodeURIComponent(getAccountReturnUrl());
+  window.location.href = `${SHOPIFY_SIGNUP_URL}?return_url=${returnUrl}`;
 }
 
-/**
- * Clears local login state and redirects to Shopify logout
- */
-export function redirectToShopifyLogout(): void {
-  if (!isBrowser()) return;
+export function redirectToShopifyLogout() {
+  if (typeof window === 'undefined') return;
+
+  // Clear local login state before redirecting to Shopify logout.
   clearShopifyLoggedIn();
-  window.location.href = buildShopifyUrl('/logout', `${SITE_URL}/logout`);
+
+  // Redirect to our dedicated logout handler page
+  const returnUrl = encodeURIComponent(`${SITE_URL}/logout`);
+  window.location.href = `${SHOPIFY_LOGOUT_URL}?return_url=${returnUrl}`;
 }
 
-/**
- * Marks user as logged in locally (cookie + localStorage)
- */
-export function markShopifyLoggedIn(): void {
-  if (!isBrowser()) return;
+export function markShopifyLoggedIn() {
+  if (typeof window === 'undefined') return;
+  const maxAgeSeconds = 60 * 60 * 24 * 30; // 30 days
 
-  // Set cookie
-  document.cookie = `${LOGIN_STATE_KEY}=${LOGIN_STATE_VALUE}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax`;
+  // Simple cookie flag used by the UI; no token decoding.
+  document.cookie = `shopify_logged_in=true; path=/; max-age=${maxAgeSeconds}`;
 
-  // Set localStorage as backup
   try {
-    window.localStorage.setItem(LOGIN_STATE_KEY, LOGIN_STATE_VALUE);
+    window.localStorage.setItem('shopify_logged_in', 'true');
   } catch {
-    // Silently fail if localStorage is unavailable
+    // Ignore storage errors (e.g., disabled storage)
   }
 }
 
-/**
- * Clears local login state (cookie + localStorage)
- */
-export function clearShopifyLoggedIn(): void {
-  if (!isBrowser()) return;
+export function clearShopifyLoggedIn() {
+  if (typeof window === 'undefined') return;
 
-  // Clear cookie
-  document.cookie = `${LOGIN_STATE_KEY}=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+  document.cookie =
+    'shopify_logged_in=false; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT';
 
-  // Clear localStorage
   try {
-    window.localStorage.removeItem(LOGIN_STATE_KEY);
+    window.localStorage.removeItem('shopify_logged_in');
   } catch {
-    // Silently fail if localStorage is unavailable
+    // Ignore storage errors
   }
 }
 
-/**
- * Checks if user is logged in locally (cookie or localStorage)
- */
 export function isShopifyLoggedIn(): boolean {
-  if (!isBrowser()) return false;
+  if (typeof window === 'undefined') return false;
 
-  // Check cookie first (more reliable cross-tab)
+  // Check cookie first
   const cookieMatch = document.cookie.match(
-    new RegExp(`(?:^|;\\s*)${LOGIN_STATE_KEY}=([^;]+)`)
+    /(?:^|;\s*)shopify_logged_in=([^;]+)/
   );
-  if (cookieMatch?.[1] === LOGIN_STATE_VALUE) return true;
+  if (cookieMatch?.[1] === 'true') return true;
 
   // Fallback to localStorage
   try {
-    return window.localStorage.getItem(LOGIN_STATE_KEY) === LOGIN_STATE_VALUE;
+    return window.localStorage.getItem('shopify_logged_in') === 'true';
   } catch {
     return false;
   }

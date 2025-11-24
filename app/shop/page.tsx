@@ -72,7 +72,7 @@ export default function ShopPage() {
       if (!ShopifyBuy) return;
 
       const client = ShopifyBuy.buildClient({
-        domain: 'zumfali.co',
+        domain: 'avw1pr-qj.myshopify.com',
         storefrontAccessToken: '74472e64ff2b3cc2204f58c4d56eb5bb',
       });
 
@@ -136,20 +136,31 @@ export default function ShopPage() {
       if (subscribeMode) {
         targetVariant = variants.find((v: any) => {
           const t = String(v.title).toLowerCase();
+          // Check if variant matches the bottle count AND is a subscription/selling plan
+          // Often subscription variants might have 'Subscribe' in the title or be separate products.
+          // Since this is a single product with variants, we check titles.
           return t.includes(baseText.toLowerCase()) &&
-                 (t.includes('subscribe') || t.includes('subscription'));
+                 (t.includes('subscribe') || t.includes('subscription') || t.includes('save'));
         });
       }
 
-      // Fallback to regular variant matching the bundle text
+      // If not subscribe mode, OR if no specific subscription variant found, 
+      // fall back to finding the variant that matches the bottle count.
+      // We assume the default variants are One-Time Purchase.
       if (!targetVariant) {
-        targetVariant = variants.find((v: any) =>
-          String(v.title).toLowerCase().includes(baseText.toLowerCase())
-        );
+        targetVariant = variants.find((v: any) => {
+           const t = String(v.title).toLowerCase();
+           // Ensure it's the correct bundle size.
+           // If subscribeMode is false, we specifically look for variants that DO NOT say "subscribe" if possible,
+           // or just the best match for the text.
+           return t.includes(baseText.toLowerCase());
+        });
       }
     }
 
     if (!targetVariant) {
+      // Fallback: default to first variant if logic fails
+      console.warn('Could not find matching variant for selection, defaulting to first variant.');
       targetVariant = variants[0];
     }
 

@@ -6,18 +6,17 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { markShopifyLoggedIn, redirectToShopifyLogout } from '@/lib/shopifyAuth';
 
-const SHOPIFY_DASHBOARD_URL = 'https://shopify.com/91374911785/account';
-
 export default function AccountPage() {
   useEffect(() => {
     markShopifyLoggedIn();
   }, []);
 
-  const handleOpenShopifyDashboard = (): void => {
-    window.location.href = SHOPIFY_DASHBOARD_URL;
+  const handleOpenShopifyDashboard = () => {
+    if (typeof window === 'undefined') return;
+    window.location.href = 'https://shopify.com/91374911785/account';
   };
 
-  const handleLogout = (): void => {
+  const handleLogout = () => {
     redirectToShopifyLogout();
   };
 
@@ -51,12 +50,8 @@ export default function AccountPage() {
               className="lg:col-span-1 bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 h-fit"
             >
               <div className="flex items-center gap-4 mb-8">
-                <div className="w-16 h-16 rounded-full bg-[#1a2f23]/5 flex items-center justify-center overflow-hidden p-3">
-                  <img 
-                    src="/shopify-logo-png-transparent.png" 
-                    alt="Shopify Secure" 
-                    className="w-full h-full object-contain opacity-80"
-                  />
+                <div className="w-16 h-16 rounded-full bg-[#1a2f23]/5 flex items-center justify-center text-[#1a2f23] overflow-hidden p-3">
+                  <img src="/shopify-logo-png-transparent.png" alt="Shopify Secure" className="w-full h-full object-contain opacity-80" />
                 </div>
                 <div>
                   <h2 className="font-serif text-xl text-[#1a2f23]">My Account</h2>
@@ -64,26 +59,20 @@ export default function AccountPage() {
                 </div>
               </div>
 
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center gap-3 text-gray-600 text-sm">
-                  <svg className="w-5 h-5 text-[#bb9c30] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+              <div className="space-y-3 mb-8">
+                <div className="flex items-center gap-3 text-gray-600 text-sm">
+                  <svg className="w-5 h-5 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                   <span>Secure Shopify Login</span>
-                </li>
-                <li className="flex items-center gap-3 text-gray-600 text-sm">
-                  <svg className="w-5 h-5 text-[#bb9c30] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
+                </div>
+                <div className="flex items-center gap-3 text-gray-600 text-sm">
+                  <svg className="w-5 h-5 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                   <span>Passwordless Access</span>
-                </li>
-              </ul>
+                </div>
+              </div>
 
               <button
-                type="button"
                 onClick={handleLogout}
                 className="w-full py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 hover:text-[#1a2f23] transition-all text-sm"
-                aria-label="Sign out of account"
               >
                 Sign Out
               </button>
@@ -100,15 +89,8 @@ export default function AccountPage() {
               <div className="bg-white rounded-[2rem] p-8 shadow-lg shadow-[#1a2f23]/5 border border-gray-100 relative overflow-hidden group">
                 {/* Background Decoration */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#96bf48]/10 rounded-full blur-3xl -mr-32 -mt-32 transition-transform group-hover:scale-110" />
-                <div 
-                  className="absolute bottom-0 right-0 opacity-[0.03] w-48 h-48 translate-x-10 translate-y-10 rotate-12 pointer-events-none"
-                  aria-hidden="true"
-                >
-                  <img 
-                    src="/shopify-logo-png-transparent.png" 
-                    alt="" 
-                    className="w-full h-full object-contain grayscale" 
-                  />
+                <div className="absolute bottom-0 right-0 opacity-[0.03] w-48 h-48 translate-x-10 translate-y-10 rotate-12 pointer-events-none">
+                  <img src="/shopify-logo-png-transparent.png" alt="" className="w-full h-full object-contain grayscale" />
                 </div>
 
                 <div className="relative">
@@ -127,13 +109,11 @@ export default function AccountPage() {
                   </p>
 
                   <button
-                    type="button"
                     onClick={handleOpenShopifyDashboard}
                     className="inline-flex items-center gap-2 px-8 py-4 bg-[#1a2f23] text-white rounded-xl font-medium shadow-xl shadow-[#1a2f23]/20 hover:bg-[#2d4a38] hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group-hover:shadow-green-900/20"
-                    aria-label="View order history on Shopify"
                   >
                     <span>Go to Order Dashboard</span>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
                   </button>
