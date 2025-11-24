@@ -1,7 +1,10 @@
 const SHOPIFY_ACCOUNT_BASE = 'https://shopify.com/91374911785/account';
 const SHOPIFY_LOGIN_URL = `${SHOPIFY_ACCOUNT_BASE}/login`;
 const SHOPIFY_SIGNUP_URL = `${SHOPIFY_ACCOUNT_BASE}/register`;
-const SHOPIFY_RETURN_URL = 'https://zain-website-eight.vercel.app/account';
+const SHOPIFY_LOGOUT_URL = `${SHOPIFY_ACCOUNT_BASE}/logout`;
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://zumfali.co';
+const SHOPIFY_RETURN_URL = `${SITE_URL}/account`;
 
 export function getAccountReturnUrl() {
   // Clean production URL required by Shopify customer accounts (no query params).
@@ -18,6 +21,16 @@ export function redirectToShopifySignup() {
   if (typeof window === 'undefined') return;
   const returnUrl = encodeURIComponent(getAccountReturnUrl());
   window.location.href = `${SHOPIFY_SIGNUP_URL}?return_url=${returnUrl}`;
+}
+
+export function redirectToShopifyLogout() {
+  if (typeof window === 'undefined') return;
+
+  // Clear local login state before redirecting to Shopify logout.
+  clearShopifyLoggedIn();
+
+  const returnUrl = encodeURIComponent(SITE_URL);
+  window.location.href = `${SHOPIFY_LOGOUT_URL}?return_url=${returnUrl}`;
 }
 
 export function markShopifyLoggedIn() {
