@@ -5,6 +5,7 @@ const SHOPIFY_LOGOUT_URL = `${SHOPIFY_ACCOUNT_BASE}/logout`;
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://zumfali.co';
 const SHOPIFY_RETURN_URL = `${SITE_URL}/account`;
+const SHOPIFY_LOGOUT_RETURN_URL = `${SITE_URL}/logout`;
 
 export function getAccountReturnUrl() {
   // Clean production URL required by Shopify customer accounts (no query params).
@@ -29,7 +30,7 @@ export function redirectToShopifyLogout() {
   // Clear local login state before redirecting to Shopify logout.
   clearShopifyLoggedIn();
 
-  const returnUrl = encodeURIComponent(SITE_URL);
+  const returnUrl = encodeURIComponent(SHOPIFY_LOGOUT_RETURN_URL);
   window.location.href = `${SHOPIFY_LOGOUT_URL}?return_url=${returnUrl}`;
 }
 

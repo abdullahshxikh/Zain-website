@@ -72,7 +72,7 @@ export default function ShopPage() {
       if (!ShopifyBuy) return;
 
       const client = ShopifyBuy.buildClient({
-        domain: 'avw1pr-qj.myshopify.com',
+        domain: 'zumfali.co',
         storefrontAccessToken: '74472e64ff2b3cc2204f58c4d56eb5bb',
       });
 
