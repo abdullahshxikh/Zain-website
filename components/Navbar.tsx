@@ -44,7 +44,7 @@ export default function Navbar() {
 
   if (!mounted) return null;
 
-  const handleAccountClick = () => {
+  const handleAccountClick = (): void => {
     if (accountLoggedIn) {
       router.push('/account');
     } else {
