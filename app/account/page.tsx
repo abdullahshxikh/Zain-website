@@ -33,7 +33,7 @@ export default function AccountPage() {
             className="text-center mb-16"
           >
             <h1 className="text-4xl sm:text-5xl font-serif text-[#1a2f23] mb-4">
-              Welcome
+              Welcome Back
             </h1>
             <p className="text-gray-500 font-light text-lg">
               Manage your profile, orders, and subscriptions in one place.
@@ -55,6 +55,7 @@ export default function AccountPage() {
                 </div>
                 <div>
                   <h2 className="font-serif text-xl text-[#1a2f23]">My Account</h2>
+                  <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Active Member</p>
                 </div>
               </div>
 
