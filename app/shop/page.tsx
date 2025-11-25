@@ -268,12 +268,12 @@ export default function ShopPage() {
               </div>
 
               <p className="text-gray-600 font-light mb-8 leading-relaxed text-lg">
-                Experience the ultimate in beauty support with Zumfali Capsules—a comprehensive 14-in-1 formula designed to nourish your skin, hair, nails, and overall wellness from within.
+                Experience the ultimate in hair nourishment with the Zumfali 7-in-1 Oil—a powerful blend of natural ingredients designed to revitalize your scalp, strengthen strands, and restore natural shine.
               </p>
 
               {/* Benefits List */}
               <div className="space-y-3 mb-10">
-                {['Skin elasticity and hydration', 'Hair strength and thickness', 'Full-body radiance and vitality'].map((benefit, i) => (
+                {['Scalp nourishment and hydration', 'Strengthens hair from root to tip', 'Restores natural shine and vitality'].map((benefit, i) => (
                   <div key={i} className="flex items-center gap-3 text-gray-700">
                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1a2f23]/5 flex items-center justify-center text-[#1a2f23]">
                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
