@@ -116,81 +116,52 @@ export default function ShopPage() {
       return;
     }
 
-    if (!shopifyClient || !shopifyProduct) {
-      console.error('Shopify client or product not loaded');
-      alert('Product is still loading. Please wait a moment and try again.');
-      return;
-    }
+    if (!shopifyClient || !shopifyProduct) return;
 
     const variants = shopifyProduct.variants || [];
-    if (!variants.length) {
-      console.error('No variants found');
-      return;
-    }
+    if (!variants.length) return;
 
-    console.log('=== BUY NOW DEBUG ===');
-    console.log('Selected Bundle ID:', selectedBundle);
-    console.log('Subscribe Mode:', subscribeMode);
-    console.log('Available variants:', variants.map((v: any) => ({
-      id: v.id,
-      title: v.title,
-      price: v.price
-    })));
-
-    // Map bundle selection to variant title text
-    const bundleText: Record<number, string> = {
-      1: '1 Bottle',
-      2: '2 Bottles',
-      3: '3 Bottles',
+    // Map bundle selection to actual Shopify variant titles
+    // Based on your Shopify product variants:
+    // Bundle 1 = "Buy 1 (30ml + 10ml)" - $29.99
+    // Bundle 2 = "Buy 2 Get 1 Free" - $59.99  
+    // Bundle 3 = "Buy 3 Get 2 Free" - $89.99
+    const bundleToVariantMap: Record<number, string> = {
+      1: 'Buy 1',
+      2: 'Buy 2 Get 1 Free',
+      3: 'Buy 3 Get 2 Free',
     };
 
-    const baseText = bundleText[selectedBundle];
-    console.log('Looking for variant matching:', baseText);
-    
+    const searchText = bundleToVariantMap[selectedBundle];
     let targetVariant: any | null = null;
 
-    if (baseText) {
-      // If subscribe mode, prefer a subscription variant first
+    if (searchText) {
+      // If subscribe mode is enabled, look for subscription variants
+      // (Note: Currently your product only has one-time purchase variants.
+      // If you add subscription variants later, they should contain 'subscribe' in the title)
       if (subscribeMode) {
         targetVariant = variants.find((v: any) => {
           const t = String(v.title).toLowerCase();
-          const matches = t.includes(baseText.toLowerCase()) &&
-                 (t.includes('subscribe') || t.includes('subscription') || t.includes('save') || t.includes('auto'));
-          if (matches) console.log('Found subscription variant:', v.title);
-          return matches;
+          return t.includes(searchText.toLowerCase()) &&
+                 (t.includes('subscribe') || t.includes('subscription') || t.includes('auto'));
         });
       }
 
-      // If not subscribe mode, OR if no specific subscription variant found, 
-      // fall back to finding the variant that matches the bottle count.
+      // Find the one-time purchase variant that matches the bundle selection
       if (!targetVariant) {
         targetVariant = variants.find((v: any) => {
            const t = String(v.title).toLowerCase();
-           // Try to find the one-time purchase variant
-           // Exclude "subscribe" if possible when subscribeMode is false
-           if (!subscribeMode && (t.includes('subscribe') || t.includes('subscription'))) {
-             console.log('Skipping subscription variant in one-time mode:', v.title);
-             return false;
-           }
-           const matches = t.includes(baseText.toLowerCase());
-           if (matches) console.log('Found matching variant:', v.title);
-           return matches;
+           return t.includes(searchText.toLowerCase());
         });
       }
     }
 
     if (!targetVariant) {
-      console.warn('Could not find matching variant for selection, defaulting to first variant.');
-      console.warn('This means your Shopify variant titles do not contain:', baseText);
+      console.warn('Could not find matching variant for bundle:', selectedBundle);
+      console.warn('Searched for:', searchText);
+      console.warn('Available variants:', variants.map((v: any) => v.title));
       targetVariant = variants[0];
     }
-
-    console.log('Final selected variant:', {
-      id: targetVariant.id,
-      title: targetVariant.title,
-      price: targetVariant.price
-    });
-    console.log('===================');
 
     try {
       const checkout = await shopifyClient.checkout.create();
@@ -209,13 +180,9 @@ export default function ShopPage() {
       // Redirect in the same tab to Shopify checkout
       if (updatedCheckout && updatedCheckout.webUrl) {
         window.location.href = updatedCheckout.webUrl;
-      } else {
-        console.error('Checkout created but no webUrl found', updatedCheckout);
-        alert('Sorry, we could not initiate checkout. Please try again.');
       }
     } catch (err) {
       console.error('Error creating Shopify checkout', err);
-      alert('An error occurred while creating checkout. Please check the console for details.');
     }
   };
 
