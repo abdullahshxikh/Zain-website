@@ -32,7 +32,8 @@ export default function ProblemSolution() {
           <div className="relative rounded-3xl overflow-hidden shadow-2xl lg:h-[600px] bg-gray-50">
              <Swiper
               modules={[Navigation, Pagination]}
-              grabCursor={true}
+              grabCursor={false}
+              allowTouchMove={false}
               centeredSlides={true}
               loop={true}
               slidesPerView={1}
