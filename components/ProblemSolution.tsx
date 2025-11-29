@@ -7,20 +7,17 @@ export default function ProblemSolution() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
           {/* Left Side - Image */}
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] lg:aspect-auto lg:h-[600px]">
-             {/* 
-                NOTE: The user provided a Google Search redirect URL which cannot be used directly as an image source.
-                I have placed a placeholder here. Please replace '/hero-image.png' with your actual downloaded image file 
-                of the balding man.
-             */}
-            <Image
-              src="/hero-image.png" 
-              alt="Understanding Hair Loss"
-              fill
-              className="object-cover"
-            />
-            {/* Overlay gradient for better text visibility if needed, or just style */}
-            <div className="absolute inset-0 bg-black/10" />
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] lg:aspect-auto lg:h-[600px] bg-gray-50 flex items-center justify-center">
+            <div className="relative w-full h-full">
+              <Image
+                src="/Screenshot_2025-11-28_at_11.20.24_PM-removebg-preview.png" 
+                alt="Understanding Hair Loss"
+                fill
+                className="object-contain p-8"
+              />
+            </div>
+            {/* Background shape or color to ground the cutout image */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-100/50 -z-10" />
           </div>
 
           {/* Right Side - Content */}
