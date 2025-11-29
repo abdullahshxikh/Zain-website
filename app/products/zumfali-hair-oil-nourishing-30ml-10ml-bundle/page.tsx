@@ -9,7 +9,6 @@ import ProductFunnel from '@/components/ProductFunnel';
 import ProductFAQ from '@/components/ProductFAQ';
 import ProblemSolution from '@/components/ProblemSolution';
 import ReviewGrid from '@/components/ReviewGrid';
-import SingleBeforeAfterGallery from '@/components/SingleBeforeAfterGallery';
 import {
   isShopifyLoggedIn,
   redirectToShopifySignup,
@@ -460,7 +459,6 @@ export default function ProductPage() {
           </div>
         </div>
         
-        <SingleBeforeAfterGallery />
         <ProblemSolution />
         <ProductFunnel />
         <ReviewGrid />

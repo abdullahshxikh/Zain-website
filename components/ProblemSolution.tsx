@@ -1,23 +1,60 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
+import BeforeAfterSlider from '@/components/BeforeAfterSlider';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-coverflow';
+
+const pairs = [
+  [2, 3],
+  [4, 5],
+  [6, 7],
+  [8, 9],
+  [10, 11],
+  [12, 13],
+  [14, 15],
+  [16, 17],
+  [18, 19],
+  [20, 21],
+];
 
 export default function ProblemSolution() {
   return (
     <section className="py-20 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-          {/* Left Side - Image */}
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] lg:aspect-auto lg:h-[600px] bg-gray-50 flex items-center justify-center">
-            <div className="relative w-full h-full">
-              <Image
-                src="/Screenshot_2025-11-28_at_11.20.24_PM-removebg-preview.png" 
-                alt="Understanding Hair Loss"
-                fill
-                className="object-contain p-8"
-              />
-            </div>
-            {/* Background shape or color to ground the cutout image */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-100/50 -z-10" />
+          {/* Left Side - Image / Slider */}
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl lg:h-[600px] bg-gray-50">
+             <Swiper
+              modules={[Navigation, Pagination]}
+              grabCursor={true}
+              centeredSlides={true}
+              loop={true}
+              slidesPerView={1}
+              spaceBetween={0}
+              navigation
+              pagination={{ clickable: true }}
+              className="problem-solution-swiper h-full w-full"
+            >
+              {pairs.map(([a, b], i) => (
+                <SwiperSlide key={i} className="h-full w-full">
+                  <BeforeAfterSlider
+                    beforeSrc={`/before-after/${a}.jpg`}
+                    afterSrc={`/before-after/${b}.jpg`}
+                    beforeLabel="Before"
+                    afterLabel="After"
+                    height={600}
+                    initial={50}
+                    className="h-full w-full"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
 
           {/* Right Side - Content */}
@@ -52,7 +89,22 @@ export default function ProblemSolution() {
           </div>
         </div>
       </div>
+
+      <style jsx global>{`
+        .problem-solution-swiper .swiper-button-next,
+        .problem-solution-swiper .swiper-button-prev {
+          color: white;
+          text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .problem-solution-swiper .swiper-pagination-bullet {
+          background: white;
+          opacity: 0.7;
+        }
+        .problem-solution-swiper .swiper-pagination-bullet-active {
+          background: #bb9c30;
+          opacity: 1;
+        }
+      `}</style>
     </section>
   );
 }
-
