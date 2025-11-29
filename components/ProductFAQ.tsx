@@ -64,20 +64,6 @@ export default function ProductFAQ() {
 
   return (
     <div className="mt-10 pt-8 border-t border-gray-200">
-       {/* Shipping Info */}
-       <div className="flex justify-between items-center mb-8 bg-gray-50 p-4 rounded-xl border border-gray-100">
-         <div className="text-center w-1/2 border-r border-gray-200">
-           <div className="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Ordered</div>
-           <div className="text-sm font-bold text-[#1a2f23]">{new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
-         </div>
-         <div className="text-center w-1/2">
-           <div className="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Delivery</div>
-           <div className="text-sm font-bold text-[#1a2f23]">
-             {new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - {new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-           </div>
-         </div>
-       </div>
-
       {/* FAQ Accordion */}
       <div className="space-y-2 mb-12">
         {faqs.map((faq, index) => (

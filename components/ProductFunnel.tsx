@@ -177,7 +177,7 @@ export default function ProductFunnel() {
               
               <div className="relative w-full max-w-[300px] aspect-[3/4]">
                 <Image
-                  src="/product-bundle.png"
+                  src="/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png"
                   alt="Zumfali 7-in-1 Oil"
                   fill
                   className="object-contain drop-shadow-2xl"
