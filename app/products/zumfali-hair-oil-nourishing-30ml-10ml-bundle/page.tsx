@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProductFunnel from '@/components/ProductFunnel';
+import ProductFAQ from '@/components/ProductFAQ';
 import {
   isShopifyLoggedIn,
   redirectToShopifySignup,
@@ -204,7 +205,7 @@ export default function ProductPage() {
               <div className="sticky top-32">
                 <div className="relative w-full aspect-square bg-white rounded-[2rem] overflow-hidden shadow-lg border border-gray-100 mb-4">
                   <Image
-                    src="/product-bundle.png"
+                    src="/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png"
                     alt="Zumfali 7-in-1 Hair Oil"
                     fill
                     className="object-contain p-12 hover:scale-105 transition-transform duration-700"
@@ -221,7 +222,7 @@ export default function ProductPage() {
                   {[1, 2, 3, 4].map((i) => (
                     <div key={i} className="relative aspect-square bg-white rounded-xl overflow-hidden border border-gray-100 cursor-pointer hover:border-[#bb9c30] transition-colors group shadow-md">
                       <Image
-                        src="/product-bundle.png"
+                        src="/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png"
                         alt={`View ${i}`}
                         fill
                         className="object-contain p-2 group-hover:scale-110 transition-transform duration-500"
@@ -449,6 +450,8 @@ export default function ProductPage() {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                 Secure 256-bit SSL Encryption
               </p>
+
+              <ProductFAQ />
 
             </motion.div>
           </div>
