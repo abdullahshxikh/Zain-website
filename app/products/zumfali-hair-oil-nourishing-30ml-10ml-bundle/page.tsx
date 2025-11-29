@@ -7,6 +7,8 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProductFunnel from '@/components/ProductFunnel';
 import ProductFAQ from '@/components/ProductFAQ';
+import ProblemSolution from '@/components/ProblemSolution';
+import ReviewGrid from '@/components/ReviewGrid';
 import {
   isShopifyLoggedIn,
   redirectToShopifySignup,
@@ -457,7 +459,9 @@ export default function ProductPage() {
           </div>
         </div>
         
+        <ProblemSolution />
         <ProductFunnel />
+        <ReviewGrid />
       </main>
       <Footer />
     </>
