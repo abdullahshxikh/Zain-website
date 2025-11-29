@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ProductFunnel from '@/components/ProductFunnel';
 import {
   isShopifyLoggedIn,
   redirectToShopifySignup,
@@ -452,6 +453,8 @@ export default function ProductPage() {
             </motion.div>
           </div>
         </div>
+        
+        <ProductFunnel />
       </main>
       <Footer />
     </>
