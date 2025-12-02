@@ -31,7 +31,10 @@ export default function VideoTestimonials() {
                 className="absolute inset-0 w-full h-full object-cover"
                 controls
                 playsInline
-                poster={index === 0 ? "/product-hero.png" : undefined} // Optional poster for first one or placeholders
+                autoPlay
+                muted
+                loop
+                poster={index === 0 ? "/product-hero.png" : undefined} 
               />
               {/* Overlay elements if needed to match TikTok style UI */}
             </div>
