@@ -9,6 +9,7 @@ import ProductFunnel from '@/components/ProductFunnel';
 import ProductFAQ from '@/components/ProductFAQ';
 import ProblemSolution from '@/components/ProblemSolution';
 import ReviewGrid from '@/components/ReviewGrid';
+import VideoTestimonials from '@/components/VideoTestimonials';
 import {
   isShopifyLoggedIn,
   redirectToShopifySignup,
@@ -17,43 +18,46 @@ import {
 type BundleOption = {
   id: number;
   title: string;
-  subTitle?: string;
   price: string;
-  originalPrice: string;
+  originalPrice?: string;
   shipping: string;
   saveBadge?: string;
   bestValue?: boolean;
   popular?: boolean;
+  bonuses?: string[];
+  pricePerBottle?: string;
 };
 
 const bundles: BundleOption[] = [
   {
     id: 1,
-    title: '1 Bottle',
-    price: '$29.99',
-    originalPrice: '$46.99',
-    shipping: '+$8 Shipping',
-    saveBadge: 'Save $17 (36%)',
+    title: 'Starter',
+    price: '$39.99',
+    originalPrice: '$49.99',
+    shipping: 'Shipping Calculated',
+    saveBadge: 'Save ~20%',
+    bonuses: [],
   },
   {
     id: 2,
-    title: '2 Bottles',
-    subTitle: 'Buy 2 get 1 free',
-    price: '$59.99',
-    originalPrice: '$93.98',
+    title: 'Most Popular',
+    price: '$69.99',
+    originalPrice: '$119.98',
     shipping: 'FREE SHIPPING',
-    saveBadge: 'Save $34 (36%)',
+    saveBadge: 'Save ~40%',
     popular: true,
+    bonuses: ['FREE Hair Growth Guide (PDF)'],
   },
   {
     id: 3,
-    title: '3 Bottles',
-    subTitle: 'Buy 3 get 2 free',
-    price: '$89.99',
-    originalPrice: '$140.97',
+    title: 'Best Value',
+    price: '$109.99',
+    originalPrice: '$239.96',
     shipping: 'FREE SHIPPING',
-    saveBadge: 'Save $51 (36%)',
+    saveBadge: 'Save ~55%',
     bestValue: true,
+    bonuses: ['Hair Growth Guide PDF', 'Scalp Massage Ebook'],
+    pricePerBottle: '$27.50/bottle',
   },
 ];
 
@@ -263,12 +267,16 @@ export default function ProductPage() {
                 <span className="text-3xl font-bold text-[#1a2f23]">
                   {bundles.find(b => b.id === selectedBundle)?.price}
                 </span>
-                <span className="text-xl text-gray-400 line-through decoration-red-500/40">
-                  {bundles.find(b => b.id === selectedBundle)?.originalPrice}
-                </span>
-                <span className="px-3 py-1 bg-[#bb9c30] text-white text-xs font-bold rounded-full uppercase tracking-wider shadow-sm">
-                  Save 14%
-                </span>
+                {bundles.find(b => b.id === selectedBundle)?.originalPrice && (
+                  <span className="text-xl text-gray-400 line-through decoration-red-500/40">
+                    {bundles.find(b => b.id === selectedBundle)?.originalPrice}
+                  </span>
+                )}
+                {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
+                  <span className="px-3 py-1 bg-[#bb9c30] text-white text-xs font-bold rounded-full uppercase tracking-wider shadow-sm">
+                    {bundles.find(b => b.id === selectedBundle)?.saveBadge}
+                  </span>
+                )}
               </div>
 
               <p className="text-gray-600 font-light mb-8 leading-relaxed text-lg">
@@ -340,8 +348,15 @@ export default function ProductPage() {
                             </span>
                           )}
                         </div>
-                        {bundle.subTitle && (
-                          <p className="text-sm text-[#bb9c30] font-bold">{bundle.subTitle}</p>
+                        {bundle.bonuses && bundle.bonuses.length > 0 && (
+                          <div className="mt-1 space-y-1">
+                            {bundle.bonuses.map((bonus, i) => (
+                              <p key={i} className="text-xs text-[#bb9c30] font-bold flex items-center gap-1">
+                                <span className="w-1 h-1 rounded-full bg-[#bb9c30]" />
+                                {bonus}
+                              </p>
+                            ))}
+                          </div>
                         )}
                         <p className="text-xs text-gray-500 font-medium uppercase tracking-wide mt-1">
                           {bundle.shipping}
@@ -350,8 +365,13 @@ export default function ProductPage() {
 
                       {/* Price */}
                       <div className="text-right flex flex-col justify-center">
-                        <div className="text-gray-400 line-through text-sm decoration-red-500/40 mb-1">{bundle.originalPrice}</div>
+                        {bundle.originalPrice && (
+                          <div className="text-gray-400 line-through text-sm decoration-red-500/40 mb-1">{bundle.originalPrice}</div>
+                        )}
                         <div className="font-bold text-xl text-[#1a2f23]">{bundle.price}</div>
+                        {bundle.pricePerBottle && (
+                          <div className="text-[10px] text-gray-500 font-medium mt-1">{bundle.pricePerBottle}</div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -371,7 +391,7 @@ export default function ProductPage() {
                   <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${
                     !subscribeMode ? 'border-[#1a2f23]' : 'border-gray-300'
                   }`}>
-                    {!subscribeMode && <div className="w-3 h-3 rounded-full bg-[#1a2f23]" /> }
+                    {!subscribeMode && <div className="w-3 h-3 rounded-full bg-[#1a2f23]" />}
                   </div>
                   <div className="flex-1">
                     <span className={`font-bold text-lg ${!subscribeMode ? 'text-[#1a2f23]' : 'text-gray-600'}`}>One-Time Purchase</span>
@@ -386,7 +406,7 @@ export default function ProductPage() {
                   }`}
                 >
                   <div className="absolute top-0 right-0 bg-[#1a2f23] text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
-                    20% Off Your First Order
+                    Most Flexible
                   </div>
 
                   <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${
@@ -396,30 +416,19 @@ export default function ProductPage() {
                   </div>
                   <div className="flex-1 pt-4 sm:pt-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className={`font-bold text-lg ${subscribeMode ? 'text-[#1a2f23]' : 'text-gray-600'}`}>Subscribe & Save</span>
-                      <span className="text-sm text-gray-400 line-through decoration-red-500/40">$39.95</span>
-                      <span className="text-lg font-bold text-[#1a2f23]">$31.96</span>
+                      <span className={`font-bold text-lg ${subscribeMode ? 'text-[#1a2f23]' : 'text-gray-600'}`}>Subscribe & Save (Monthly)</span>
                     </div>
                     
                     <ul className="space-y-1 mt-2">
                       <li className="flex items-center gap-2 text-sm text-gray-600">
                         <svg className="w-4 h-4 text-[#1a2f23]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
-                        20% Off Your First Order
+                        Save extra on every order
                       </li>
                       <li className="flex items-center gap-2 text-sm text-gray-600">
                          <svg className="w-4 h-4 text-[#1a2f23]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        No Commitment, Cancel Anytime
+                        Cancel Anytime
                       </li>
                     </ul>
-
-                    <div className="mt-4 pt-4 border-t border-gray-200/60">
-                      <label className="text-xs font-bold uppercase tracking-wide text-gray-500 mb-2 block">Deliver Every:</label>
-                      <select className="w-full p-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-700 focus:outline-none focus:border-[#1a2f23]">
-                        <option>1 month: save 20%</option>
-                        <option>2 months: save 20%</option>
-                        <option>3 months: save 20%</option>
-                      </select>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -431,7 +440,7 @@ export default function ProductPage() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
             >
-              Buy Now
+              {subscribeMode ? 'Subscribe Now' : 'Buy Now'}
             </motion.button>
 
               <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -461,10 +470,10 @@ export default function ProductPage() {
         
         <ProblemSolution />
         <ProductFunnel />
+        <VideoTestimonials />
         <ReviewGrid />
       </main>
       <Footer />
     </>
   );
 }
-
