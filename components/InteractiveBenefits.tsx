@@ -8,21 +8,18 @@ const benefits = [
     tabLabel: 'Restores Follicle Health',
     title: 'Restores Follicle Health',
     description: 'Penetrates deep into the scalp to nourish dormant follicles, stimulating natural growth cycles without harsh chemicals.',
-    image: '/download.jpg'
   },
   {
     id: 'strengthen',
     tabLabel: 'Strengthens Strands',
     title: 'Strengthens Every Strand',
     description: 'Fortifies hair from root to tip, reducing breakage and shedding while improving elasticity and shine.',
-    image: '/download-1.jpg'
   },
   {
     id: 'balance',
     tabLabel: 'Balances Scalp',
     title: 'Balances Scalp Health',
     description: 'Soothes irritation and regulates oil production, creating the optimal environment for thicker, fuller hair growth.',
-    image: '/download-2.jpg'
   }
 ];
 
@@ -56,40 +53,53 @@ export default function InteractiveBenefits() {
         </div>
 
         {/* Content Area */}
-        <div className="relative bg-[#FAFAF9] rounded-3xl overflow-hidden shadow-xl min-h-[400px] sm:min-h-[500px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-              className="grid grid-cols-1 md:grid-cols-2 h-full"
-            >
-              {/* Left: Image */}
-              <div className="relative h-64 sm:h-80 md:h-full">
+        <div className="relative bg-[#FAFAF9] rounded-3xl overflow-hidden shadow-2xl min-h-[400px] sm:min-h-[500px]">
+          <div className="grid grid-cols-1 md:grid-cols-2 h-full min-h-[400px] sm:min-h-[500px]">
+            
+            {/* Left: Static Product Image */}
+            <div className="relative h-64 sm:h-80 md:h-full bg-white flex items-center justify-center p-8 md:p-12">
+               {/* Background Glow Effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#bb9c30]/10 to-transparent opacity-50" />
+              <div className="absolute w-64 h-64 bg-[#bb9c30]/20 rounded-full blur-3xl" />
+              
+              <div className="relative w-full h-full max-h-[400px]">
                 <Image
-                  src={benefits[activeTab].image}
-                  alt={benefits[activeTab].title}
+                  src="/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png"
+                  alt="Zumfali Hair Oil"
                   fill
-                  className="object-cover"
+                  className="object-contain drop-shadow-xl"
+                  priority
                 />
               </div>
+            </div>
 
-              {/* Right: Text */}
-              <div className="flex flex-col justify-center p-8 sm:p-12 md:p-16">
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#1a2f23] mb-4 sm:mb-6">
-                  {benefits[activeTab].title}
-                </h3>
-                <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
-                  {benefits[activeTab].description}
-                </p>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+            {/* Right: Dynamic Text Content */}
+            <div className="relative flex flex-col justify-center p-8 sm:p-12 md:p-16">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="h-full flex flex-col justify-center"
+                >
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#1a2f23] mb-4 sm:mb-6">
+                    {benefits[activeTab].title}
+                  </h3>
+                  <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+                    {benefits[activeTab].description}
+                  </p>
+                  
+                  {/* Decorative Element */}
+                  <div className="mt-8 w-16 h-1 bg-[#bb9c30] rounded-full" />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+          </div>
         </div>
       </div>
     </section>
   );
 }
-
