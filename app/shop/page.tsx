@@ -5,12 +5,13 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import ProductFunnel from '@/components/ProductFunnel';
-import ProductFAQ from '@/components/ProductFAQ';
 import ProblemSolution from '@/components/ProblemSolution';
+import ProductFunnel from '@/components/ProductFunnel';
+import ClinicallyTested from '@/components/ClinicallyTested';
 import ReviewGrid from '@/components/ReviewGrid';
 import InteractiveBenefits from '@/components/InteractiveBenefits';
 import VideoTestimonials from '@/components/VideoTestimonials';
+import ProductFAQ from '@/components/ProductFAQ';
 import {
   isShopifyLoggedIn,
   redirectToShopifySignup,
@@ -434,15 +435,15 @@ export default function ShopPage() {
                 </div>
               </div>
 
-            {/* CTA Button - single, clean, Shopify-powered */}
-            <motion.button
-              onClick={handleBuyNow}
-              className="w-full py-5 bg-[#1a2f23] text-white rounded-full font-bold text-xl uppercase tracking-[0.25em] shadow-xl shadow-[#1a2f23]/20 hover:bg-[#2d4a38] transition-all transform hover:-translate-y-1"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              {subscribeMode ? 'Subscribe Now' : 'Buy Now'}
-            </motion.button>
+              {/* CTA Button - single, clean, Shopify-powered */}
+              <motion.button
+                onClick={handleBuyNow}
+                className="w-full py-5 bg-[#1a2f23] text-white rounded-full font-bold text-xl uppercase tracking-[0.25em] shadow-xl shadow-[#1a2f23]/20 hover:bg-[#2d4a38] transition-all transform hover:-translate-y-1"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                {subscribeMode ? 'Subscribe Now' : 'Buy Now'}
+              </motion.button>
 
               <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <p className="text-xs text-gray-500">
@@ -470,6 +471,8 @@ export default function ShopPage() {
         </div>
         
         <ProblemSolution />
+        <ProductFunnel />
+        <ClinicallyTested />
         <InteractiveBenefits />
         <VideoTestimonials />
         <ReviewGrid />
@@ -478,3 +481,4 @@ export default function ShopPage() {
     </>
   );
 }
+
