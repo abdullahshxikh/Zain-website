@@ -34,33 +34,35 @@ type BundleOption = {
 const bundles: BundleOption[] = [
   {
     id: 1,
-    title: 'Starter',
-    price: '$39.99',
-    originalPrice: '$49.99',
-    shipping: 'Shipping Calculated',
-    saveBadge: 'Save ~20%',
-    bonuses: [],
+    title: 'Buy 1 + Get 1 FREE',
+    price: '$51.30',
+    originalPrice: '$114.00',
+    shipping: '',
+    saveBadge: 'Save $62.70',
+    bonuses: ['+FREE Nutrition Planner'],
+    pricePerBottle: '2 Bottles in Total',
   },
   {
     id: 2,
-    title: 'Most Popular',
-    price: '$69.99',
-    originalPrice: '$119.98',
-    shipping: 'FREE SHIPPING',
-    saveBadge: 'Save ~40%',
+    title: 'Buy 2 + Get 2 FREE',
+    price: '$102.60',
+    originalPrice: '$227.00',
+    shipping: '',
+    saveBadge: 'Save $124.40',
     popular: true,
-    bonuses: ['FREE Hair Growth Guide (PDF)'],
+    bonuses: ['+FREE Nutrition Planner', '+FREE Shipping'],
+    pricePerBottle: '4 Bottles in Total',
   },
   {
     id: 3,
-    title: 'Best Value',
-    price: '$109.99',
-    originalPrice: '$239.96',
-    shipping: 'FREE SHIPPING',
-    saveBadge: 'Save ~55%',
+    title: 'Buy 3 + Get 3 FREE',
+    price: '$153.00',
+    originalPrice: '$340.00',
+    shipping: '',
+    saveBadge: 'Save $187.00',
     bestValue: true,
-    bonuses: ['Hair Growth Guide PDF', 'Scalp Massage Ebook'],
-    pricePerBottle: '$27.50/bottle',
+    bonuses: ['+FREE Nutrition Planner', '+FREE Shipping', '+FREE Mystery Gift'],
+    pricePerBottle: '6 Bottles in Total',
   },
 ];
 
@@ -138,9 +140,9 @@ export default function ShopPage() {
     // Bundle 2 = "Buy 2 Get 1 Free" - $59.99  
     // Bundle 3 = "Buy 3 Get 2 Free" - $89.99
     const bundleToVariantMap: Record<number, string> = {
-      1: 'Buy 1',
-      2: 'Buy 2 Get 1 Free',
-      3: 'Buy 3 Get 2 Free',
+      1: 'Buy 1 + Get 1 FREE',
+      2: 'Buy 2 + Get 2 FREE',
+      3: 'Buy 3 + Get 3 FREE',
     };
 
     const searchText = bundleToVariantMap[selectedBundle];
@@ -300,7 +302,7 @@ export default function ShopPage() {
 
               <div className="h-px bg-gray-200 mb-8" />
               
-              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-6 text-center">Bundle & Save</h3>
+              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-6 text-center">CHOOSE YOUR PACK</h3>
 
               {/* Bundles Selector */}
               <div className="space-y-4 mb-8">
@@ -308,132 +310,70 @@ export default function ShopPage() {
                   <div
                     key={bundle.id}
                     onClick={() => setSelectedBundle(bundle.id)}
-                    className={`relative cursor-pointer rounded-xl border-2 transition-all duration-300 overflow-hidden ${
+                    className={`relative cursor-pointer rounded-xl border-2 transition-all duration-300 overflow-hidden flex flex-col ${
                       selectedBundle === bundle.id
-                        ? 'border-[#1a2f23] bg-[#1a2f23]/5 shadow-lg shadow-[#1a2f23]/5'
+                        ? 'border-[#1a2f23] bg-[#fffcf5] shadow-lg'
                         : 'border-gray-200 bg-white hover:border-[#bb9c30]/50'
                     }`}
                   >
                     {/* Badges */}
                     {bundle.popular && (
-                      <div className="absolute top-0 right-0 bg-[#1a2f23] text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider z-10">
+                      <div className="absolute -top-[1px] -right-[1px] bg-[#1a2f23] text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider z-10">
                         Most Popular
                       </div>
                     )}
                     {bundle.bestValue && (
-                      <div className="absolute top-0 right-0 bg-[#bb9c30] text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider z-10">
-                        Best Value
+                      <div className="absolute -top-[1px] -right-[1px] bg-[#1a2f23] text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider z-10">
+                        Best Deal
                       </div>
                     )}
 
-                    <div className="flex items-center p-5">
+                    {/* Main Content */}
+                    <div className="flex items-center p-5 pb-4">
                       {/* Radio Circle */}
-                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-5 transition-colors ${
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mr-4 flex-shrink-0 transition-colors ${
                         selectedBundle === bundle.id ? 'border-[#1a2f23]' : 'border-gray-300'
                       }`}>
                         {selectedBundle === bundle.id && (
-                          <div className="w-3 h-3 rounded-full bg-[#1a2f23]" />
+                          <div className="w-2.5 h-2.5 rounded-full bg-[#1a2f23]" />
                         )}
                       </div>
 
-                      {/* Image Thumbnail */}
-                      <div className="relative w-12 h-12 flex-shrink-0 mr-5">
-                        <Image src="/product-image.png" alt="" fill className="object-contain" />
-                      </div>
-
-                      {/* Details */}
-                      <div className="flex-1 pr-4">
-                        <div className="flex items-center gap-3 mb-1">
-                          <span className="font-bold text-lg text-[#1a2f23]">{bundle.title}</span>
+                      {/* Text Details */}
+                      <div className="flex-1">
+                        <div className="flex items-center flex-wrap gap-2 mb-1 pr-16">
+                          <span className="font-bold text-lg text-[#1a2f23] leading-tight">{bundle.title}</span>
                           {bundle.saveBadge && (
-                            <span className="text-[10px] bg-green-100 text-green-800 px-2 py-0.5 rounded-full font-bold">
+                            <span className="text-[10px] bg-[#5c8065] text-white px-2 py-0.5 rounded font-bold">
                               {bundle.saveBadge}
                             </span>
                           )}
                         </div>
-                        {bundle.bonuses && bundle.bonuses.length > 0 && (
-                          <div className="mt-1 space-y-1">
-                            {bundle.bonuses.map((bonus, i) => (
-                              <p key={i} className="text-xs text-[#bb9c30] font-bold flex items-center gap-1">
-                                <span className="w-1 h-1 rounded-full bg-[#bb9c30]" />
-                                {bonus}
-                              </p>
-                            ))}
-                          </div>
-                        )}
-                        <p className="text-xs text-gray-500 font-medium uppercase tracking-wide mt-1">
-                          {bundle.shipping}
-                        </p>
+                        <p className="text-sm text-gray-500 italic">{bundle.pricePerBottle}</p>
                       </div>
 
                       {/* Price */}
-                      <div className="text-right flex flex-col justify-center">
+                      <div className="text-right flex flex-col justify-center flex-shrink-0 ml-2">
+                         <div className="font-bold text-xl text-[#1a2f23]">{bundle.price}</div>
                         {bundle.originalPrice && (
-                          <div className="text-gray-400 line-through text-sm decoration-red-500/40 mb-1">{bundle.originalPrice}</div>
-                        )}
-                        <div className="font-bold text-xl text-[#1a2f23]">{bundle.price}</div>
-                        {bundle.pricePerBottle && (
-                          <div className="text-[10px] text-gray-500 font-medium mt-1">{bundle.pricePerBottle}</div>
+                          <div className="text-gray-400 line-through text-sm decoration-gray-400">{bundle.originalPrice}</div>
                         )}
                       </div>
                     </div>
+
+                    {/* Footer / Bonuses - Green Bar */}
+                     <div className="bg-[#1a2f23] px-5 py-2 mt-auto">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-y-1 gap-x-4 text-white text-xs font-bold">
+                           {bundle.bonuses?.map((bonus, i) => (
+                              <div key={i} className="flex items-center gap-1">
+                                <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                                <span>{bonus}</span>
+                              </div>
+                           ))}
+                        </div>
+                     </div>
                   </div>
                 ))}
-              </div>
-
-              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-6 text-center">Frequency</h3>
-
-              {/* Purchase Mode Toggle */}
-              <div className="border-2 rounded-xl overflow-hidden mb-8 bg-white border-gray-200">
-                <div 
-                  onClick={() => setSubscribeMode(false)}
-                  className={`p-5 flex items-center cursor-pointer border-b border-gray-100 transition-colors ${
-                    !subscribeMode ? 'bg-gray-50' : 'bg-white'
-                  }`}
-                >
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${
-                    !subscribeMode ? 'border-[#1a2f23]' : 'border-gray-300'
-                  }`}>
-                    {!subscribeMode && <div className="w-3 h-3 rounded-full bg-[#1a2f23]" />}
-                  </div>
-                  <div className="flex-1">
-                    <span className={`font-bold text-lg ${!subscribeMode ? 'text-[#1a2f23]' : 'text-gray-600'}`}>One-Time Purchase</span>
-                  </div>
-                  <span className="font-bold text-lg text-[#1a2f23]">{bundles.find(b => b.id === selectedBundle)?.price}</span>
-                </div>
-
-                <div 
-                  onClick={() => setSubscribeMode(true)}
-                  className={`p-5 flex items-center cursor-pointer transition-colors relative overflow-hidden ${
-                    subscribeMode ? 'bg-[#1a2f23]/5' : 'bg-white'
-                  }`}
-                >
-                  <div className="absolute top-0 right-0 bg-[#1a2f23] text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
-                    Most Flexible
-                  </div>
-
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${
-                    subscribeMode ? 'border-[#1a2f23]' : 'border-gray-300'
-                  }`}>
-                    {subscribeMode && <div className="w-3 h-3 rounded-full bg-[#1a2f23]" />}
-                  </div>
-                  <div className="flex-1 pt-4 sm:pt-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className={`font-bold text-lg ${subscribeMode ? 'text-[#1a2f23]' : 'text-gray-600'}`}>Subscribe & Save (Monthly)</span>
-                    </div>
-                    
-                    <ul className="space-y-1 mt-2">
-                      <li className="flex items-center gap-2 text-sm text-gray-600">
-                        <svg className="w-4 h-4 text-[#1a2f23]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
-                        Save extra on every order
-                      </li>
-                      <li className="flex items-center gap-2 text-sm text-gray-600">
-                         <svg className="w-4 h-4 text-[#1a2f23]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        Cancel Anytime
-                      </li>
-                    </ul>
-                  </div>
-                </div>
               </div>
 
               {/* CTA Button - single, clean, Shopify-powered */}
