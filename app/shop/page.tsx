@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
@@ -39,8 +39,8 @@ const bundles: BundleOption[] = [
     originalPrice: '$114.00',
     shipping: '',
     saveBadge: 'Save $62.70',
-    bonuses: ['+FREE Nutrition Planner'],
-    pricePerBottle: '2 Bottles in Total',
+    bonuses: ['+FREE Comb', '+PDF Guide'],
+    pricePerBottle: 'Save 40%',
   },
   {
     id: 2,
@@ -50,8 +50,8 @@ const bundles: BundleOption[] = [
     shipping: '',
     saveBadge: 'Save $124.40',
     popular: true,
-    bonuses: ['+FREE Nutrition Planner', '+FREE Shipping'],
-    pricePerBottle: '4 Bottles in Total',
+    bonuses: ['+FREE Comb', '+PDF Guide', '+FREE Shipping'],
+    pricePerBottle: 'Save 55%',
   },
   {
     id: 3,
@@ -61,8 +61,8 @@ const bundles: BundleOption[] = [
     shipping: '',
     saveBadge: 'Save $187.00',
     bestValue: true,
-    bonuses: ['+FREE Nutrition Planner', '+FREE Shipping', '+FREE Mystery Gift'],
-    pricePerBottle: '6 Bottles in Total',
+    bonuses: ['+FREE Comb', '+PDF Guide', '+FREE Shipping', '+Mystery Gift'],
+    pricePerBottle: 'Save 65%',
   },
 ];
 
@@ -72,8 +72,25 @@ export default function ShopPage() {
   const [shopifyClient, setShopifyClient] = useState<any | null>(null);
   const [shopifyProduct, setShopifyProduct] = useState<any | null>(null);
   const [accountLoggedIn, setAccountLoggedIn] = useState(false);
+  const [showStickyBar, setShowStickyBar] = useState(false);
 
   // Minimal Shopify integration: load SDK once, fetch product once, no embedded UI
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleScroll = () => {
+      // Show sticky bar after scrolling past the main pricing area (approx 800px)
+      if (window.scrollY > 800) {
+        setShowStickyBar(true);
+      } else {
+        setShowStickyBar(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -417,7 +434,54 @@ export default function ShopPage() {
         <ProductFunnel />
         <DetailedFAQ />
         <ExpandedReviews />
-      </main>
+
+      {/* Sticky Bottom Bar */}
+      <AnimatePresence>
+        {showStickyBar && (
+          <motion.div
+            initial={{ y: 100 }}
+            animate={{ y: 0 }}
+            exit={{ y: 100 }}
+            className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] z-50 px-4 py-3 sm:py-4"
+          >
+            <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+               <div className="flex items-center gap-4">
+                  <div className="relative w-12 h-12 sm:w-16 sm:h-16 bg-gray-50 rounded-lg border border-gray-100 overflow-hidden flex-shrink-0">
+                     <Image 
+                        src="/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png"
+                        alt="Product"
+                        fill
+                        className="object-contain p-1"
+                     />
+                  </div>
+                  <div className="hidden sm:block">
+                     <p className="font-bold text-[#1a2f23] text-sm sm:text-base">
+                       {bundles.find(b => b.id === selectedBundle)?.title}
+                     </p>
+                     <p className="text-[#bb9c30] font-bold text-sm">
+                       {bundles.find(b => b.id === selectedBundle)?.price}
+                     </p>
+                  </div>
+               </div>
+
+               <div className="flex items-center gap-4 flex-1 sm:flex-none justify-end">
+                  <div className="hidden md:flex items-center gap-2 text-xs text-gray-500">
+                     <span>Free Shipping</span>
+                     <span className="w-1 h-1 rounded-full bg-gray-300" />
+                     <span>Secure Checkout</span>
+                  </div>
+                  <button
+                    onClick={handleBuyNow}
+                    className="flex-1 sm:flex-none px-6 sm:px-8 py-3 bg-[#1a2f23] text-white rounded-full font-bold text-sm sm:text-base uppercase tracking-widest hover:bg-[#2d4a38] transition-colors shadow-lg shadow-[#1a2f23]/20 whitespace-nowrap"
+                  >
+                    Add to Cart
+                  </button>
+               </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </main>
       <Footer />
     </>
   );
