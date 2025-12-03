@@ -47,7 +47,7 @@ const reviews = [
 ];
 
 export default function ProductFAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [currentReview, setCurrentReview] = useState(0);
 
   const toggleFAQ = (index: number) => {

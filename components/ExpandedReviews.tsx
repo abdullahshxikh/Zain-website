@@ -7,8 +7,8 @@ const reviews = [
     author: "Christopher Easton",
     verified: true,
     rating: 5,
-    title: "This supplement really packs a punch.",
-    text: "ADHD adult here who's routinely stressed about losing focus and being forgetful. I don't take medication and prefer to find natural alternatives. I've been taking L-theanine and ashwagandha for a while and found it to be so helpful for focus and stress management.",
+    title: "This oil really packs a punch.",
+    text: "I was skeptical about hair oils, but this one is different. My scalp feels so much healthier and I've noticed significantly less hair fall in the shower. The rosemary scent is refreshing and not overpowering. Highly recommend!",
     image: null // Or add image path if available
   },
   {
@@ -16,8 +16,8 @@ const reviews = [
     author: "Kfassben",
     verified: true,
     rating: 5,
-    title: "I like this 13-in-1 cortisol supplement.",
-    text: "It is suppose to help improve sleep, mood and calm the mind. I take it right before bed and I've noticed I sleep much better. The capsules are easy to swallow. This supplement has magnesium, L-Theanine, holy basil, lions mane, ashwagandha, gaba, valerian root.",
+    title: "I like this 7-in-1 hair growth blend.",
+    text: "It is supposed to help with growth and thickness, and it really delivers. I apply it before bed and wash it out in the morning. My hair is shinier and feels stronger. The applicator makes it easy to target thinning spots.",
     image: null
   },
   {
@@ -25,8 +25,8 @@ const reviews = [
     author: "Gerald L Harper",
     verified: true,
     rating: 5,
-    title: "I started taking the Parrox Corti-Smooth Cortisol Supplement",
-    text: "during a particularly overwhelming season of life—juggling work deadlines, parenting, and trying to stay present without burning out. I'd tried magnesium and ashwagandha separately before, but this 13-in-1 blend intrigued me with its thoughtful mix.",
+    title: "I started taking the Zumfali Hair Oil",
+    text: "during a particularly stressful season where I was losing a lot of hair. I'd tried other oils before, but this blend with pumpkin seed and black seed oil felt different. After a month, I'm seeing baby hairs coming in!",
     image: null
   },
   {
@@ -34,7 +34,7 @@ const reviews = [
     author: "Ruslana",
     verified: true,
     rating: 5,
-    title: "Helps take the edge off at the end of the day!",
+    title: "Helps my hair feel amazing at the end of the day!",
     text: "",
     date: "5 months ago",
     image: null
@@ -44,8 +44,8 @@ const reviews = [
     author: "Stacy Gold",
     verified: true,
     rating: 5,
-    title: "I realized that I have all the signs of elevated cortisol levels.",
-    text: "I did some research and learned of ingredients to look for. This supplement has practically all the ingredients needed. I take it in the evening because the valerian root makes me sleepy. I've been sleeping better and feeling less stressed.",
+    title: "I realized that I have all the signs of thinning hair.",
+    text: "I did some research and learned of ingredients to look for. This oil has practically all the ingredients needed like rosemary, castor, and vitamin E. I use it twice a week and my hair feels thicker and more voluminous. It's a staple in my routine now.",
     image: null
   }
 ];
@@ -60,14 +60,14 @@ export default function ExpandedReviews() {
           <div>
             <h2 className="text-2xl font-bold text-[#1a2f23] mb-2">Customer Reviews</h2>
             <div className="flex items-center gap-4">
-              <div className="text-5xl font-bold text-[#bb9c30]">4.6<span className="text-xl text-gray-400 font-normal">/5</span></div>
+              <div className="text-5xl font-bold text-[#bb9c30]">4.8<span className="text-xl text-gray-400 font-normal">/5</span></div>
               <div>
                 <div className="flex text-[#bb9c30] mb-1">
                   {[...Array(5)].map((_, i) => (
                     <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
                   ))}
                 </div>
-                <p className="text-sm text-gray-500">From 19 reviews</p>
+                <p className="text-sm text-gray-500">From 524 reviews</p>
               </div>
             </div>
           </div>
@@ -75,9 +75,9 @@ export default function ExpandedReviews() {
           {/* Bars */}
           <div className="flex-1 max-w-md w-full space-y-2">
             {[
-              { star: 5, count: 15, pct: '80%' },
-              { star: 4, count: 1, pct: '5%' },
-              { star: 3, count: 3, pct: '15%' },
+              { star: 5, count: 480, pct: '92%' },
+              { star: 4, count: 35, pct: '7%' },
+              { star: 3, count: 9, pct: '1%' },
               { star: 2, count: 0, pct: '0%' },
               { star: 1, count: 0, pct: '0%' },
             ].map((item) => (
@@ -139,4 +139,3 @@ export default function ExpandedReviews() {
     </section>
   );
 }
-
