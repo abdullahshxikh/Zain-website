@@ -39,16 +39,34 @@ export default function DetailedFAQ() {
           
           {/* Left: FAQ Content */}
           <div className="flex-1 w-full">
-            <p className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">
+            <motion.p 
+              className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
               Frequently Asked Questions
-            </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#1a2f23] mb-10">
+            </motion.p>
+            <motion.h2 
+              className="text-3xl md:text-4xl font-bold text-[#1a2f23] mb-10"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
               Your Zumfali Questions—Answered.
-            </h2>
+            </motion.h2>
 
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index}>
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
+                >
                   <button
                     onClick={() => toggleFAQ(index)}
                     className={`w-full px-6 py-5 flex items-center justify-between text-left rounded-full transition-all duration-300 ${
@@ -80,13 +98,19 @@ export default function DetailedFAQ() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
 
           {/* Right: Product Image Card */}
-          <div className="w-full lg:w-1/3 relative sticky top-32">
+          <motion.div 
+            className="w-full lg:w-1/3 relative sticky top-32"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
              <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-white border border-gray-100">
                <div className="aspect-[4/5] relative">
                  <Image 
@@ -111,11 +135,10 @@ export default function DetailedFAQ() {
                  </button>
                </div>
              </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>
     </section>
   );
 }
-

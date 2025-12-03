@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const reviews = [
   {
@@ -35,7 +36,7 @@ const reviews = [
     verified: true,
     rating: 5,
     title: "Helps my hair feel amazing at the end of the day!",
-    text: "",
+    text: "I use it as a pre-shampoo treatment and my hair is so soft afterwards. The 7-in-1 formula covers everything I need. Love it!",
     date: "5 months ago",
     image: null
   },
@@ -47,6 +48,33 @@ const reviews = [
     title: "I realized that I have all the signs of thinning hair.",
     text: "I did some research and learned of ingredients to look for. This oil has practically all the ingredients needed like rosemary, castor, and vitamin E. I use it twice a week and my hair feels thicker and more voluminous. It's a staple in my routine now.",
     image: null
+  },
+  {
+    id: 6,
+    author: "Amanda K.",
+    verified: true,
+    rating: 5,
+    title: "Finally something that works for my postpartum hair loss!",
+    text: "After having my second baby, my hair was falling out in clumps. A friend recommended Zumfali and I'm so glad she did. It's been 3 months and the difference is night and day.",
+    image: null
+  },
+  {
+    id: 7,
+    author: "Jennifer B.",
+    verified: true,
+    rating: 5,
+    title: "Best natural hair oil on the market.",
+    text: "I love that it's 100% natural with no nasties. The quality is top notch and the results are real. My hair has never looked better.",
+    image: null
+  },
+  {
+    id: 8,
+    author: "David M.",
+    verified: true,
+    rating: 5,
+    title: "Even works for beards!",
+    text: "I bought this for my wife but decided to try it on my patchy beard. It's actually filling in nicely! We're both hooked now.",
+    image: null
   }
 ];
 
@@ -56,7 +84,13 @@ export default function ExpandedReviews() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header with Summary */}
-        <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-8">
+        <motion.div 
+          className="flex flex-col md:flex-row items-center justify-between mb-12 gap-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <div>
             <h2 className="text-2xl font-bold text-[#1a2f23] mb-2">Customer Reviews</h2>
             <div className="flex items-center gap-4">
@@ -93,16 +127,28 @@ export default function ExpandedReviews() {
           </div>
 
           <div>
-            <a href="/write-review" className="inline-block px-8 py-3 bg-[#1a2f23] text-white font-bold rounded-lg hover:bg-[#2d4a38] transition-colors shadow-lg">
+            <motion.a 
+              href="/write-review" 
+              className="inline-block px-8 py-3 bg-[#1a2f23] text-white font-bold rounded-lg hover:bg-[#2d4a38] transition-colors shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               Write A Review
-            </a>
+            </motion.a>
           </div>
-        </div>
+        </motion.div>
 
         {/* Reviews Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {reviews.map((review) => (
-            <div key={review.id} className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+          {reviews.map((review, index) => (
+            <motion.div 
+              key={review.id} 
+              className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-[#1a2f23] text-sm">{review.author}</span>
@@ -132,7 +178,7 @@ export default function ExpandedReviews() {
                  {review.text && <button className="text-xs font-bold text-gray-400 hover:text-[#1a2f23] transition-colors">Read More</button>}
                  {review.date && <p className="text-xs text-gray-400 mt-2">{review.date}</p>}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

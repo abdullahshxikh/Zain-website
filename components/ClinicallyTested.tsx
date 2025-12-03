@@ -57,7 +57,7 @@ export default function ClinicallyTested() {
             <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl aspect-[4/3] lg:aspect-square">
                {/* Since the user provided a specific screenshot, we use it. */}
               <Image
-                src="/Screenshot 2025-12-02 at 10.03.28 PM.png"
+                src="/clinically-tested.png"
                 alt="Clinically Tested Formula"
                 fill
                 className="object-cover"
