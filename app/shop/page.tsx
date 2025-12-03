@@ -11,7 +11,8 @@ import ClinicallyTested from '@/components/ClinicallyTested';
 import ReviewGrid from '@/components/ReviewGrid';
 import InteractiveBenefits from '@/components/InteractiveBenefits';
 import VideoTestimonials from '@/components/VideoTestimonials';
-import ProductFAQ from '@/components/ProductFAQ';
+import DetailedFAQ from '@/components/DetailedFAQ';
+import ExpandedReviews from '@/components/ExpandedReviews';
 import {
   isShopifyLoggedIn,
   redirectToShopifySignup,
@@ -464,21 +465,20 @@ export default function ShopPage() {
                 Secure 256-bit SSL Encryption
               </p>
 
-              <ProductFAQ />
-
             </motion.div>
           </div>
         </div>
         
         <ProblemSolution />
-        <ProductFunnel />
-        <ClinicallyTested />
-        <InteractiveBenefits />
-        <VideoTestimonials />
         <ReviewGrid />
+        <InteractiveBenefits />
+        <ClinicallyTested />
+        <VideoTestimonials />
+        <ProductFunnel />
+        <DetailedFAQ />
+        <ExpandedReviews />
       </main>
       <Footer />
     </>
   );
 }
-
