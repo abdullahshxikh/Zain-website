@@ -13,7 +13,7 @@ export default function VideoTestimonials() {
     <section className="py-12 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-2 mb-6">
-          <div className="flex bg-[#00b67a] text-white px-1.5 py-0.5 rounded text-xs font-bold">
+          <div className="flex bg-[#bb9c30] text-white px-1.5 py-0.5 rounded text-xs font-bold">
             ★★★★★
           </div>
           <span className="text-sm font-medium text-gray-500">Rated 4.8/5 by 30,000+ customers</span>

@@ -9,6 +9,7 @@ import ProductFunnel from '@/components/ProductFunnel';
 import ProductFAQ from '@/components/ProductFAQ';
 import ProblemSolution from '@/components/ProblemSolution';
 import ReviewGrid from '@/components/ReviewGrid';
+import InteractiveBenefits from '@/components/InteractiveBenefits';
 import VideoTestimonials from '@/components/VideoTestimonials';
 import {
   isShopifyLoggedIn,
@@ -469,7 +470,7 @@ export default function ProductPage() {
         </div>
         
         <ProblemSolution />
-        <ProductFunnel />
+        <InteractiveBenefits />
         <VideoTestimonials />
         <ReviewGrid />
       </main>
