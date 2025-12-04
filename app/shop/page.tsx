@@ -393,15 +393,112 @@ export default function ShopPage() {
                 ))}
               </div>
 
+              {/* Purchase Options */}
+              <div className="space-y-4 mb-6">
+                {/* Subscribe Option */}
+                <div 
+                  onClick={() => setSubscribeMode(true)}
+                  className={`relative border-2 rounded-xl p-5 cursor-pointer transition-all duration-300 ${
+                    subscribeMode 
+                      ? 'border-[#e67e22] bg-[#fffcf5]' 
+                      : 'border-gray-200 bg-white hover:border-[#bb9c30]/30'
+                  }`}
+                >
+                  {subscribeMode && (
+                    <div className="absolute -top-3 right-4 bg-[#e67e22] text-white text-xs font-bold px-3 py-1 rounded shadow-sm">
+                      Save 20% For First Order
+                    </div>
+                  )}
+                  
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                        subscribeMode ? 'border-[#e67e22]' : 'border-gray-300'
+                      }`}>
+                        {subscribeMode && <div className="w-2.5 h-2.5 rounded-full bg-[#e67e22]" />}
+                      </div>
+                      <span className="font-bold text-lg text-[#1a2f23]">Subscribe & save</span>
+                    </div>
+                    <div className="text-right">
+                       <div className="flex flex-col items-end">
+                         <span className="text-gray-400 line-through text-sm font-medium">
+                           {bundles.find(b => b.id === selectedBundle)?.price}
+                         </span>
+                         <span className="font-bold text-xl text-[#1a2f23]">
+                           {/* Calculate roughly 20% off for display demo */}
+                           {bundles.find(b => b.id === selectedBundle)?.price ? 
+                             `$${(parseFloat(bundles.find(b => b.id === selectedBundle)!.price.replace('$', '')) * 0.8).toFixed(2)}` 
+                             : ''}
+                         </span>
+                       </div>
+                    </div>
+                  </div>
+
+                  {subscribeMode && (
+                    <div className="pl-8 animate-fadeIn">
+                      <div className="text-sm text-gray-600 space-y-2 mb-4">
+                        <p className="flex items-center gap-2">
+                          <svg className="w-4 h-4 text-[#e67e22]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
+                          Get an additional 20% off your first purchase and 10% off all recurring orders.
+                        </p>
+                        <p className="flex items-center gap-2">
+                          <svg className="w-4 h-4 text-[#e67e22]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
+                          No commitment. Cancel anytime
+                        </p>
+                      </div>
+                      
+                      <div className="bg-[#e67e22] text-white font-bold py-3 px-4 rounded-lg text-center text-sm cursor-default">
+                        1 Month
+                      </div>
+                      <p className="text-center text-[10px] text-gray-500 mt-1 uppercase tracking-wider">Deliver every</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* One-time Option */}
+                <div 
+                  onClick={() => setSubscribeMode(false)}
+                  className={`border-2 rounded-xl p-5 cursor-pointer transition-all duration-300 flex items-center justify-between ${
+                    !subscribeMode 
+                      ? 'border-[#e67e22] bg-[#fffcf5]' 
+                      : 'border-gray-200 bg-white hover:border-[#bb9c30]/30'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                      !subscribeMode ? 'border-[#e67e22]' : 'border-gray-300'
+                    }`}>
+                      {!subscribeMode && <div className="w-2.5 h-2.5 rounded-full bg-[#e67e22]" />}
+                    </div>
+                    <span className="font-bold text-lg text-[#1a2f23]">One-time</span>
+                  </div>
+                  <span className="font-bold text-xl text-[#1a2f23]">
+                    {bundles.find(b => b.id === selectedBundle)?.price}
+                  </span>
+                </div>
+              </div>
+
               {/* CTA Button - single, clean, Shopify-powered */}
               <motion.button
                 onClick={handleBuyNow}
-                className="w-full py-5 bg-[#1a2f23] text-white rounded-full font-bold text-xl uppercase tracking-[0.25em] shadow-xl shadow-[#1a2f23]/20 hover:bg-[#2d4a38] transition-all transform hover:-translate-y-1"
+                className="w-full py-5 bg-[#e67e22] text-white rounded-lg font-bold text-xl uppercase tracking-wider shadow-xl shadow-[#e67e22]/20 hover:bg-[#d35400] transition-all transform hover:-translate-y-1 mb-8"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >
-                {subscribeMode ? 'Subscribe Now' : 'Buy Now'}
+                ADD TO CART
               </motion.button>
+              
+              {/* Payment Icons */}
+              <div className="flex justify-center mb-6 opacity-80 grayscale hover:grayscale-0 transition-all">
+                <div className="relative w-full max-w-md h-8">
+                   <Image 
+                     src="/payment-icons.png" 
+                     alt="Secure Payment Options" 
+                     fill 
+                     className="object-contain"
+                   />
+                </div>
+              </div>
 
               <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <p className="text-xs text-gray-500">
