@@ -444,9 +444,9 @@ export default function ShopPage() {
             exit={{ y: 100 }}
             className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] z-50 px-4 py-3 sm:py-4"
           >
-            <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-               <div className="flex items-center gap-4">
-                  <div className="relative w-12 h-12 sm:w-16 sm:h-16 bg-gray-50 rounded-lg border border-gray-100 overflow-hidden flex-shrink-0">
+            <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+               <div className="flex items-center gap-4 w-full sm:w-auto">
+                  <div className="relative w-12 h-12 sm:w-16 sm:h-16 bg-gray-50 rounded-lg border border-gray-100 overflow-hidden flex-shrink-0 hidden xs:block">
                      <Image 
                         src="/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png"
                         alt="Product"
@@ -454,27 +454,52 @@ export default function ShopPage() {
                         className="object-contain p-1"
                      />
                   </div>
-                  <div className="hidden sm:block">
-                     <p className="font-bold text-[#1a2f23] text-sm sm:text-base">
-                       {bundles.find(b => b.id === selectedBundle)?.title}
-                     </p>
-                     <p className="text-[#bb9c30] font-bold text-sm">
-                       {bundles.find(b => b.id === selectedBundle)?.price}
-                     </p>
+                  <div className="flex-1 sm:flex-none">
+                     <h4 className="font-bold text-[#1a2f23] text-sm sm:text-base leading-tight mb-1 font-sans">
+                       Zumfali 7-in-1 Complete Vital Glow Blend
+                     </h4>
+                     <div className="flex items-center gap-2">
+                        <span className="font-extrabold text-[#1a2f23] text-lg">
+                          {bundles.find(b => b.id === selectedBundle)?.price}
+                        </span>
+                        {bundles.find(b => b.id === selectedBundle)?.originalPrice && (
+                          <span className="text-sm text-gray-400 line-through font-medium">
+                            {bundles.find(b => b.id === selectedBundle)?.originalPrice}
+                          </span>
+                        )}
+                        {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
+                          <span className="bg-[#e0d8c3] text-[#8c7335] text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
+                            <svg className="w-3 h-3 fill-current" viewBox="0 0 20 20"><path d="M17.707 9.293l-2.646-2.647a1 1 0 01-.293-.707V4.375a1 1 0 00-1-1h-1.569a1 1 0 01-.707-.293L8.845.438a1 1 0 00-1.415 0L4.784 3.084a1 1 0 01-.707.293H2.508a1 1 0 00-1 1v1.569a1 1 0 01-.293.707L.438 8.845a1 1 0 000 1.415l2.647 2.646a1 1 0 01.293.707v1.569a1 1 0 001 1h1.569a1 1 0 01.707.293l2.646 2.647a1 1 0 001.415 0l2.646-2.647a1 1 0 01.707-.293h1.569a1 1 0 001-1v-1.569a1 1 0 01.293-.707l2.646-2.646a1 1 0 000-1.415zM12 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                            {bundles.find(b => b.id === selectedBundle)?.saveBadge?.replace('Save ', '')} OFF
+                          </span>
+                        )}
+                     </div>
                   </div>
                </div>
 
-               <div className="flex items-center gap-4 flex-1 sm:flex-none justify-end">
-                  <div className="hidden md:flex items-center gap-2 text-xs text-gray-500">
-                     <span>Free Shipping</span>
-                     <span className="w-1 h-1 rounded-full bg-gray-300" />
-                     <span>Secure Checkout</span>
+               <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
+                  <div className="hidden md:block relative">
+                    <select 
+                      value={selectedBundle}
+                      onChange={(e) => setSelectedBundle(Number(e.target.value))}
+                      className="appearance-none bg-[#f0f2f1] border border-transparent hover:border-gray-300 text-[#1a2f23] py-3 pl-4 pr-10 rounded-lg cursor-pointer font-medium focus:outline-none focus:ring-2 focus:ring-[#1a2f23]/20 transition-all min-w-[160px]"
+                    >
+                      {bundles.map((b) => (
+                        <option key={b.id} value={b.id}>
+                          {b.id === 1 ? '1 Bottle' : b.id === 2 ? '4 Bottles (Buy 2+2)' : '6 Bottles (Buy 3+3)'}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
+                    </div>
                   </div>
+
                   <button
                     onClick={handleBuyNow}
-                    className="flex-1 sm:flex-none px-6 sm:px-8 py-3 bg-[#1a2f23] text-white rounded-full font-bold text-sm sm:text-base uppercase tracking-widest hover:bg-[#2d4a38] transition-colors shadow-lg shadow-[#1a2f23]/20 whitespace-nowrap"
+                    className="flex-1 sm:flex-none px-8 py-3 bg-[#1a2f23] text-white rounded-lg font-bold text-base hover:bg-[#2d4a38] transition-colors shadow-lg shadow-[#1a2f23]/20 whitespace-nowrap"
                   >
-                    Add to Cart
+                    Shop Now
                   </button>
                </div>
             </div>
