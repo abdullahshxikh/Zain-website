@@ -367,6 +367,9 @@ export default function ShopPage() {
                           )}
                         </div>
                         <p className="text-sm text-gray-500 italic">{bundle.pricePerBottle}</p>
+                        {bundle.shipping && (
+                          <p className="text-xs text-gray-500 font-medium mt-1">{bundle.shipping}</p>
+                        )}
                       </div>
 
                       {/* Price */}
@@ -379,6 +382,7 @@ export default function ShopPage() {
                     </div>
 
                     {/* Footer / Bonuses - Green Bar */}
+                    {bundle.bonuses && bundle.bonuses.length > 0 && (
                      <div className="bg-[#1a2f23] px-5 py-2 mt-auto">
                         <div className="flex flex-col sm:flex-row sm:items-center gap-y-1 gap-x-4 text-white text-xs font-bold">
                            {bundle.bonuses?.map((bonus, i) => (
@@ -389,6 +393,7 @@ export default function ShopPage() {
                            ))}
                         </div>
                      </div>
+                    )}
                   </div>
                 ))}
               </div>
