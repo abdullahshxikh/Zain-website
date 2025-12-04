@@ -400,12 +400,12 @@ export default function ShopPage() {
                   onClick={() => setSubscribeMode(true)}
                   className={`relative border-2 rounded-xl p-5 cursor-pointer transition-all duration-300 ${
                     subscribeMode 
-                      ? 'border-[#e67e22] bg-[#fffcf5]' 
+                      ? 'border-[#bb9c30] bg-[#fffcf5]' 
                       : 'border-gray-200 bg-white hover:border-[#bb9c30]/30'
                   }`}
                 >
                   {subscribeMode && (
-                    <div className="absolute -top-3 right-4 bg-[#e67e22] text-white text-xs font-bold px-3 py-1 rounded shadow-sm">
+                    <div className="absolute -top-3 right-4 bg-[#bb9c30] text-white text-xs font-bold px-3 py-1 rounded shadow-sm">
                       Save 20% For First Order
                     </div>
                   )}
@@ -413,9 +413,9 @@ export default function ShopPage() {
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-3">
                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                        subscribeMode ? 'border-[#e67e22]' : 'border-gray-300'
+                        subscribeMode ? 'border-[#bb9c30]' : 'border-gray-300'
                       }`}>
-                        {subscribeMode && <div className="w-2.5 h-2.5 rounded-full bg-[#e67e22]" />}
+                        {subscribeMode && <div className="w-2.5 h-2.5 rounded-full bg-[#bb9c30]" />}
                       </div>
                       <span className="font-bold text-lg text-[#1a2f23]">Subscribe & save</span>
                     </div>
@@ -438,16 +438,16 @@ export default function ShopPage() {
                     <div className="pl-8 animate-fadeIn">
                       <div className="text-sm text-gray-600 space-y-2 mb-4">
                         <p className="flex items-center gap-2">
-                          <svg className="w-4 h-4 text-[#e67e22]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
+                          <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
                           Get an additional 20% off your first purchase and 10% off all recurring orders.
                         </p>
                         <p className="flex items-center gap-2">
-                          <svg className="w-4 h-4 text-[#e67e22]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
+                          <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
                           No commitment. Cancel anytime
                         </p>
                       </div>
                       
-                      <div className="bg-[#e67e22] text-white font-bold py-3 px-4 rounded-lg text-center text-sm cursor-default">
+                      <div className="bg-[#bb9c30] text-white font-bold py-3 px-4 rounded-lg text-center text-sm cursor-default">
                         1 Month
                       </div>
                       <p className="text-center text-[10px] text-gray-500 mt-1 uppercase tracking-wider">Deliver every</p>
@@ -460,15 +460,15 @@ export default function ShopPage() {
                   onClick={() => setSubscribeMode(false)}
                   className={`border-2 rounded-xl p-5 cursor-pointer transition-all duration-300 flex items-center justify-between ${
                     !subscribeMode 
-                      ? 'border-[#e67e22] bg-[#fffcf5]' 
+                      ? 'border-[#bb9c30] bg-[#fffcf5]' 
                       : 'border-gray-200 bg-white hover:border-[#bb9c30]/30'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                      !subscribeMode ? 'border-[#e67e22]' : 'border-gray-300'
+                      !subscribeMode ? 'border-[#bb9c30]' : 'border-gray-300'
                     }`}>
-                      {!subscribeMode && <div className="w-2.5 h-2.5 rounded-full bg-[#e67e22]" />}
+                      {!subscribeMode && <div className="w-2.5 h-2.5 rounded-full bg-[#bb9c30]" />}
                     </div>
                     <span className="font-bold text-lg text-[#1a2f23]">One-time</span>
                   </div>
@@ -481,7 +481,7 @@ export default function ShopPage() {
               {/* CTA Button - single, clean, Shopify-powered */}
               <motion.button
                 onClick={handleBuyNow}
-                className="w-full py-5 bg-[#e67e22] text-white rounded-lg font-bold text-xl uppercase tracking-wider shadow-xl shadow-[#e67e22]/20 hover:bg-[#d35400] transition-all transform hover:-translate-y-1 mb-8"
+                className="w-full py-5 bg-[#1a2f23] text-white rounded-lg font-bold text-xl uppercase tracking-wider shadow-xl shadow-[#1a2f23]/20 hover:bg-[#2d4a38] transition-all transform hover:-translate-y-1 mb-8"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -489,8 +489,8 @@ export default function ShopPage() {
               </motion.button>
               
               {/* Payment Icons */}
-              <div className="flex justify-center mb-6 opacity-80 grayscale hover:grayscale-0 transition-all">
-                <div className="relative w-full max-w-md h-8">
+              <div className="flex justify-center mb-6">
+                <div className="relative w-full max-w-lg h-10">
                    <Image 
                      src="/payment-icons.png" 
                      alt="Secure Payment Options" 

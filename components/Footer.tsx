@@ -133,7 +133,7 @@ export default function Footer() {
       <div className="border-t border-gray-200 bg-gray-50 py-8">
          <div className="max-w-7xl mx-auto px-4 flex flex-col items-center gap-6">
            {/* Payment Icons */}
-           <div className="relative w-full max-w-md h-8 opacity-60 grayscale hover:grayscale-0 transition-all">
+           <div className="relative w-full max-w-lg h-10">
              <Image 
                src="/payment-icons.png" 
                alt="Accepted Payment Methods" 
