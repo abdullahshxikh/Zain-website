@@ -37,9 +37,9 @@ const bundles: BundleOption[] = [
     title: 'Buy 1 + Get 1 FREE',
     price: '$51.30',
     originalPrice: '$114.00',
-    shipping: '',
+    shipping: '+ $8.00 Shipping',
     saveBadge: 'Save $62.70',
-    bonuses: ['+FREE Comb', '+PDF Guide'],
+    bonuses: [],
     pricePerBottle: 'Save 40%',
   },
   {
@@ -50,7 +50,7 @@ const bundles: BundleOption[] = [
     shipping: '',
     saveBadge: 'Save $124.40',
     popular: true,
-    bonuses: ['+FREE Comb', '+PDF Guide', '+FREE Shipping'],
+    bonuses: ['+FREE Comb'],
     pricePerBottle: 'Save 55%',
   },
   {
@@ -61,7 +61,7 @@ const bundles: BundleOption[] = [
     shipping: '',
     saveBadge: 'Save $187.00',
     bestValue: true,
-    bonuses: ['+FREE Comb', '+PDF Guide', '+FREE Shipping', '+Mystery Gift'],
+    bonuses: ['+FREE Comb', '+PDF Guide'],
     pricePerBottle: 'Save 65%',
   },
 ];
