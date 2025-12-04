@@ -277,7 +277,7 @@ export default function ShopPage() {
                     </svg>
                   ))}
                 </div>
-                <span className="text-sm font-medium text-gray-500">Rated 4.9/5 by 30,000+ Customers</span>
+                <span className="text-sm font-medium text-gray-500">Rated 4.8/5 by 30,000+ Customers</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl font-serif font-medium text-[#1a2f23] mb-4 leading-tight">

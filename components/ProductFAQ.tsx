@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const faqs = [
   {
-    question: 'How To Take',
+    question: 'How To Use',
     answer: 'Apply 2-3 full droppers of the 30ml oil directly to the scalp and massage gently. Use the 10ml roll-on for targeted application on thinning areas. For best results, leave it on overnight or for at least 2 hours before washing.'
   },
   {
@@ -12,7 +12,7 @@ const faqs = [
     answer: 'Our formula contains scientifically proven ingredients like Rosemary Oil (shown to be as effective as 2% minoxidil), Pumpkin Seed Oil (supports hair count increase), and Black Seed Oil (anti-inflammatory properties).',
   },
   {
-    question: 'How Long Until I See Result?',
+    question: 'How Long Until I See Results?',
     answer: 'Most customers notice reduced hair fall within 2-4 weeks. Visible thickness and new growth typically appear around months 3-4 with consistent use. Results may vary.',
   },
   {

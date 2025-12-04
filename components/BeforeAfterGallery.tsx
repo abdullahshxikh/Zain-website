@@ -99,7 +99,7 @@ export default function BeforeAfterGallery() {
           <div className="text-gray-700 text-sm md:text-base">See Results in 30 Days</div>
         </div>
         <div>
-          <div className="text-3xl md:text-4xl font-bold text-[#bb9c30] mb-1">4.9★</div>
+          <div className="text-3xl md:text-4xl font-bold text-[#bb9c30] mb-1">4.8★</div>
           <div className="text-gray-700 text-sm md:text-base">Average Rating</div>
         </div>
       </motion.div>

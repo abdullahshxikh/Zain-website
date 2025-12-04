@@ -192,7 +192,7 @@ export default function BeforeAfterSection() {
             <div className="text-gray-300 text-xs">See Results in 30 Days</div>
           </div>
           <div>
-            <div className="text-xl sm:text-2xl font-bold text-[#bb9c30] mb-1">4.9★</div>
+            <div className="text-xl sm:text-2xl font-bold text-[#bb9c30] mb-1">4.8★</div>
             <div className="text-gray-300 text-xs">Average Rating</div>
           </div>
         </motion.div>

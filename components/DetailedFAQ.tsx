@@ -4,15 +4,15 @@ import Image from 'next/image';
 
 const faqs = [
   {
-    question: 'What are the key ingredients in your supplements?',
+    question: 'What are the key ingredients in your hair oil duo?',
     answer: 'Zumfali Hair Oil features a powerful 7-in-1 blend including Mustard Oil (nourishes scalp), Coconut Oil (hydrates), Black Seed Oil (anti-inflammatory), Castor Oil (thickens), Pumpkin Seed Oil (blocks DHT), Rosemary Oil (stimulates growth), and Vitamin E (antioxidant repair). It is 100% natural and free from synthetic fragrances.'
   },
   {
-    question: 'Are your supplements safe for everyone to use?',
+    question: 'Is the hair oil duo safe for everyone to use?',
     answer: 'Our oil is formulated with natural ingredients and is generally safe for all hair types. However, we recommend doing a patch test first, especially if you have sensitive skin or known allergies to any of the botanical ingredients. Consult your doctor if pregnant or nursing.'
   },
   {
-    question: 'How do you ensure the quality and safety of your supplements?',
+    question: 'How do you ensure the quality and safety of your hair oil duo?',
     answer: 'We source premium, ethically harvested ingredients and manufacture in small batches to ensure freshness and potency. Our formula is third-party tested for purity and free from harmful additives like parabens, sulfates, and silicones.'
   },
   {
