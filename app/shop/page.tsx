@@ -34,35 +34,35 @@ type BundleOption = {
 const bundles: BundleOption[] = [
   {
     id: 1,
-    title: 'Buy 1 + Get 1 FREE',
-    price: '$51.30',
-    originalPrice: '$114.00',
+    title: 'Buy 1 Bottle',
+    price: '$39.99',
+    originalPrice: '$59.99',
     shipping: '+ $8.00 Shipping',
-    saveBadge: 'Save $62.70',
+    saveBadge: 'Save $20.00',
     bonuses: [],
-    pricePerBottle: 'Save 40%',
+    pricePerBottle: 'Save 33%',
   },
   {
     id: 2,
-    title: 'Buy 2 + Get 2 FREE',
-    price: '$102.60',
-    originalPrice: '$227.00',
+    title: 'Buy 2 Bottles',
+    price: '$69.99',
+    originalPrice: '$119.98',
     shipping: '',
-    saveBadge: 'Save $124.40',
+    saveBadge: 'Save $49.99',
     popular: true,
     bonuses: ['+FREE Comb'],
-    pricePerBottle: 'Save 55%',
+    pricePerBottle: 'Save 42%',
   },
   {
     id: 3,
-    title: 'Buy 3 + Get 3 FREE',
-    price: '$153.00',
-    originalPrice: '$340.00',
+    title: 'Buy 3 Bottles',
+    price: '$99.99',
+    originalPrice: '$179.97',
     shipping: '',
-    saveBadge: 'Save $187.00',
+    saveBadge: 'Save $79.98',
     bestValue: true,
     bonuses: ['+FREE Comb', '+PDF Guide'],
-    pricePerBottle: 'Save 65%',
+    pricePerBottle: 'Save 44%',
   },
 ];
 
@@ -153,13 +153,13 @@ export default function ShopPage() {
 
     // Map bundle selection to actual Shopify variant titles
     // Based on your Shopify product variants:
-    // Bundle 1 = "Buy 1 (30ml + 10ml)" - $29.99
-    // Bundle 2 = "Buy 2 Get 1 Free" - $59.99  
-    // Bundle 3 = "Buy 3 Get 2 Free" - $89.99
+    // Bundle 1 = "Buy 1"
+    // Bundle 2 = "Buy 2"  
+    // Bundle 3 = "Buy 3"
     const bundleToVariantMap: Record<number, string> = {
-      1: 'Buy 1 + Get 1 FREE',
-      2: 'Buy 2 + Get 2 FREE',
-      3: 'Buy 3 + Get 3 FREE',
+      1: 'Buy 1',
+      2: 'Buy 2',
+      3: 'Buy 3',
     };
 
     const searchText = bundleToVariantMap[selectedBundle];
@@ -588,7 +588,7 @@ export default function ShopPage() {
                     >
                       {bundles.map((b) => (
                         <option key={b.id} value={b.id}>
-                          {b.id === 1 ? '1 Bottle' : b.id === 2 ? '4 Bottles (Buy 2+2)' : '6 Bottles (Buy 3+3)'}
+                          {b.id === 1 ? '1 Bottle' : b.id === 2 ? '2 Bottles' : '3 Bottles'}
                         </option>
                       ))}
                     </select>
