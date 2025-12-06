@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProblemSolution from '@/components/ProblemSolution';
+import HairLossSection from '@/components/HairLossSection';
 import ProductFunnel from '@/components/ProductFunnel';
 import ClinicallyTested from '@/components/ClinicallyTested';
 import ReviewGrid from '@/components/ReviewGrid';
@@ -306,7 +307,7 @@ export default function ShopPage() {
               </p>
 
               {/* Benefits List */}
-              <div className="space-y-3 mb-10">
+              <div className="space-y-3 mb-6">
                 {['Scalp nourishment and hydration', 'Strengthens hair from root to tip', 'Restores natural shine and vitality'].map((benefit, i) => (
                   <div key={i} className="flex items-center gap-3 text-gray-700">
                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1a2f23]/5 flex items-center justify-center text-[#1a2f23]">
@@ -316,6 +317,11 @@ export default function ShopPage() {
                   </div>
                 ))}
               </div>
+
+              <p className="text-sm font-bold text-[#1a2f23] mb-10 flex items-center gap-2">
+                <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Shipping takes 8-12 business days
+              </p>
 
               <div className="h-px bg-gray-200 mb-8" />
               
@@ -529,6 +535,7 @@ export default function ShopPage() {
         </div>
         
         <ProblemSolution />
+        <HairLossSection />
         <ReviewGrid />
         <InteractiveBenefits />
         <ClinicallyTested />

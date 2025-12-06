@@ -9,6 +9,9 @@ const playfair = Playfair_Display({ subsets: ["latin"], variable: '--font-playfa
 export const metadata: Metadata = {
   title: "Zumfali - Premium Natural Hair Oil",
   description: "Nourish your hair with scientifically backed natural ingredients. 7-in-1 formula for all hair types.",
+  icons: {
+    icon: '/Logo1.png',
+  },
 };
 
 export default function RootLayout({
