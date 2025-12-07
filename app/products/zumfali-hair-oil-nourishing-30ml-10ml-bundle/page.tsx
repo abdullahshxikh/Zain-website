@@ -263,7 +263,7 @@ export default function ProductPage() {
 
               <h1 className="text-4xl sm:text-5xl font-serif font-medium text-[#1a2f23] mb-4 leading-tight">
                 Zumfali 7-in-1 Complete <br />
-                <span className="italic text-[#bb9c30]">Vital Glow Blend</span>
+                <span className="italic text-[#bb9c30]">Hair Growth Oil</span>
               </h1>
 
               <div className="flex items-baseline gap-3 mb-6">

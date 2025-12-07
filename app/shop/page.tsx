@@ -283,7 +283,7 @@ export default function ShopPage() {
 
               <h1 className="text-4xl sm:text-5xl font-serif font-medium text-[#1a2f23] mb-4 leading-tight">
                 Zumfali 7-in-1 Complete <br />
-                <span className="italic text-[#bb9c30]">Vital Glow Blend</span>
+                <span className="italic text-[#bb9c30]">Hair Growth Oil</span>
               </h1>
 
               <div className="flex items-baseline gap-3 mb-6">
@@ -317,11 +317,6 @@ export default function ShopPage() {
                   </div>
                 ))}
               </div>
-
-              <p className="text-sm font-bold text-[#1a2f23] mb-10 flex items-center gap-2">
-                <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                Shipping takes 8-12 business days
-              </p>
 
               <div className="h-px bg-gray-200 mb-8" />
               
@@ -492,12 +487,17 @@ export default function ShopPage() {
               {/* CTA Button - single, clean, Shopify-powered */}
               <motion.button
                 onClick={handleBuyNow}
-                className="w-full py-5 bg-[#1a2f23] text-white rounded-lg font-bold text-xl uppercase tracking-wider shadow-xl shadow-[#1a2f23]/20 hover:bg-[#2d4a38] transition-all transform hover:-translate-y-1 mb-8"
+                className="w-full py-5 bg-[#1a2f23] text-white rounded-lg font-bold text-xl uppercase tracking-wider shadow-xl shadow-[#1a2f23]/20 hover:bg-[#2d4a38] transition-all transform hover:-translate-y-1 mb-4"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >
                 ADD TO CART
               </motion.button>
+
+              <p className="text-xs text-gray-500 text-center mb-8 flex items-center justify-center gap-2">
+                <svg className="w-3 h-3 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Shipping takes 8-12 business days
+              </p>
               
               {/* Payment Icons */}
               <div className="flex justify-center mb-6">
@@ -565,7 +565,7 @@ export default function ShopPage() {
                   </div>
                   <div className="flex-1 sm:flex-none">
                      <h4 className="font-bold text-[#1a2f23] text-sm sm:text-base leading-tight mb-1 font-sans">
-                       Zumfali 7-in-1 Complete Vital Glow Blend
+                       Zumfali 7-in-1 Complete Hair Growth Oil
                      </h4>
                      <div className="flex items-center gap-2">
                         <span className="font-extrabold text-[#1a2f23] text-lg">
