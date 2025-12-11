@@ -74,6 +74,14 @@ export default function ShopPage() {
   const [shopifyProduct, setShopifyProduct] = useState<any | null>(null);
   const [accountLoggedIn, setAccountLoggedIn] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
+  const [activeImage, setActiveImage] = useState(0);
+
+  const productImages = [
+    '/Screenshot 2025-12-11 at 5.31.49 PM.png',
+    '/Screenshot 2025-12-11 at 5.33.16 PM.png',
+    '/Screenshot 2025-12-11 at 5.33.42 PM.png',
+    '/Screenshot 2025-12-11 at 5.34.02 PM.png',
+  ];
 
   // Minimal Shopify integration: load SDK once, fetch product once, no embedded UI
   useEffect(() => {
@@ -234,7 +242,7 @@ export default function ShopPage() {
               <div className="sticky top-32">
                 <div className="relative w-full aspect-square bg-white rounded-[2rem] overflow-hidden shadow-lg border border-gray-100 mb-4">
                   <Image
-                    src="/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png"
+                    src={productImages[activeImage]}
                     alt="Zumfali 7-in-1 Hair Oil"
                     fill
                     className="object-contain p-12 hover:scale-105 transition-transform duration-700"
@@ -248,11 +256,17 @@ export default function ShopPage() {
                 
                 {/* Thumbnails */}
                 <div className="grid grid-cols-4 gap-4">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="relative aspect-square bg-white rounded-xl overflow-hidden border border-gray-100 cursor-pointer hover:border-[#bb9c30] transition-colors group shadow-md">
+                  {productImages.map((src, i) => (
+                    <div 
+                      key={i} 
+                      onClick={() => setActiveImage(i)}
+                      className={`relative aspect-square bg-white rounded-xl overflow-hidden border cursor-pointer hover:border-[#bb9c30] transition-all duration-300 group shadow-md ${
+                        activeImage === i ? 'border-[#bb9c30] ring-2 ring-[#bb9c30]/20' : 'border-gray-100'
+                      }`}
+                    >
                       <Image
-                        src="/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png"
-                        alt={`View ${i}`}
+                        src={src}
+                        alt={`View ${i + 1}`}
                         fill
                         className="object-contain p-2 group-hover:scale-110 transition-transform duration-500"
                       />
@@ -557,7 +571,7 @@ export default function ShopPage() {
                <div className="flex items-center gap-4 w-full sm:w-auto">
                   <div className="relative w-12 h-12 sm:w-16 sm:h-16 bg-gray-50 rounded-lg border border-gray-100 overflow-hidden flex-shrink-0 hidden xs:block">
                      <Image 
-                        src="/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png"
+                        src={productImages[0]}
                         alt="Product"
                         fill
                         className="object-contain p-1"
