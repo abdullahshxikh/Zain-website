@@ -5,11 +5,35 @@ import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { markShopifyLoggedIn, redirectToShopifyLogout } from '@/lib/shopifyAuth';
+import { useRouter } from 'next/navigation';
 
 export default function AccountPage() {
+  const router = useRouter();
+
   useEffect(() => {
     markShopifyLoggedIn();
-  }, []);
+    
+    // Check for pending cart items
+    const checkPendingCart = async () => {
+      const pendingItem = localStorage.getItem('pendingAddToCart');
+      if (pendingItem) {
+        try {
+          const { bundleId, subscribeMode } = JSON.parse(pendingItem);
+          
+          // Clear pending item
+          localStorage.removeItem('pendingAddToCart');
+          
+          // Redirect back to shop to handle the addition
+          router.push(`/shop?restore_cart=${bundleId}&subscribe=${subscribeMode}`);
+        } catch (e) {
+          console.error('Error parsing pending cart', e);
+          localStorage.removeItem('pendingAddToCart');
+        }
+      }
+    };
+    
+    checkPendingCart();
+  }, [router]);
 
   const handleOpenShopifyDashboard = () => {
     if (typeof window === 'undefined') return;

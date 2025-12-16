@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { useCart } from '@/context/CartContext';
+import { useMetaPixel } from '@/hooks/useMetaPixel';
 import ProblemSolution from '@/components/ProblemSolution';
 import HairLossSection from '@/components/HairLossSection';
 import ProductFunnel from '@/components/ProductFunnel';
@@ -67,10 +69,16 @@ const bundles: BundleOption[] = [
   },
 ];
 
+import { useRouter, useSearchParams } from 'next/navigation';
+
 export default function ShopPage() {
+  const { shopifyClient, addToCart, openCart } = useCart();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const { trackViewContent, trackAddToCart } = useMetaPixel();
+  
   const [selectedBundle, setSelectedBundle] = useState<number>(2);
   const [subscribeMode, setSubscribeMode] = useState(false);
-  const [shopifyClient, setShopifyClient] = useState<any | null>(null);
   const [shopifyProduct, setShopifyProduct] = useState<any | null>(null);
   const [accountLoggedIn, setAccountLoggedIn] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
@@ -103,59 +111,111 @@ export default function ShopPage() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (!shopifyClient) return;
 
-    const scriptURL =
-      'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
-
-    function ShopifyBuyInit() {
-      const ShopifyBuy = (window as any).ShopifyBuy;
-      if (!ShopifyBuy) return;
-
-      const client = ShopifyBuy.buildClient({
-        domain: 'avw1pr-qj.myshopify.com',
-        storefrontAccessToken: '74472e64ff2b3cc2204f58c4d56eb5bb',
+    // Fetch all products and keep only the one we care about
+    shopifyClient.product.fetchAll().then((products: any[]) => {
+      const target = products.find((p: any) => {
+        const numericId = String(p.id).split('/').pop();
+        return numericId === '9848343953705';
       });
 
-      // Fetch all products and keep only the one we care about
-      client.product.fetchAll().then((products: any[]) => {
-        const target = products.find((p: any) => {
-          const numericId = String(p.id).split('/').pop();
-          return numericId === '9848343953705';
-        });
+      setShopifyProduct(target || null);
+    });
+  }, [shopifyClient]);
 
-        setShopifyClient(client);
-        setShopifyProduct(target || null);
-      });
+  // Fire ViewContent once when product is loaded
+  useEffect(() => {
+    if (!shopifyProduct) return;
+    const productId = String(shopifyProduct.id).split('/').pop() || String(shopifyProduct.id);
+    const defaultPrice = parseFloat(bundles[1].price.replace('$', '')); // Bundle 2 (most popular)
+    trackViewContent(productId, defaultPrice);
+  }, [shopifyProduct, trackViewContent]);
+
+  // Handle auto-restore cart from redirection
+  useEffect(() => {
+    if (!shopifyClient || !shopifyProduct) return;
+    
+    const restoreCartId = searchParams?.get('restore_cart');
+    const subscribeParam = searchParams?.get('subscribe');
+    
+    if (restoreCartId) {
+      const bundleId = parseInt(restoreCartId);
+      const isSubscribe = subscribeParam === 'true';
+      
+      if (!isNaN(bundleId)) {
+        // Set state for UI consistency
+        setSelectedBundle(bundleId);
+        setSubscribeMode(isSubscribe);
+        
+        // Trigger add to cart (custom logic duplicator or extract function)
+        // Since we can't easily call handleAddToCart with stale state closures, we duplicate the logic briefly
+        // or safer: clean the URL and rely on user click? No, "bypass".
+        
+        // Let's invoke logic directly
+        const variants = shopifyProduct.variants || [];
+        if (!variants.length) return;
+
+        const bundleToVariantMap: Record<number, string> = {
+          1: 'Buy 1',
+          2: 'Buy 2',
+          3: 'Buy 3',
+        };
+        const searchText = bundleToVariantMap[bundleId];
+        let targetVariant: any | null = null;
+        
+        if (searchText) {
+          if (isSubscribe) {
+             targetVariant = variants.find((v: any) => {
+               const t = String(v.title).toLowerCase();
+               return t.includes(searchText.toLowerCase()) &&
+                      (t.includes('subscribe') || t.includes('subscription') || t.includes('auto'));
+             });
+          }
+          if (!targetVariant) {
+            targetVariant = variants.find((v: any) => {
+               const t = String(v.title).toLowerCase();
+               return t.includes(searchText.toLowerCase());
+            });
+          }
+        }
+        
+        if (targetVariant) {
+             const selectedBundleData = bundles.find(b => b.id === bundleId);
+             const variantPrice = parseFloat(selectedBundleData?.price?.replace('$', '') || '0');
+
+             // Fire Meta Pixel AddToCart event for auto-restore
+             trackAddToCart(
+               targetVariant.id,
+               targetVariant.title,
+               variantPrice
+             );
+
+             addToCart({
+               variantId: targetVariant.id,
+               title: shopifyProduct.title,
+               variantTitle: targetVariant.title,
+               price: selectedBundleData?.price || '$0.00',
+               quantity: 1,
+               image: productImages[0], // Approximate
+               originalPrice: selectedBundleData?.originalPrice
+             });
+             openCart();
+             
+             // Clean URL
+             router.replace('/shop', { scroll: false });
+        }
+      }
     }
+  }, [shopifyClient, shopifyProduct, searchParams, addToCart, openCart, router, trackAddToCart]);
 
-    function loadScript() {
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = scriptURL;
-      (document.head || document.body).appendChild(script);
-      script.onload = ShopifyBuyInit;
-    }
-
-    const ShopifyBuy = (window as any).ShopifyBuy;
-    if (ShopifyBuy) {
-      ShopifyBuyInit();
-    } else {
-      loadScript();
-    }
-  }, []);
-
+  // Check login status after component mounts and after any navigation
   useEffect(() => {
     if (typeof window === 'undefined') return;
     setAccountLoggedIn(isShopifyLoggedIn());
   }, []);
 
-  const handleBuyNow = async () => {
-    if (!accountLoggedIn) {
-      // Users must be signed up before purchasing; send them to Shopify signup.
-      redirectToShopifySignup();
-      return;
-    }
-
+  const handleAddToCart = () => {
     if (!shopifyClient || !shopifyProduct) return;
 
     const variants = shopifyProduct.variants || [];
@@ -177,8 +237,6 @@ export default function ShopPage() {
 
     if (searchText) {
       // If subscribe mode is enabled, look for subscription variants
-      // (Note: Currently your product only has one-time purchase variants.
-      // If you add subscription variants later, they should contain 'subscribe' in the title)
       if (subscribeMode) {
         targetVariant = variants.find((v: any) => {
           const t = String(v.title).toLowerCase();
@@ -198,32 +256,31 @@ export default function ShopPage() {
 
     if (!targetVariant) {
       console.warn('Could not find matching variant for bundle:', selectedBundle);
-      console.warn('Searched for:', searchText);
-      console.warn('Available variants:', variants.map((v: any) => v.title));
       targetVariant = variants[0];
     }
 
-    try {
-      const checkout = await shopifyClient.checkout.create();
-      const lineItems = [
-        {
-          variantId: targetVariant.id,
-          quantity: 1,
-        },
-      ];
+    // Fire Meta Pixel AddToCart event BEFORE adding to cart
+    const selectedBundleData = bundles.find(b => b.id === selectedBundle);
+    const variantPrice = parseFloat(selectedBundleData?.price?.replace('$', '') || '0');
 
-      const updatedCheckout = await shopifyClient.checkout.addLineItems(
-        checkout.id,
-        lineItems
-      );
+    trackAddToCart(
+      targetVariant.id,
+      targetVariant.title,
+      variantPrice
+    );
 
-      // Redirect in the same tab to Shopify checkout
-      if (updatedCheckout && updatedCheckout.webUrl) {
-        window.location.href = updatedCheckout.webUrl;
-      }
-    } catch (err) {
-      console.error('Error creating Shopify checkout', err);
-    }
+    // Add to Cart Logic
+    addToCart({
+      variantId: targetVariant.id,
+      title: shopifyProduct.title,
+      variantTitle: targetVariant.title,
+      price: selectedBundleData?.price || '$0.00',
+      quantity: 1,
+      image: productImages[0],
+      originalPrice: selectedBundleData?.originalPrice
+    });
+    
+    openCart();
   };
 
   return (
@@ -245,6 +302,7 @@ export default function ShopPage() {
                   <Image
                     src={productImages[activeImage]}
                     alt="Zumfali 7-in-1 Hair Oil"
+                    title="Zumfali 7-in-1 Hair Oil"
                     fill
                     className={`object-contain transition-transform duration-700 hover:scale-105 ${
                       activeImage === 0 ? 'p-8 sm:p-12' : 'p-0 sm:p-0'
@@ -292,7 +350,8 @@ export default function ShopPage() {
                     >
                       <Image
                         src={src}
-                        alt={`View ${i + 1}`}
+                        alt={`Zumfali 7-in-1 Hair Oil image ${i + 1}`}
+                        title={`Zumfali 7-in-1 Hair Oil image ${i + 1}`}
                         fill
                         className="object-contain p-1 group-hover:scale-110 transition-transform duration-500"
                       />
@@ -526,7 +585,7 @@ export default function ShopPage() {
 
               {/* CTA Button - single, clean, Shopify-powered */}
               <motion.button
-                onClick={handleBuyNow}
+                onClick={handleAddToCart}
                 className="w-full py-5 bg-[#1a2f23] text-white rounded-lg font-bold text-xl uppercase tracking-wider shadow-xl shadow-[#1a2f23]/20 hover:bg-[#2d4a38] transition-all transform hover:-translate-y-1 mb-4"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
@@ -545,6 +604,7 @@ export default function ShopPage() {
                    <Image 
                      src="/payment-icons.png" 
                      alt="Secure Payment Options" 
+                     title="Secure Payment Options" 
                      fill 
                      className="object-contain"
                    />
@@ -598,7 +658,8 @@ export default function ShopPage() {
                   <div className="relative w-12 h-12 sm:w-16 sm:h-16 bg-gray-50 rounded-lg border border-gray-100 overflow-hidden flex-shrink-0 hidden xs:block">
                      <Image 
                         src={productImages[0]}
-                        alt="Product"
+                        alt="Zumfali 7-in-1 Hair Oil"
+                        title="Zumfali 7-in-1 Hair Oil"
                         fill
                         className="object-contain p-1"
                      />
@@ -645,10 +706,10 @@ export default function ShopPage() {
                   </div>
 
                   <button
-                    onClick={handleBuyNow}
+                    onClick={handleAddToCart}
                     className="flex-1 sm:flex-none px-8 py-3 bg-[#1a2f23] text-white rounded-lg font-bold text-base hover:bg-[#2d4a38] transition-colors shadow-lg shadow-[#1a2f23]/20 whitespace-nowrap"
                   >
-                    Shop Now
+                    ADD TO CART
                   </button>
                </div>
             </div>

@@ -77,6 +77,7 @@ export default function BeforeAfterSection() {
                 <Image
                   src={`/before-after/${images[currentIndex]}.jpg`}
                   alt={`Before and After Result ${images[currentIndex]}`}
+                  title={`Before and after result ${images[currentIndex]}`}
                   fill
                   className="object-cover"
                   priority={currentIndex === 0}
@@ -145,7 +146,8 @@ export default function BeforeAfterSection() {
               >
                 <Image
                   src={`/before-after/${img}.jpg`}
-                  alt={`Thumbnail ${img}`}
+                  alt={`Before and after thumbnail ${img}`}
+                  title={`Before and after thumbnail ${img}`}
                   fill
                   className="object-cover"
                 />

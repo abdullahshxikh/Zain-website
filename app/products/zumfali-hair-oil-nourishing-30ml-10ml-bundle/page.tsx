@@ -216,6 +216,7 @@ export default function ProductPage() {
                   <Image
                     src="/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png"
                     alt="Zumfali 7-in-1 Hair Oil"
+                    title="Zumfali 7-in-1 Hair Oil"
                     fill
                     className="object-contain p-12 hover:scale-105 transition-transform duration-700"
                     priority
@@ -232,7 +233,8 @@ export default function ProductPage() {
                     <div key={i} className="relative aspect-square bg-white rounded-xl overflow-hidden border border-gray-100 cursor-pointer hover:border-[#bb9c30] transition-colors group shadow-md">
                       <Image
                         src="/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png"
-                        alt={`View ${i}`}
+                        alt={`Zumfali 7-in-1 Hair Oil view ${i}`}
+                        title={`Zumfali 7-in-1 Hair Oil view ${i}`}
                         fill
                         className="object-contain p-2 group-hover:scale-110 transition-transform duration-500"
                       />
@@ -338,7 +340,7 @@ export default function ProductPage() {
 
                       {/* Image Thumbnail */}
                       <div className="relative w-12 h-12 flex-shrink-0 mr-5">
-                        <Image src="/product-image.png" alt="" fill className="object-contain" />
+                        <Image src="/product-image.png" alt="Zumfali hair oil bottle" title="Zumfali hair oil bottle" fill className="object-contain" />
                       </div>
 
                       {/* Details */}

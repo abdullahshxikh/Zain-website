@@ -66,6 +66,7 @@ export default function InteractiveBenefits() {
                 <Image
                   src="/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png"
                   alt="Zumfali Hair Oil"
+                  title="Zumfali Hair Oil"
                   fill
                   className="object-contain drop-shadow-xl"
                   priority

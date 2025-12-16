@@ -24,6 +24,7 @@ export default function HeroSection() {
           <Image
             src="/Screenshot 2025-11-22 at 5.35.59 PM.png"
             alt="Zumfali Hair Oil Transformation"
+            title="Zumfali Hair Oil Transformation"
             fill
             className="object-contain object-bottom lg:object-contain lg:object-bottom"
             priority

@@ -53,7 +53,7 @@ export default function ProductFunnel() {
                  <div className="relative w-32 h-12">
                     {/* Text Logo equivalent */}
                     <div className="flex items-center justify-center w-full h-full bg-[#1a2f23] rounded-lg text-white font-serif font-bold text-xl">
-                      <Image src="/Logo1.png" alt="Zumfali" width={100} height={40} className="w-20 h-auto object-contain filter brightness-0 invert" />
+                      <Image src="/Logo1.png" alt="Zumfali" title="Zumfali logo" width={100} height={40} className="w-20 h-auto object-contain filter brightness-0 invert" />
                     </div>
                  </div>
               </div>

@@ -35,7 +35,10 @@ export default function FacebookPixel() {
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '1131006299104337');
+            if(!window._pixel_init_1825759484727777) {
+              fbq('init', '1825759484727777');
+              window._pixel_init_1825759484727777 = true;
+            }
           `,
         }}
       />
@@ -44,7 +47,7 @@ export default function FacebookPixel() {
           height="1"
           width="1"
           style={{ display: "none" }}
-          src="https://www.facebook.com/tr?id=1131006299104337&ev=PageView&noscript=1"
+          src="https://www.facebook.com/tr?id=1825759484727777&ev=PageView&noscript=1"
           alt=""
         />
       </noscript>

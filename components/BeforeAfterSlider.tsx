@@ -37,6 +37,7 @@ export default function BeforeAfterSlider({
           <ReactCompareSliderImage
             src={beforeSrc}
             alt={beforeLabel}
+            title={beforeLabel}
             style={{ objectFit: 'cover' }}
           />
         }
@@ -44,6 +45,7 @@ export default function BeforeAfterSlider({
           <ReactCompareSliderImage
             src={afterSrc}
             alt={afterLabel}
+            title={afterLabel}
             style={{ objectFit: 'cover' }}
           />
         }

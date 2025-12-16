@@ -115,7 +115,9 @@ export default function DetailedFAQ() {
                <div className="aspect-[4/5] relative">
                  <Image 
                     src="/product-bundle.png" 
+
                     alt="Zumfali Bundle"
+                    title="Zumfali 7-in-1 Hair Oil Bundle"
                     fill
                     className="object-contain p-8"
                  />

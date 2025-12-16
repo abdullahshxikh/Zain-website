@@ -18,6 +18,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 't3.ftcdn.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.shopify.com',
+      },
     ],
   },
 };

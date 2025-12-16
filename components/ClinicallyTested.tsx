@@ -59,6 +59,7 @@ export default function ClinicallyTested() {
               <Image
                 src="/clinically-tested.png"
                 alt="Clinically Tested Formula"
+                title="Clinically Tested Formula"
                 fill
                 className="object-cover"
               />

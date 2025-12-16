@@ -45,6 +45,7 @@ export default function ProductPricingSection() {
               <Image
                 src="/product-bundle.png"
                 alt="Zumfali 7-in-1 Hair Oil Duo"
+                title="Zumfali 7-in-1 Hair Oil Duo"
                 fill
                 className="object-contain p-12 hover:scale-105 transition-transform duration-700"
                 priority

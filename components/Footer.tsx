@@ -12,6 +12,7 @@ export default function Footer() {
             <Image
               src="/Logo1.png"
               alt="Zumfali"
+              title="Zumfali logo"
               width={160}
               height={60}
               className="h-12 w-auto"
@@ -137,6 +138,7 @@ export default function Footer() {
              <Image 
                src="/payment-icons.png" 
                alt="Accepted Payment Methods" 
+               title="Accepted Payment Methods" 
                fill 
                className="object-contain"
              />

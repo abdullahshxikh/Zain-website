@@ -105,7 +105,7 @@ export default function ProductFAQ() {
              {/* Using a generic placeholder if no image available, or the model image as placeholder */}
              <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400 text-xs">
                {reviews[currentReview].image ? (
-                 <Image src={reviews[currentReview].image} alt={reviews[currentReview].name} fill className="object-cover" />
+                 <Image src={reviews[currentReview].image} alt={reviews[currentReview].name} title={`${reviews[currentReview].name} review photo`} fill className="object-cover" />
                ) : (
                  reviews[currentReview].name.charAt(0)
                )}
