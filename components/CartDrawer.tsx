@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
+import { useMetaPixel } from '@/hooks/useMetaPixel';
 
 export default function CartDrawer() {
   const { items, isOpen, closeCart, updateQuantity, removeFromCart, checkout, cartTotal } = useCart();
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
+  const { trackInitiateCheckout } = useMetaPixel();
 
   // Timer logic for "Reserved For"
   useEffect(() => {
@@ -200,7 +202,19 @@ export default function CartDrawer() {
                 </div>
                 
                 <button
-                  onClick={checkout}
+                  onClick={() => {
+                    trackInitiateCheckout(
+                      items.map((item) => ({
+                        id: item.variantId,
+                        quantity: item.quantity,
+                        item_price: parseFloat(
+                          String(item.price || '0').replace(/[^0-9.]/g, '')
+                        ),
+                      })),
+                      cartTotal
+                    );
+                    checkout();
+                  }}
                   className="w-full py-4 bg-[#1b5e20] text-white rounded-lg font-bold text-lg uppercase tracking-wider shadow-xl hover:bg-[#2d4a38] transition-all transform hover:-translate-y-1"
                 >
                   Check out

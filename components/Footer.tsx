@@ -1,8 +1,11 @@
 'use client';
 
 import Image from 'next/image';
+import { useMetaPixel } from '@/hooks/useMetaPixel';
 
 export default function Footer() {
+  const { trackSubscribe, trackCompleteRegistration, trackContact } = useMetaPixel();
+
   return (
     <footer className="border-t border-[#1a2f23]/10 bg-[#FAFAF9]">
       <div className="mx-auto flex max-w-7xl flex-col gap-12 px-4 py-16 sm:px-6 lg:flex-row lg:items-start lg:gap-20 lg:px-12">
@@ -94,6 +97,7 @@ export default function Footer() {
                 <a
                   href="mailto:hello@zumfali.co"
                   className="hover:text-[#bb9c30] transition-colors"
+                  onClick={() => trackContact('email')}
                 >
                   hello@zumfali.co
                 </a>
@@ -112,10 +116,19 @@ export default function Footer() {
               new Zumfali drops.
             </p>
             <form
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={(e) => {
+                e.preventDefault();
+                const form = e.currentTarget;
+                const email = new FormData(form).get('email');
+                if (!email) return;
+                trackSubscribe();
+                trackCompleteRegistration('newsletter_footer');
+                form.reset();
+              }}
               className="flex flex-col gap-3"
             >
               <input
+                name="email"
                 type="email"
                 placeholder="Email"
                 className="w-full rounded-md border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#bb9c30] focus:ring-1 focus:ring-[#bb9c30] focus:outline-none transition-all"

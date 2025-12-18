@@ -17,6 +17,7 @@ import {
   isShopifyLoggedIn,
   redirectToShopifySignup,
 } from '@/lib/shopifyAuth';
+import { useMetaPixel } from '@/hooks/useMetaPixel';
 
 type BundleOption = {
   id: number;
@@ -70,6 +71,7 @@ export default function ProductPage() {
   const [shopifyClient, setShopifyClient] = useState<any | null>(null);
   const [shopifyProduct, setShopifyProduct] = useState<any | null>(null);
   const [accountLoggedIn, setAccountLoggedIn] = useState(false);
+  const { trackInitiateCheckout } = useMetaPixel();
 
   // Minimal Shopify integration: load SDK once, fetch product once, no embedded UI
   useEffect(() => {
@@ -175,6 +177,20 @@ export default function ProductPage() {
     }
 
     try {
+      const selectedBundleData = bundles.find((b) => b.id === selectedBundle);
+      const value = parseFloat(String(selectedBundleData?.price || '0').replace(/[^0-9.]/g, ''));
+
+      trackInitiateCheckout(
+        [
+          {
+            id: String(targetVariant.id),
+            quantity: 1,
+            item_price: isNaN(value) ? undefined : value,
+          },
+        ],
+        isNaN(value) ? 0 : value
+      );
+
       const checkout = await shopifyClient.checkout.create();
       const lineItems = [
         {

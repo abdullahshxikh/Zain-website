@@ -2,11 +2,13 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { useMetaPixel } from '@/hooks/useMetaPixel';
 
 export default function NewsletterPopup() {
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const { trackSubscribe, trackCompleteRegistration } = useMetaPixel();
 
   useEffect(() => {
     // Check if user has seen popup
@@ -28,6 +30,8 @@ export default function NewsletterPopup() {
     e.preventDefault();
     // Simulate submission
     console.log('Newsletter signup:', email);
+    trackSubscribe();
+    trackCompleteRegistration('newsletter_popup');
     setSubmitted(true);
     localStorage.setItem('hasSeenPopup', 'true');
     setTimeout(() => {

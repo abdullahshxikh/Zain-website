@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useMetaPixel } from '@/hooks/useMetaPixel';
 
 const timeline = [
   {
@@ -45,6 +46,8 @@ const timeline = [
 
 export default function HowItWorksNewsletterSection() {
   const [mounted, setMounted] = useState(false);
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const { trackSubscribe, trackCompleteRegistration } = useMetaPixel();
 
   useEffect(() => {
     setMounted(true);
@@ -141,9 +144,17 @@ export default function HowItWorksNewsletterSection() {
                 type="email"
                 placeholder="Enter your email"
                 className="flex-1 px-6 py-3.5 bg-white border border-gray-200 rounded-full text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#bb9c30] transition-colors"
+                ref={emailRef}
               />
               <button
                 className="px-8 py-3.5 bg-[#1a2f23] text-white rounded-full font-medium hover:bg-[#2d4a38] transition-colors shadow-lg shadow-[#1a2f23]/20"
+                type="button"
+                onClick={() => {
+                  const email = emailRef.current?.value?.trim();
+                  if (!email) return;
+                  trackSubscribe();
+                  trackCompleteRegistration('newsletter_inline');
+                }}
               >
                 Subscribe
               </button>
