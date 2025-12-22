@@ -22,7 +22,7 @@ export default function HeroSection() {
       <div className="relative w-full lg:w-[45%] h-[50vh] lg:h-[90vh] lg:absolute lg:right-0 lg:bottom-0 order-1 lg:order-2 flex items-end justify-end">
         <div className="relative w-full h-full">
           <Image
-            src="/Screenshot 2025-11-22 at 5.35.59 PM.png"
+            src="/Hero girl new.jpg"
             alt="Zumfali Hair Oil Transformation"
             title="Zumfali Hair Oil Transformation"
             fill
