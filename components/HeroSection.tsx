@@ -15,7 +15,7 @@ export default function HeroSection() {
   if (!mounted) return null;
 
   return (
-    <section className="relative w-full min-h-[100dvh] bg-[#BCA379] flex flex-col lg:flex-row overflow-hidden pt-24 lg:pt-0">
+    <section className="relative w-full min-h-[100dvh] bg-[#b9a072] flex flex-col lg:flex-row overflow-hidden pt-24 lg:pt-0">
       {/* Mobile: Image on Top. Desktop: Image on Right (order-2) */}
       
       {/* Image Section */}
