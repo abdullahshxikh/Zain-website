@@ -22,11 +22,11 @@ export default function HeroSection() {
       <div className="relative w-full lg:w-[45%] h-[50vh] lg:h-[90vh] lg:absolute lg:right-0 lg:bottom-0 order-1 lg:order-2 flex items-end justify-end">
         <div className="relative w-full h-full">
           <Image
-            src="/Hero girl new.jpg"
+            src="/Hero girl.png"
             alt="Zumfali Hair Oil Transformation"
             title="Zumfali Hair Oil Transformation"
             fill
-            className="object-contain object-bottom lg:object-contain lg:object-bottom"
+            className="object-contain object-bottom lg:object-contain lg:object-center"
             priority
             quality={100}
             sizes="(max-width: 768px) 100vw, 50vw"
