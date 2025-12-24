@@ -28,7 +28,7 @@ export default function ProductPricingSection() {
   if (!mounted) return null;
 
   return (
-    <section 
+    <section
       className="relative py-20 lg:py-32 px-4 sm:px-6 lg:px-16 overflow-hidden bg-[#FAFAF9]"
     >
       <div className="relative z-10 max-w-7xl mx-auto">
@@ -43,11 +43,11 @@ export default function ProductPricingSection() {
           >
             <div className="relative w-full max-w-xl aspect-square bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border border-gray-100/50">
               <Image
-                src="/product-bundle.png"
+                src="/targeting grwth anytime a portable rokl in. desigen for dges and thinig ares felivers precise nourishmwnt and promotes concintend growth on the go 3/2.png"
                 alt="Zumfali 7-in-1 Hair Oil Duo"
                 title="Zumfali 7-in-1 Hair Oil Duo"
                 fill
-                className="object-contain p-12 hover:scale-105 transition-transform duration-700"
+                className="object-contain hover:scale-105 transition-transform duration-700"
                 priority
               />
             </div>
@@ -104,7 +104,7 @@ export default function ProductPricingSection() {
               <h3 className="text-2xl font-serif text-gray-900 text-center mb-6">
                 Reserve Your Bundle
               </h3>
-              
+
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input
@@ -124,7 +124,7 @@ export default function ProductPricingSection() {
                     required
                   />
                 </div>
-                
+
                 <motion.button
                   type="submit"
                   className="w-full py-4 rounded-xl font-medium text-lg text-white shadow-lg shadow-[#bb9c30]/20 transition-all"
