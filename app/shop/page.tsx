@@ -84,13 +84,31 @@ export default function ShopPage() {
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
 
-  const productImages = [
+  const [productImages, setProductImages] = useState([
     '/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png',
     '/prod-1.png',
     '/prod-2.png',
     '/prod-3.png',
     '/prod-4.png',
-  ];
+  ]);
+
+  useEffect(() => {
+    const bundleImages: Record<number, string> = {
+      1: '/targeting grwth anytime a portable rokl in. desigen for dges and thinig ares felivers precise nourishmwnt and promotes concintend growth on the go 3/2.png',
+      2: '/targeting grwth anytime a portable rokl in. desigen for dges and thinig ares felivers precise nourishmwnt and promotes concintend growth on the go 3/3.png',
+      3: '/targeting grwth anytime a portable rokl in. desigen for dges and thinig ares felivers precise nourishmwnt and promotes concintend growth on the go 3/4.png',
+    };
+
+    const newImage = bundleImages[selectedBundle];
+    if (newImage) {
+      setProductImages((prev) => {
+        const updated = [...prev];
+        updated[0] = newImage;
+        return updated;
+      });
+      setActiveImage(0);
+    }
+  }, [selectedBundle]);
 
   // Minimal Shopify integration: load SDK once, fetch product once, no embedded UI
   useEffect(() => {

@@ -15,18 +15,18 @@ export default function HeroSection() {
   if (!mounted) return null;
 
   return (
-    <section className="relative w-full min-h-[100dvh] bg-[#b79e6e] flex flex-col lg:flex-row overflow-hidden pt-24 lg:pt-0">
+    <section className="relative w-full min-h-[100dvh] bg-[#BCA379] flex flex-col lg:flex-row overflow-hidden pt-24 lg:pt-0">
       {/* Mobile: Image on Top. Desktop: Image on Right (order-2) */}
       
       {/* Image Section */}
-      <div className="relative w-full lg:w-[45%] h-[58vh] sm:h-[62vh] lg:h-[92vh] lg:absolute lg:right-0 lg:bottom-0 order-1 lg:order-2 flex items-center justify-center lg:items-end lg:justify-end px-4 sm:px-10 lg:px-0">
-        <div className="relative w-full h-full max-w-[520px] sm:max-w-[620px] lg:max-w-none">
+      <div className="relative w-full lg:w-[45%] h-[56vh] sm:h-[60vh] lg:h-[90vh] lg:absolute lg:right-0 lg:bottom-0 order-1 lg:order-2 flex items-center justify-center lg:items-end lg:justify-end px-4 sm:px-10 lg:px-0">
+        <div className="relative w-full h-full max-w-[520px] lg:max-w-none">
           <Image
-            src="/Hero%20girl%20true.jpg"
-            alt="Woman with healthy, nourished hair"
-            title="Woman with healthy, nourished hair"
+            src="/Hero%20girl.png"
+            alt="Woman with healthy hair"
+            title="Woman with healthy hair"
             fill
-            className="object-contain object-center lg:object-contain lg:object-bottom drop-shadow-[0_12px_35px_rgba(0,0,0,0.25)]"
+            className="object-contain object-center lg:object-contain lg:object-bottom"
             priority
             quality={90}
             sizes="(max-width: 1024px) 100vw, 45vw"
