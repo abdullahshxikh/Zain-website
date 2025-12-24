@@ -316,14 +316,13 @@ export default function ShopPage() {
               className="relative"
             >
               <div className="sticky top-32">
-                <div className="relative w-full aspect-square bg-white rounded-[2rem] overflow-hidden shadow-lg border border-gray-100 mb-4 group/main-image">
+                <div className="relative w-full aspect-square bg-white rounded-[2rem] overflow-hidden mb-4 group/main-image">
                   <Image
                     src={productImages[activeImage]}
                     alt="Zumfali 7-in-1 Hair Oil"
                     title="Zumfali 7-in-1 Hair Oil"
                     fill
-                    className={`object-contain transition-transform duration-700 hover:scale-105 ${activeImage === 0 ? 'p-8 sm:p-12' : 'p-0 sm:p-0'
-                      }`}
+                    className="object-contain transition-transform duration-700 hover:scale-105"
                     priority
                   />
 
@@ -333,7 +332,7 @@ export default function ShopPage() {
                       e.stopPropagation();
                       setActiveImage((prev) => (prev - 1 + productImages.length) % productImages.length);
                     }}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 flex items-center justify-center text-[#1a2f23] shadow-md hover:bg-white transition-all focus:opacity-100 z-10"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-[#1a2f23] hover:bg-white transition-all focus:opacity-100 z-10"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
                   </button>
@@ -342,14 +341,14 @@ export default function ShopPage() {
                       e.stopPropagation();
                       setActiveImage((prev) => (prev + 1) % productImages.length);
                     }}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 flex items-center justify-center text-[#1a2f23] shadow-md hover:bg-white transition-all focus:opacity-100 z-10"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-[#1a2f23] hover:bg-white transition-all focus:opacity-100 z-10"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                   </button>
 
                   {/* Floating Badge - Only show on first image */}
                   {activeImage === 0 && (
-                    <div className="absolute top-6 left-6 bg-[#1a2f23] text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest shadow-md">
+                    <div className="absolute top-6 left-6 bg-[#1a2f23] text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest">
                       Best Seller
                     </div>
                   )}
@@ -361,7 +360,7 @@ export default function ShopPage() {
                     <div
                       key={i}
                       onClick={() => setActiveImage(i)}
-                      className={`relative aspect-square bg-white rounded-xl overflow-hidden border cursor-pointer hover:border-[#bb9c30] transition-all duration-300 group shadow-sm ${activeImage === i ? 'border-[#bb9c30] ring-2 ring-[#bb9c30]/20' : 'border-gray-100'
+                      className={`relative aspect-square bg-white rounded-xl overflow-hidden cursor-pointer transition-all duration-300 group ${activeImage === i ? 'ring-2 ring-[#bb9c30]/20' : ''
                         }`}
                     >
                       <Image
@@ -444,8 +443,8 @@ export default function ShopPage() {
                     key={bundle.id}
                     onClick={() => setSelectedBundle(bundle.id)}
                     className={`relative cursor-pointer rounded-xl border-2 transition-all duration-300 overflow-hidden flex flex-col ${selectedBundle === bundle.id
-                        ? 'border-[#1a2f23] bg-[#fffcf5] shadow-lg'
-                        : 'border-gray-200 bg-white hover:border-[#bb9c30]/50'
+                      ? 'border-[#1a2f23] bg-[#fffcf5] shadow-lg'
+                      : 'border-gray-200 bg-white hover:border-[#bb9c30]/50'
                       }`}
                   >
                     {/* Badges */}
@@ -518,8 +517,8 @@ export default function ShopPage() {
                 <div
                   onClick={() => setSubscribeMode(true)}
                   className={`relative border-2 rounded-xl p-5 cursor-pointer transition-all duration-300 ${subscribeMode
-                      ? 'border-[#bb9c30] bg-[#fffcf5]'
-                      : 'border-gray-200 bg-white hover:border-[#bb9c30]/30'
+                    ? 'border-[#bb9c30] bg-[#fffcf5]'
+                    : 'border-gray-200 bg-white hover:border-[#bb9c30]/30'
                     }`}
                 >
                   {subscribeMode && (
@@ -576,8 +575,8 @@ export default function ShopPage() {
                 <div
                   onClick={() => setSubscribeMode(false)}
                   className={`border-2 rounded-xl p-5 cursor-pointer transition-all duration-300 flex items-center justify-between ${!subscribeMode
-                      ? 'border-[#bb9c30] bg-[#fffcf5]'
-                      : 'border-gray-200 bg-white hover:border-[#bb9c30]/30'
+                    ? 'border-[#bb9c30] bg-[#fffcf5]'
+                    : 'border-gray-200 bg-white hover:border-[#bb9c30]/30'
                     }`}
                 >
                   <div className="flex items-center gap-3">
