@@ -11,12 +11,11 @@ import ProblemSolution from '@/components/ProblemSolution';
 import HairLossSection from '@/components/HairLossSection';
 import ProductFunnel from '@/components/ProductFunnel';
 import ClinicallyTested from '@/components/ClinicallyTested';
-import ReviewGrid from '@/components/ReviewGrid';
+import IngredientsSection from '@/components/IngredientsSection';
 import InteractiveBenefits from '@/components/InteractiveBenefits';
 import VideoTestimonials from '@/components/VideoTestimonials';
 import DetailedFAQ from '@/components/DetailedFAQ';
 import ExpandedReviews from '@/components/ExpandedReviews';
-import IngredientsSection from '@/components/IngredientsSection';
 import {
   isShopifyLoggedIn,
   redirectToShopifySignup,
@@ -85,11 +84,16 @@ export default function ShopPage() {
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
 
-  // Helper function to calculate subscribe price (20% off first order)
-  const getSubscribePrice = (price: string): string => {
-    const numericPrice = parseFloat(price.replace('$', ''));
-    const discountedPrice = numericPrice * 0.8;
-    return `$${discountedPrice.toFixed(2)}`;
+  // Helper function to get the display price based on subscribe mode
+  const getDisplayPrice = (bundleId: number): string => {
+    const bundle = bundles.find(b => b.id === bundleId);
+    if (!bundle) return '$0.00';
+    
+    if (subscribeMode) {
+      const price = parseFloat(bundle.price.replace('$', ''));
+      return `$${(price * 0.8).toFixed(2)}`;
+    }
+    return bundle.price;
   };
 
   const [productImages, setProductImages] = useState([
@@ -405,26 +409,26 @@ export default function ShopPage() {
 
               <div className="flex items-baseline gap-3 mb-6">
                 <span className="text-3xl font-bold text-[#1a2f23]">
-                  {subscribeMode && bundles.find(b => b.id === selectedBundle)?.price
-                    ? getSubscribePrice(bundles.find(b => b.id === selectedBundle)!.price)
-                    : bundles.find(b => b.id === selectedBundle)?.price}
+                  {getDisplayPrice(selectedBundle)}
                 </span>
-                {subscribeMode ? (
-                  bundles.find(b => b.id === selectedBundle)?.price && (
-                    <span className="text-xl text-gray-400 line-through decoration-red-500/40">
-                      {bundles.find(b => b.id === selectedBundle)?.price}
-                    </span>
-                  )
-                ) : (
-                  bundles.find(b => b.id === selectedBundle)?.originalPrice && (
-                    <span className="text-xl text-gray-400 line-through decoration-red-500/40">
-                      {bundles.find(b => b.id === selectedBundle)?.originalPrice}
-                    </span>
-                  )
+                {subscribeMode && bundles.find(b => b.id === selectedBundle)?.price && (
+                  <span className="text-xl text-gray-400 line-through decoration-red-500/40">
+                    {bundles.find(b => b.id === selectedBundle)?.price}
+                  </span>
+                )}
+                {!subscribeMode && bundles.find(b => b.id === selectedBundle)?.originalPrice && (
+                  <span className="text-xl text-gray-400 line-through decoration-red-500/40">
+                    {bundles.find(b => b.id === selectedBundle)?.originalPrice}
+                  </span>
                 )}
                 {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
                   <span className="px-3 py-1 bg-[#bb9c30] text-white text-xs font-bold rounded-full uppercase tracking-wider shadow-sm">
-                    {subscribeMode ? 'Save 20%' : bundles.find(b => b.id === selectedBundle)?.saveBadge}
+                    {bundles.find(b => b.id === selectedBundle)?.saveBadge}
+                  </span>
+                )}
+                {subscribeMode && (
+                  <span className="px-3 py-1 bg-[#bb9c30] text-white text-xs font-bold rounded-full uppercase tracking-wider shadow-sm">
+                    Save 20%
                   </span>
                 )}
               </div>
@@ -501,14 +505,13 @@ export default function ShopPage() {
                       {/* Price */}
                       <div className="text-right flex flex-col justify-center flex-shrink-0 ml-2">
                         <div className="font-bold text-xl text-[#1a2f23]">
-                          {subscribeMode ? getSubscribePrice(bundle.price) : bundle.price}
+                          {subscribeMode ? getDisplayPrice(bundle.id) : bundle.price}
                         </div>
-                        {subscribeMode ? (
+                        {subscribeMode && bundle.price && (
                           <div className="text-gray-400 line-through text-sm decoration-gray-400">{bundle.price}</div>
-                        ) : (
-                          bundle.originalPrice && (
-                            <div className="text-gray-400 line-through text-sm decoration-gray-400">{bundle.originalPrice}</div>
-                          )
+                        )}
+                        {!subscribeMode && bundle.originalPrice && (
+                          <div className="text-gray-400 line-through text-sm decoration-gray-400">{bundle.originalPrice}</div>
                         )}
                       </div>
                     </div>
@@ -605,8 +608,8 @@ export default function ShopPage() {
                     </div>
                     <span className="font-bold text-lg text-[#1a2f23]">One-time</span>
                   </div>
-                  <span className="font-bold text-xl text-[#1a2f23]">
-                    {bundles.find(b => b.id === selectedBundle)?.price}
+                    <span className="font-bold text-xl text-[#1a2f23]">
+                    {getDisplayPrice(selectedBundle)}
                   </span>
                 </div>
               </div>
@@ -664,9 +667,12 @@ export default function ShopPage() {
 
         <ProblemSolution />
         <HairLossSection />
-        <ReviewGrid />
-        <ProductFunnel />
         <IngredientsSection />
+        <InteractiveBenefits />
+        <ClinicallyTested />
+        <VideoTestimonials />
+        <ProductFunnel />
+        <DetailedFAQ />
         <ExpandedReviews />
 
         {/* Sticky Bottom Bar */}
@@ -695,27 +701,22 @@ export default function ShopPage() {
                     </h4>
                     <div className="flex items-center gap-2">
                       <span className="font-extrabold text-[#1a2f23] text-lg">
-                        {subscribeMode && bundles.find(b => b.id === selectedBundle)?.price
-                          ? getSubscribePrice(bundles.find(b => b.id === selectedBundle)!.price)
-                          : bundles.find(b => b.id === selectedBundle)?.price}
+                        {getDisplayPrice(selectedBundle)}
                       </span>
-                      {subscribeMode ? (
-                        bundles.find(b => b.id === selectedBundle)?.price && (
-                          <span className="text-sm text-gray-400 line-through font-medium">
-                            {bundles.find(b => b.id === selectedBundle)?.price}
-                          </span>
-                        )
-                      ) : (
-                        bundles.find(b => b.id === selectedBundle)?.originalPrice && (
-                          <span className="text-sm text-gray-400 line-through font-medium">
-                            {bundles.find(b => b.id === selectedBundle)?.originalPrice}
-                          </span>
-                        )
+                      {subscribeMode && bundles.find(b => b.id === selectedBundle)?.price && (
+                        <span className="text-sm text-gray-400 line-through font-medium">
+                          {bundles.find(b => b.id === selectedBundle)?.price}
+                        </span>
+                      )}
+                      {!subscribeMode && bundles.find(b => b.id === selectedBundle)?.originalPrice && (
+                        <span className="text-sm text-gray-400 line-through font-medium">
+                          {bundles.find(b => b.id === selectedBundle)?.originalPrice}
+                        </span>
                       )}
                       {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
                         <span className="bg-[#e0d8c3] text-[#8c7335] text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
                           <svg className="w-3 h-3 fill-current" viewBox="0 0 20 20"><path d="M17.707 9.293l-2.646-2.647a1 1 0 01-.293-.707V4.375a1 1 0 00-1-1h-1.569a1 1 0 01-.707-.293L8.845.438a1 1 0 00-1.415 0L4.784 3.084a1 1 0 01-.707.293H2.508a1 1 0 00-1 1v1.569a1 1 0 01-.293.707L.438 8.845a1 1 0 000 1.415l2.647 2.646a1 1 0 01.293.707v1.569a1 1 0 001 1h1.569a1 1 0 01.707.293l2.646 2.647a1 1 0 001.415 0l2.646-2.647a1 1 0 01.707-.293h1.569a1 1 0 001-1v-1.569a1 1 0 01.293-.707l2.646-2.646a1 1 0 000-1.415zM12 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                          {subscribeMode ? '20% OFF' : bundles.find(b => b.id === selectedBundle)?.saveBadge?.replace('Save ', '') + ' OFF'}
+                          {bundles.find(b => b.id === selectedBundle)?.saveBadge?.replace('Save ', '')} OFF
                         </span>
                       )}
                     </div>
