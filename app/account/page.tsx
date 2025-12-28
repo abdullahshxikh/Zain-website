@@ -12,17 +12,17 @@ export default function AccountPage() {
 
   useEffect(() => {
     markShopifyLoggedIn();
-    
+
     // Check for pending cart items
     const checkPendingCart = async () => {
       const pendingItem = localStorage.getItem('pendingAddToCart');
       if (pendingItem) {
         try {
           const { bundleId, subscribeMode } = JSON.parse(pendingItem);
-          
+
           // Clear pending item
           localStorage.removeItem('pendingAddToCart');
-          
+
           // Redirect back to shop to handle the addition
           router.push(`/shop?restore_cart=${bundleId}&subscribe=${subscribeMode}`);
         } catch (e) {
@@ -31,7 +31,7 @@ export default function AccountPage() {
         }
       }
     };
-    
+
     checkPendingCart();
   }, [router]);
 
@@ -49,9 +49,9 @@ export default function AccountPage() {
       <Navbar />
       <main className="min-h-screen bg-[#FAFAF9] pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          
+
           {/* Header Section */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
@@ -65,7 +65,7 @@ export default function AccountPage() {
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
+
             {/* Profile Card */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -85,11 +85,11 @@ export default function AccountPage() {
 
               <div className="space-y-3 mb-8">
                 <div className="flex items-center gap-3 text-gray-600 text-sm">
-                  <svg className="w-5 h-5 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <svg className="w-5 h-5 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   <span>Secure Shopify Login</span>
                 </div>
                 <div className="flex items-center gap-3 text-gray-600 text-sm">
-                  <svg className="w-5 h-5 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                  <svg className="w-5 h-5 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                   <span>Passwordless Access</span>
                 </div>
               </div>
@@ -127,7 +127,7 @@ export default function AccountPage() {
                       </span>
                     </div>
                   </div>
-                  
+
                   <p className="text-gray-500 mb-8 leading-relaxed max-w-lg">
                     View your past orders, check shipment status, and manage your returns directly through our secure Shopify portal.
                   </p>
@@ -152,7 +152,7 @@ export default function AccountPage() {
                     <p className="text-white/70 text-sm mb-6">
                       Our support team is here to assist you with any questions.
                     </p>
-                    <a href="mailto:hello@zumfali.co" className="inline-block text-sm font-bold border-b border-[#bb9c30] text-[#bb9c30] pb-0.5 hover:text-white hover:border-white transition-colors">
+                    <a href="mailto:info@zumfali.co" className="inline-block text-sm font-bold border-b border-[#bb9c30] text-[#bb9c30] pb-0.5 hover:text-white hover:border-white transition-colors">
                       Contact Support
                     </a>
                   </div>
@@ -161,13 +161,13 @@ export default function AccountPage() {
                 </div>
 
                 <div className="bg-white rounded-[2rem] p-8 border border-gray-100 flex flex-col justify-center items-start">
-                   <h3 className="font-serif text-xl text-[#1a2f23] mb-2">Shop New Arrivals</h3>
-                   <p className="text-gray-500 text-sm mb-6">
-                     Check out the latest additions to our collection.
-                   </p>
-                   <a href="/shop" className="text-[#1a2f23] font-medium text-sm flex items-center gap-2 group hover:gap-3 transition-all">
-                     Shop Now <span className="text-[#bb9c30] group-hover:translate-x-1 transition-transform">→</span>
-                   </a>
+                  <h3 className="font-serif text-xl text-[#1a2f23] mb-2">Shop New Arrivals</h3>
+                  <p className="text-gray-500 text-sm mb-6">
+                    Check out the latest additions to our collection.
+                  </p>
+                  <a href="/shop" className="text-[#1a2f23] font-medium text-sm flex items-center gap-2 group hover:gap-3 transition-all">
+                    Shop Now <span className="text-[#bb9c30] group-hover:translate-x-1 transition-transform">→</span>
+                  </a>
                 </div>
               </div>
 

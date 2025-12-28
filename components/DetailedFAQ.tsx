@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     question: 'How long does shipping take?',
-    answer: 'We process orders within 1-2 business days. Standard shipping typically takes 3-5 business days within the US. International shipping times vary based on location.'
+    answer: 'We process orders within 1-2 business days. Standard shipping typically takes 8-12 business days within the US. International shipping times vary based on location.'
   },
   {
     question: 'Do you offer international shipping?',
@@ -70,8 +70,8 @@ export default function DetailedFAQ() {
                   <button
                     onClick={() => toggleFAQ(index)}
                     className={`w-full px-6 py-5 flex items-center justify-between text-left rounded-full transition-all duration-300 ${openIndex === index
-                        ? 'bg-[#1a2f23] text-white'
-                        : 'bg-[#1a2f23] text-white hover:bg-[#2d4a38]'
+                      ? 'bg-[#1a2f23] text-white'
+                      : 'bg-[#1a2f23] text-white hover:bg-[#2d4a38]'
                       }`}
                   >
                     <span className="font-medium text-sm sm:text-base pr-4 flex items-center gap-3">

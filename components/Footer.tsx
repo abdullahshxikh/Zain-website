@@ -95,11 +95,11 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-gray-600 font-light">
               <li>
                 <a
-                  href="mailto:hello@zumfali.co"
+                  href="mailto:info@zumfali.co"
                   className="hover:text-[#bb9c30] transition-colors"
                   onClick={() => trackContact('email')}
                 >
-                  hello@zumfali.co
+                  info@zumfali.co
                 </a>
               </li>
               <li>New York, United States</li>
@@ -145,22 +145,22 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-gray-200 bg-gray-50 py-8">
-         <div className="max-w-7xl mx-auto px-4 flex flex-col items-center gap-6">
-           {/* Payment Icons */}
-           <div className="relative w-full max-w-lg h-10">
-             <Image 
-               src="/payment-icons.png" 
-               alt="Accepted Payment Methods" 
-               title="Accepted Payment Methods" 
-               fill 
-               className="object-contain"
-             />
-           </div>
-           
-           <p className="text-xs text-gray-400 font-light">
-             © {new Date().getFullYear()} Zumfali. All rights reserved.
-           </p>
-         </div>
+        <div className="max-w-7xl mx-auto px-4 flex flex-col items-center gap-6">
+          {/* Payment Icons */}
+          <div className="relative w-full max-w-lg h-10">
+            <Image
+              src="/payment-icons.png"
+              alt="Accepted Payment Methods"
+              title="Accepted Payment Methods"
+              fill
+              className="object-contain"
+            />
+          </div>
+
+          <p className="text-xs text-gray-400 font-light">
+            © {new Date().getFullYear()} Zumfali. All rights reserved.
+          </p>
+        </div>
       </div>
     </footer>
   );

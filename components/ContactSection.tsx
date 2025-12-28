@@ -7,7 +7,7 @@ import Link from 'next/link';
 const faqs = [
     {
         question: 'How long does shipping take?',
-        answer: 'We process orders within 1-2 business days. Standard shipping typically takes 3-5 business days within the US. International shipping times vary based on location.'
+        answer: 'We process orders within 1-2 business days. Standard shipping typically takes 8-12 business days within the US. International shipping times vary based on location.'
     },
     {
         question: 'What is your return policy?',
@@ -189,7 +189,7 @@ export default function ContactSection() {
                                     </div>
                                     <div>
                                         <span className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Email Us</span>
-                                        <a href="mailto:hello@zumfali.co" className="text-lg hover:text-[#bb9c30] transition-colors">hello@zumfali.co</a>
+                                        <a href="mailto:info@zumfali.co" className="text-lg hover:text-[#bb9c30] transition-colors">info@zumfali.co</a>
                                     </div>
                                 </li>
 
