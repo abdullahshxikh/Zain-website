@@ -84,7 +84,13 @@ export default function Navbar() {
               {leftNavItems.map((item) => (
                 <Link
                   key={item}
-                  href={item === 'Shop Now' ? '/shop' : item === 'Home' ? '/' : item === 'Contact Us' ? '/contact' : `/#${item.toLowerCase().replace(/\s+/g, '-')}`}
+                  href={
+                    item === 'Shop Now' ? '/shop' :
+                      item === 'Home' ? '/' :
+                        item === 'Contact Us' ? '/contact' :
+                          item === 'About Us' ? '/about' :
+                            `/#${item.toLowerCase().replace(/\s+/g, '-')}`
+                  }
                 >
                   <motion.span
                     className="text-sm font-medium transition-colors text-gray-800 hover:text-[#bb9c30] cursor-pointer"
@@ -254,7 +260,9 @@ export default function Navbar() {
                             ? '/'
                             : item === 'Contact Us'
                               ? '/contact'
-                              : `/#${item.toLowerCase().replace(/\s+/g, '-')}`
+                              : item === 'About Us'
+                                ? '/about'
+                                : `/#${item.toLowerCase().replace(/\s+/g, '-')}`
                       }
                       onClick={() => setMobileMenuOpen(false)}
                     >
