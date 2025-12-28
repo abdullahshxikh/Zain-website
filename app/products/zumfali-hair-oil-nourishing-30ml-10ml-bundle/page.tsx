@@ -73,13 +73,6 @@ export default function ProductPage() {
   const [accountLoggedIn, setAccountLoggedIn] = useState(false);
   const { trackInitiateCheckout } = useMetaPixel();
 
-  // Helper function to calculate subscribe price (20% off first order)
-  const getSubscribePrice = (price: string): string => {
-    const numericPrice = parseFloat(price.replace('$', ''));
-    const discountedPrice = numericPrice * 0.8;
-    return `$${discountedPrice.toFixed(2)}`;
-  };
-
   // Minimal Shopify integration: load SDK once, fetch product once, no embedded UI
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -293,26 +286,16 @@ export default function ProductPage() {
 
               <div className="flex items-baseline gap-3 mb-6">
                 <span className="text-3xl font-bold text-[#1a2f23]">
-                  {subscribeMode && bundles.find(b => b.id === selectedBundle)?.price
-                    ? getSubscribePrice(bundles.find(b => b.id === selectedBundle)!.price)
-                    : bundles.find(b => b.id === selectedBundle)?.price}
+                  {bundles.find(b => b.id === selectedBundle)?.price}
                 </span>
-                {subscribeMode ? (
-                  bundles.find(b => b.id === selectedBundle)?.price && (
-                    <span className="text-xl text-gray-400 line-through decoration-red-500/40">
-                      {bundles.find(b => b.id === selectedBundle)?.price}
-                    </span>
-                  )
-                ) : (
-                  bundles.find(b => b.id === selectedBundle)?.originalPrice && (
-                    <span className="text-xl text-gray-400 line-through decoration-red-500/40">
-                      {bundles.find(b => b.id === selectedBundle)?.originalPrice}
-                    </span>
-                  )
+                {bundles.find(b => b.id === selectedBundle)?.originalPrice && (
+                  <span className="text-xl text-gray-400 line-through decoration-red-500/40">
+                    {bundles.find(b => b.id === selectedBundle)?.originalPrice}
+                  </span>
                 )}
                 {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
                   <span className="px-3 py-1 bg-[#bb9c30] text-white text-xs font-bold rounded-full uppercase tracking-wider shadow-sm">
-                    {subscribeMode ? 'Save 20%' : bundles.find(b => b.id === selectedBundle)?.saveBadge}
+                    {bundles.find(b => b.id === selectedBundle)?.saveBadge}
                   </span>
                 )}
               </div>
@@ -403,19 +386,10 @@ export default function ProductPage() {
 
                       {/* Price */}
                       <div className="text-right flex flex-col justify-center">
-                        {subscribeMode ? (
-                          <>
-                            <div className="text-gray-400 line-through text-sm decoration-red-500/40 mb-1">{bundle.price}</div>
-                            <div className="font-bold text-xl text-[#1a2f23]">{getSubscribePrice(bundle.price)}</div>
-                          </>
-                        ) : (
-                          <>
-                            {bundle.originalPrice && (
-                              <div className="text-gray-400 line-through text-sm decoration-red-500/40 mb-1">{bundle.originalPrice}</div>
-                            )}
-                            <div className="font-bold text-xl text-[#1a2f23]">{bundle.price}</div>
-                          </>
+                        {bundle.originalPrice && (
+                          <div className="text-gray-400 line-through text-sm decoration-red-500/40 mb-1">{bundle.originalPrice}</div>
                         )}
+                        <div className="font-bold text-xl text-[#1a2f23]">{bundle.price}</div>
                         {bundle.pricePerBottle && (
                           <div className="text-[10px] text-gray-500 font-medium mt-1">{bundle.pricePerBottle}</div>
                         )}
@@ -443,9 +417,7 @@ export default function ProductPage() {
                   <div className="flex-1">
                     <span className={`font-bold text-lg ${!subscribeMode ? 'text-[#1a2f23]' : 'text-gray-600'}`}>One-Time Purchase</span>
                   </div>
-                  <span className="font-bold text-lg text-[#1a2f23]">
-                    {bundles.find(b => b.id === selectedBundle)?.price}
-                  </span>
+                  <span className="font-bold text-lg text-[#1a2f23]">{bundles.find(b => b.id === selectedBundle)?.price}</span>
                 </div>
 
                 <div 

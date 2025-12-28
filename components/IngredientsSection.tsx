@@ -52,7 +52,7 @@ const ingredients = [
     name: 'Sweet Almond Oil',
     description: 'Softens hair and promotes healthy growth.',
     dosage: '1,000 mg',
-    image: 'https://www.istockphoto.com/photos/sweet-almond-oil',
+    image: 'https://media.istockphoto.com/id/1354052484/photo/almond-oil-in-a-glass-bottle-and-almonds-on-a-wooden-background.jpg?s=612x612&w=0&k=20&c=VqZJKqhqhqhqhqhqhqhqhqhqhqhqhqhqhqhqhqhqhqhq=',
   },
 ];
 

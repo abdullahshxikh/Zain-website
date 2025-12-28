@@ -84,7 +84,7 @@ export default function Navbar() {
               {leftNavItems.map((item) => (
                 <Link
                   key={item}
-                  href={item === 'Shop Now' ? '/shop' : item === 'Home' ? '/' : `/#${item.toLowerCase().replace(/\s+/g, '-')}`}
+                  href={item === 'Shop Now' ? '/shop' : item === 'Home' ? '/' : item === 'Contact Us' ? '/contact' : `/#${item.toLowerCase().replace(/\s+/g, '-')}`}
                 >
                   <motion.span
                     className="text-sm font-medium transition-colors text-gray-800 hover:text-[#bb9c30] cursor-pointer"
@@ -130,9 +130,8 @@ export default function Navbar() {
                       aria-label="Account"
                     >
                       <svg
-                        className={`w-5 h-5 ${
-                          accountLoggedIn ? 'text-[#1a2f23]' : ''
-                        }`}
+                        className={`w-5 h-5 ${accountLoggedIn ? 'text-[#1a2f23]' : ''
+                          }`}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -253,7 +252,9 @@ export default function Navbar() {
                           ? '/shop'
                           : item === 'Home'
                             ? '/'
-                            : `/#${item.toLowerCase().replace(/\s+/g, '-')}`
+                            : item === 'Contact Us'
+                              ? '/contact'
+                              : `/#${item.toLowerCase().replace(/\s+/g, '-')}`
                       }
                       onClick={() => setMobileMenuOpen(false)}
                     >
