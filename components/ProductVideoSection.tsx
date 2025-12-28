@@ -114,6 +114,15 @@ const customerReviews: CustomerReview[] = [
 export default function ProductVideoSection() {
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
   const [showReview, setShowReview] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(error => {
+        console.log("Video autoplay failed:", error);
+      });
+    }
+  }, []);
 
   // Cycle through reviews every 3 seconds
   useEffect(() => {
@@ -144,8 +153,8 @@ export default function ProductVideoSection() {
       {/* Full-width Video Container */}
       <div className="relative w-full h-screen">
         <video
-          className="w-full h-full object-cover"
-          controls={false}
+          ref={videoRef}
+          className="w-full h-full object-cover pointer-events-none"
           autoPlay
           muted
           loop
@@ -164,12 +173,11 @@ export default function ProductVideoSection() {
           {showReview && (
             <motion.div
               key={currentReview.id}
-              className={`absolute z-30 ${
-                currentReviewIndex % 4 === 0 ? 'top-32 left-8' :
+              className={`absolute z-30 ${currentReviewIndex % 4 === 0 ? 'top-32 left-8' :
                 currentReviewIndex % 4 === 1 ? 'top-32 right-8' :
-                currentReviewIndex % 4 === 2 ? 'bottom-32 left-8' :
-                'bottom-32 right-8'
-              }`}
+                  currentReviewIndex % 4 === 2 ? 'bottom-32 left-8' :
+                    'bottom-32 right-8'
+                }`}
               initial={{ opacity: 0, scale: 0.8, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8, y: -20 }}
