@@ -48,12 +48,6 @@ const ingredients = [
     dosage: '1,200 mg',
     image: 'https://media.istockphoto.com/id/598807974/photo/argan-oil.jpg?s=612x612&w=0&k=20&c=wyTlbG03_yZIOEDeu0sodTA9AxRDyUDlkG_vKuKNkfs=',
   },
-  {
-    name: 'Sweet Almond Oil',
-    description: 'Softens hair and promotes healthy growth.',
-    dosage: '1,000 mg',
-    image: '/Screenshot 2025-12-28 at 4.29.20 AM.png',
-  },
 ];
 
 export default function IngredientsSection() {
@@ -79,7 +73,7 @@ export default function IngredientsSection() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#1a2f23] mb-6">
-            8 Powerful Ingredients
+            7 Powerful Ingredients
           </h2>
           <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto font-light">
             Nature's finest oils scientifically formulated for maximum hair growth and vitality.
