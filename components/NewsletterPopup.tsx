@@ -101,29 +101,28 @@ export default function NewsletterPopup() {
                       exit={{ opacity: 0, x: 20 }}
                       className="text-center"
                     >
-                      <h2 className="text-3xl sm:text-4xl font-serif text-[#1a2f23] mb-4 leading-tight">
-                        Let's Personalize <br />
-                        <span className="italic text-[#bb9c30]">Your Routine</span>
+                      <h2 className="text-4xl sm:text-5xl font-serif text-[#1a2f23] mb-4 leading-none tracking-tight">
+                        You've got a <br />
+                        special discount!
                       </h2>
-                      <p className="text-gray-500 font-medium text-sm uppercase tracking-wider mb-8">
-                        What is your main hair concern?
+                      <p className="font-mono text-gray-500 text-sm mb-6">
+                        What do you use hair oil for??
                       </p>
 
                       <div className="space-y-3">
-                        {['Hair Loss & Thinning', 'Dryness & Frizz', 'Scalp Health', 'Maintenance & Shine'].map((option) => (
+                        {['Hair Growth & Thickness', 'Frizz Control & Shine', 'Scalp Health', 'All of the Above'].map((option) => (
                           <button
                             key={option}
                             onClick={() => handleOptionSelect(option)}
-                            className="w-full py-4 px-6 rounded-xl border border-[#1a2f23]/10 bg-white text-[#1a2f23] font-bold text-sm tracking-wide transition-all duration-200 hover:scale-[1.02] hover:border-[#bb9c30] hover:shadow-md hover:text-[#bb9c30] flex items-center justify-between group"
+                            className="w-full py-4 px-6 rounded-full border-2 border-[#1a2f23] bg-[#E5D178] text-[#1a2f23] font-bold font-mono text-sm tracking-wide transition-transform duration-200 hover:scale-[1.02] hover:bg-[#d9c063] shadow-[4px_4px_0px_0px_#1a2f23] hover:shadow-[2px_2px_0px_0px_#1a2f23] hover:translate-x-[2px] hover:translate-y-[2px] mb-3 uppercase"
                           >
-                            <span>{option}</span>
-                            <span className="opacity-0 group-hover:opacity-100 transition-opacity text-lg">→</span>
+                            {option}
                           </button>
                         ))}
                       </div>
 
                       <button onClick={handleClose} className="mt-8 text-xs text-gray-400 underline hover:text-gray-600 transition-colors">
-                        I'm just browsing, thanks
+                        I don't want a special discount!
                       </button>
                     </motion.div>
                   )}
