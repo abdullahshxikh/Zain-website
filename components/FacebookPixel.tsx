@@ -10,12 +10,13 @@ export default function FacebookPixel() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (!loaded) return;
-    
-    // @ts-ignore
-    if (typeof window !== 'undefined' && window.fbq) {
+    // Track PageView on route change
+    if (loaded) {
       // @ts-ignore
-      window.fbq("track", "PageView");
+      if (window.fbq) {
+        // @ts-ignore
+        window.fbq('track', 'PageView');
+      }
     }
   }, [pathname, searchParams, loaded]);
 
@@ -35,10 +36,8 @@ export default function FacebookPixel() {
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            if(!window._pixel_init_1825759484727777) {
-              fbq('init', '1825759484727777');
-              window._pixel_init_1825759484727777 = true;
-            }
+            fbq('init', '1825759484727777');
+            fbq('track', 'PageView');
           `,
         }}
       />
