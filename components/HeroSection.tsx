@@ -17,16 +17,16 @@ export default function HeroSection() {
   return (
     <section className="relative w-full min-h-[100dvh] bg-[#BCA379] flex flex-col lg:flex-row overflow-hidden pt-24 lg:pt-0">
       {/* Mobile: Image on Top. Desktop: Image on Right (order-2) */}
-      
+
       {/* Image Section */}
-      <div className="relative w-full lg:w-[45%] h-[56vh] sm:h-[60vh] lg:h-[90vh] lg:absolute lg:right-0 lg:bottom-0 order-1 lg:order-2 flex items-center justify-center lg:items-end lg:justify-end px-4 sm:px-10 lg:px-0">
-        <div className="relative w-full h-full max-w-[520px] lg:max-w-none">
+      <div className="relative w-full lg:w-[45%] h-[56vh] sm:h-[60vh] lg:h-[90vh] lg:absolute lg:right-0 lg:top-0 order-1 lg:order-2 flex items-start justify-center lg:items-start lg:justify-end px-0">
+        <div className="relative w-full h-full">
           <Image
-            src="/Hero%20girl.png"
+            src="/edited-photo.png"
             alt="Woman with healthy hair"
             title="Woman with healthy hair"
             fill
-            className="object-contain object-center lg:object-contain lg:object-bottom"
+            className="object-cover object-top"
             priority
             quality={90}
             sizes="(max-width: 1024px) 100vw, 45vw"
@@ -68,7 +68,7 @@ export default function HeroSection() {
                 style={{
                   backgroundColor: '#d9c063',
                 }}
-                whileHover={{ 
+                whileHover={{
                   scale: 1.05,
                   backgroundColor: '#ccb358'
                 }}
