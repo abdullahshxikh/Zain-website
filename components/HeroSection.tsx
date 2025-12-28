@@ -19,7 +19,7 @@ export default function HeroSection() {
       {/* Mobile: Image on Top. Desktop: Image on Right (order-2) */}
 
       {/* Image Section */}
-      <div className="relative w-full lg:w-[45%] h-[56vh] sm:h-[60vh] lg:h-[90vh] lg:absolute lg:right-0 lg:top-0 order-1 lg:order-2 flex items-start justify-center lg:items-start lg:justify-end px-0">
+      <div className="relative w-full lg:w-[45%] h-[56vh] sm:h-[60vh] lg:h-[calc(100vh-6rem)] lg:absolute lg:right-0 lg:top-24 order-1 lg:order-2 flex items-start justify-center lg:items-start lg:justify-end px-0">
         <div className="relative w-full h-full">
           <Image
             src="/edited-photo.png"
