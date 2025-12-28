@@ -23,7 +23,7 @@ export default function NewsletterPopup() {
 
   const handleClose = () => {
     setIsOpen(false);
-    localStorage.setItem('hasSeenPopup', 'true');
+    // Don't save to localStorage - popup will show again on next visit until email is submitted
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -75,11 +75,11 @@ export default function NewsletterPopup() {
                 <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#1a2f23]/5 text-[#1a2f23] mb-6">
                   <span className="text-3xl">🎁</span>
                 </div>
-                
+
                 <h2 className="text-3xl font-serif font-bold text-[#1a2f23] mb-3">
                   Get a <span className="text-[#bb9c30] italic">Free Comb</span>
                 </h2>
-                
+
                 <p className="text-gray-600 font-light mb-8 leading-relaxed">
                   Sign up for our newsletter to receive a complimentary premium comb with your first order, plus exclusive access to new drops.
                 </p>
@@ -93,7 +93,7 @@ export default function NewsletterPopup() {
                     className="w-full px-6 py-4 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#bb9c30] focus:ring-1 focus:ring-[#bb9c30] transition-all text-center"
                     required
                   />
-                  
+
                   <motion.button
                     type="submit"
                     className="w-full py-4 bg-[#1a2f23] text-white rounded-xl font-medium text-lg shadow-lg shadow-[#1a2f23]/20 hover:bg-[#2d4a38] transition-colors"
@@ -103,8 +103,8 @@ export default function NewsletterPopup() {
                     Unlock My Gift
                   </motion.button>
                 </form>
-                
-                <button 
+
+                <button
                   onClick={handleClose}
                   className="mt-6 text-sm text-gray-400 hover:text-gray-600 underline decoration-gray-300 underline-offset-4"
                 >

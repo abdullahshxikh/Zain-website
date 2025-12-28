@@ -78,7 +78,7 @@ export default function ShopPage() {
   const { trackViewContent, trackAddToCart } = useMetaPixel();
 
   const [selectedBundle, setSelectedBundle] = useState<number>(1);
-  const [subscribeMode, setSubscribeMode] = useState(false);
+  const [subscribeMode, setSubscribeMode] = useState(true);
   const [shopifyProduct, setShopifyProduct] = useState<any | null>(null);
   const [accountLoggedIn, setAccountLoggedIn] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);

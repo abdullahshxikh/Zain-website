@@ -49,10 +49,10 @@ const ingredients = [
     image: 'https://media.istockphoto.com/id/598807974/photo/argan-oil.jpg?s=612x612&w=0&k=20&c=wyTlbG03_yZIOEDeu0sodTA9AxRDyUDlkG_vKuKNkfs=',
   },
   {
-    name: 'Jojoba Oil',
-    description: 'Balances scalp and strengthens hair roots.',
+    name: 'Sweet Almond Oil',
+    description: 'Softens hair and promotes healthy growth.',
     dosage: '1,000 mg',
-    image: 'https://t3.ftcdn.net/jpg/02/93/21/44/360_F_293214485_BVtXwz0y7JXxvgVnm6CR8YCu50mwxt7y.jpg',
+    image: 'https://media.istockphoto.com/id/1354052484/photo/almond-oil-in-a-glass-bottle-and-almonds-on-a-wooden-background.jpg?s=612x612&w=0&k=20&c=VqZJKqhqhqhqhqhqhqhqhqhqhqhqhqhqhqhqhqhqhqhq=',
   },
 ];
 
@@ -66,8 +66,8 @@ export default function IngredientsSection() {
   if (!mounted) return null;
 
   return (
-    <section 
-      className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-16 overflow-hidden bg-white" 
+    <section
+      className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-16 overflow-hidden bg-white"
     >
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Header */}
@@ -136,17 +136,17 @@ export default function IngredientsSection() {
         >
           <Link href="/shop">
             <motion.button
-            className="group relative px-12 py-5 bg-[#1a2f23] text-white rounded-full text-lg font-medium overflow-hidden shadow-2xl shadow-[#1a2f23]/30 hover:shadow-[#1a2f23]/50 transition-all duration-300"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <span className="relative z-10 flex items-center gap-3">
-              Discover the Formula
-              <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </span>
-          </motion.button>
+              className="group relative px-12 py-5 bg-[#1a2f23] text-white rounded-full text-lg font-medium overflow-hidden shadow-2xl shadow-[#1a2f23]/30 hover:shadow-[#1a2f23]/50 transition-all duration-300"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <span className="relative z-10 flex items-center gap-3">
+                Discover the Formula
+                <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
+            </motion.button>
           </Link>
         </motion.div>
       </div>
