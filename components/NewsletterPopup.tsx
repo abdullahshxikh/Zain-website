@@ -9,24 +9,25 @@ export default function NewsletterPopup() {
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [step, setStep] = useState<'onboarding' | 'email' | 'success'>('onboarding');
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedConcern, setSelectedConcern] = useState<string | null>(null);
 
   const { trackSubscribe, trackCompleteRegistration } = useMetaPixel();
 
   useEffect(() => {
-    // Only set up the timer if the component is mounted
+    // 60-second timer as requested
     const timer = setTimeout(() => {
       setIsOpen(true);
-    }, 60000); // 60 seconds
+    }, 60000);
 
     return () => clearTimeout(timer);
   }, []);
 
-  const handleOptionSelect = (option: string) => {
-    setSelectedOption(option);
+  const handleOptionSelect = (concern: string) => {
+    setSelectedConcern(concern);
+    // Add brief delay for better UX
     setTimeout(() => {
       setStep('email');
-    }, 400); // Small delay for visual feedback
+    }, 400);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -46,7 +47,7 @@ export default function NewsletterPopup() {
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
-          {/* Detailed Backdrop */}
+          {/* Backdrop with blur */}
           <motion.div
             className="absolute inset-0 bg-[#1a2f23]/60 backdrop-blur-md"
             initial={{ opacity: 0 }}
@@ -55,31 +56,30 @@ export default function NewsletterPopup() {
             onClick={handleClose}
           />
 
-          {/* Main Card - Centered, slightly wider but single column focused */}
+          {/* Main Modal Card */}
           <motion.div
-            className="relative w-full max-w-2xl bg-[#FDFBF7] rounded-[2rem] shadow-2xl overflow-hidden flex flex-col min-h-[450px]"
+            className="relative w-full max-w-2xl bg-[#FDFBF7] rounded-[2rem] shadow-2xl overflow-hidden flex flex-col min-h-[500px]"
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', duration: 0.6, bounce: 0.2 }}
           >
-            {/* Close Button - Sticky */}
+            {/* Close Button */}
             <button
               onClick={handleClose}
-              className="absolute top-4 right-4 z-50 p-2 text-gray-400 hover:text-[#1a2f23] transition-colors rounded-full hover:bg-black/5"
+              className="absolute top-5 right-5 z-50 p-2 text-gray-400 hover:text-[#1a2f23] transition-colors rounded-full hover:bg-black/5"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
 
-            {/* Content Area */}
             <div className="flex-1 p-8 sm:p-12 flex flex-col justify-center relative">
-              {/* Background Pattern */}
+              {/* Subtle Background Pattern */}
               <div className="absolute inset-0 opacity-[0.03] bg-[url('/grid-pattern.svg')] pointer-events-none" />
 
               <div className="relative z-10 max-w-lg mx-auto w-full">
 
-                {/* BRAND HEADER */}
-                <div className="text-center mb-6">
+                {/* Brand Logo */}
+                <div className="text-center mb-8">
                   <div className="relative w-40 h-16 mx-auto">
                     <Image
                       src="/Logo1.png"
@@ -92,6 +92,7 @@ export default function NewsletterPopup() {
                 </div>
 
                 <AnimatePresence mode="wait">
+                  {/* STEP 1: QUIZ */}
                   {step === 'onboarding' && (
                     <motion.div
                       key="onboarding"
@@ -100,39 +101,34 @@ export default function NewsletterPopup() {
                       exit={{ opacity: 0, x: 20 }}
                       className="text-center"
                     >
-                      <h2 className="text-3xl sm:text-4xl font-serif text-[#1a2f23] mb-3 leading-tight">
-                        Unlock Your <br />
-                        <span className="italic text-[#bb9c30]">Exclusive Discount</span>
+                      <h2 className="text-3xl sm:text-4xl font-serif text-[#1a2f23] mb-4 leading-tight">
+                        Let's Personalize <br />
+                        <span className="italic text-[#bb9c30]">Your Routine</span>
                       </h2>
-                      <p className="text-gray-500 font-medium text-sm mb-8">
-                        Get customized recommendations + a special offer. <br />
-                        What fits your needs best?
+                      <p className="text-gray-500 font-medium text-sm uppercase tracking-wider mb-8">
+                        What is your main hair concern?
                       </p>
 
-                      <div className="space-y-3 max-w-sm mx-auto">
-                        <button
-                          onClick={() => handleOptionSelect('20% Off')}
-                          className="w-full py-4 px-6 rounded-xl border-2 font-bold text-sm tracking-wide uppercase transition-all duration-200 transform hover:scale-[1.02] bg-white border-[#1a2f23] text-[#1a2f23] hover:bg-[#1a2f23] hover:text-white shadow-sm flex items-center justify-between group"
-                        >
-                          <span>Just Browsing</span>
-                          <span className="text-xs bg-[#bb9c30]/10 text-[#bb9c30] px-2 py-0.5 rounded group-hover:bg-white/20 group-hover:text-white">Get 20% Off</span>
-                        </button>
-
-                        <button
-                          onClick={() => handleOptionSelect('30% Off')}
-                          className="w-full py-4 px-6 rounded-xl border-2 font-bold text-sm tracking-wide uppercase transition-all duration-200 transform hover:scale-[1.02] bg-[#1a2f23] border-[#1a2f23] text-white shadow-lg flex items-center justify-between ring-offset-2 ring-[#bb9c30] ring-2"
-                        >
-                          <span>Subscribe & Save</span>
-                          <span className="text-xs bg-[#bb9c30] text-white px-2 py-0.5 rounded animate-pulse">Get 30% Off</span>
-                        </button>
+                      <div className="space-y-3">
+                        {['Hair Loss & Thinning', 'Dryness & Frizz', 'Scalp Health', 'Maintenance & Shine'].map((option) => (
+                          <button
+                            key={option}
+                            onClick={() => handleOptionSelect(option)}
+                            className="w-full py-4 px-6 rounded-xl border border-[#1a2f23]/10 bg-white text-[#1a2f23] font-bold text-sm tracking-wide transition-all duration-200 hover:scale-[1.02] hover:border-[#bb9c30] hover:shadow-md hover:text-[#bb9c30] flex items-center justify-between group"
+                          >
+                            <span>{option}</span>
+                            <span className="opacity-0 group-hover:opacity-100 transition-opacity text-lg">→</span>
+                          </button>
+                        ))}
                       </div>
 
                       <button onClick={handleClose} className="mt-8 text-xs text-gray-400 underline hover:text-gray-600 transition-colors">
-                        No thanks, I prefer paying full price
+                        I'm just browsing, thanks
                       </button>
                     </motion.div>
                   )}
 
+                  {/* STEP 2: EMAIL CAPTURE */}
                   {step === 'email' && (
                     <motion.div
                       key="email"
@@ -142,10 +138,10 @@ export default function NewsletterPopup() {
                       className="text-center"
                     >
                       <h2 className="text-3xl sm:text-4xl font-serif text-[#1a2f23] mb-4 leading-tight">
-                        Almost There!
+                        We Can Help!
                       </h2>
-                      <p className="text-gray-600 mb-8 max-w-xs mx-auto">
-                        Where should we send your {selectedOption === '30% Off' ? '30%' : '20%'} off code?
+                      <p className="text-gray-600 mb-8 max-w-sm mx-auto leading-relaxed">
+                        Join our community to get expert tips for <span className="text-[#bb9c30] font-bold">{selectedConcern?.toLowerCase()}</span> plus an exclusive <span className="font-bold">20% OFF</span> discount code.
                       </p>
 
                       <form onSubmit={handleSubmit} className="space-y-4 max-w-sm mx-auto">
@@ -154,23 +150,24 @@ export default function NewsletterPopup() {
                           required
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          placeholder="your@email.com"
-                          className="w-full py-4 px-6 rounded-full border-2 border-gray-200 bg-white text-[#1a2f23] placeholder-gray-400 focus:outline-none focus:border-[#1a2f23] text-center font-medium shadow-inner"
+                          placeholder="Enter your email address"
+                          className="w-full py-4 px-6 rounded-full border-2 border-gray-200 bg-white text-[#1a2f23] placeholder-gray-400 focus:outline-none focus:border-[#bb9c30] focus:ring-1 focus:ring-[#bb9c30] text-center font-medium shadow-inner transition-all"
                         />
                         <button
                           type="submit"
                           className="w-full py-4 px-6 rounded-full bg-[#1a2f23] text-white font-bold tracking-widest uppercase shadow-xl hover:bg-[#2d4a38] transition-transform hover:scale-[1.02]"
                         >
-                          Reveal My Code
+                          Unlock My Code
                         </button>
                       </form>
 
                       <p className="mt-6 text-[10px] text-gray-400 px-4">
-                        Unsubscribe at any time. We respect your privacy.
+                        By signing up, you agree to receive email marketing. Unsubscribe anytime.
                       </p>
                     </motion.div>
                   )}
 
+                  {/* STEP 3: SUCCESS / CODE */}
                   {step === 'success' && (
                     <motion.div
                       key="success"
@@ -182,22 +179,22 @@ export default function NewsletterPopup() {
                         🎉
                       </div>
                       <h2 className="text-3xl font-serif text-[#1a2f23] mb-2">
-                        You're All Set!
+                        You're In!
                       </h2>
-                      <p className="text-gray-500 mb-6">
-                        Use promo code <span className="font-bold text-[#1a2f23]">ZUMFALI123</span> at checkout to get {selectedOption === '30% Off' ? '30% off your subscription' : '20% off your order'}.
+                      <p className="text-gray-500 mb-8 max-w-xs mx-auto">
+                        Here is your exclusive code for <span className="font-bold text-[#1a2f23]">20% OFF</span> your first order.
                       </p>
 
                       <div className="bg-[#fffcf5] text-[#1a2f23] text-2xl font-mono font-bold py-5 px-10 rounded-xl border-2 border-dashed border-[#bb9c30] mb-8 tracking-widest relative group cursor-pointer shadow-sm hover:bg-[#fdfbf7] transition-colors"
                         onClick={() => {
-                          navigator.clipboard.writeText('ZUMFALI123');
+                          navigator.clipboard.writeText('ZUMFALI20');
                           const btn = document.getElementById('copy-text');
                           if (btn) btn.innerText = 'Copied!';
                           setTimeout(() => { if (btn) btn.innerText = 'Click to Copy' }, 2000);
                         }}
                       >
-                        ZUMFALI123
-                        <span id="copy-text" className="absolute -bottom-6 left-0 right-0 text-[10px] text-gray-400 font-sans normal-case">Click to Copy</span>
+                        ZUMFALI20
+                        <span id="copy-text" className="absolute -bottom-6 left-0 right-0 text-[10px] text-gray-400 font-sans normal-case tracking-normal">Click to Copy</span>
                       </div>
 
                       <button
@@ -206,6 +203,10 @@ export default function NewsletterPopup() {
                       >
                         Shop Now
                       </button>
+
+                      <p className="mt-6 text-xs text-gray-400">
+                        Apply code at checkout.
+                      </p>
                     </motion.div>
                   )}
                 </AnimatePresence>
