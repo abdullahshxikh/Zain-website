@@ -103,14 +103,14 @@ export default function IngredientsSection() {
               </div>
 
               {/* Content */}
-              <div className="absolute inset-0 p-6 flex flex-col justify-end text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+              <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
                 <h3 className="text-2xl font-serif mb-2 font-medium">
                   {ingredient.name}
                 </h3>
-                <p className="text-sm text-white/90 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 line-clamp-2">
+                <p className="text-sm text-white/90 mb-4 line-clamp-2">
                   {ingredient.description}
                 </p>
-                <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                <div className="flex items-center gap-2">
                   <span className="text-[#bb9c30] text-xs font-bold tracking-wider uppercase bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
                     {ingredient.dosage}
                   </span>
