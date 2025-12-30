@@ -7,8 +7,8 @@ import FacebookPixel from "@/components/FacebookPixel";
 import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/CartDrawer";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: 'swap' });
+const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair", display: 'swap' });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://zumfali.co'),

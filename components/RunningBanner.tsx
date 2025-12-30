@@ -7,9 +7,9 @@ const messages = [
   'Sign up today & get a free gift on us',
   'Buy 2 bottles, get 1 free',
   'Free shipping on orders over $30',
-  'Made with 8 powerful natural ingredients',
+  'Made with 7 powerful natural ingredients',
   'Limited launch spots – reserve yours now',
-]; 
+];
 
 export default function RunningBanner() {
   const [mounted, setMounted] = useState(false);
