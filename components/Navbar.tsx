@@ -27,9 +27,8 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
     setAccountLoggedIn(isShopifyLoggedIn());
-  }, [mounted]);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,7 +43,7 @@ export default function Navbar() {
     };
   }, []);
 
-  if (!mounted) return null;
+  // if (!mounted) return null; // Removed to fix CLS/SSR performance
 
   const handleAccountClick = () => {
     if (accountLoggedIn) {

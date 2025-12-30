@@ -25,7 +25,7 @@ export default function ProductPricingSection() {
     console.log('Early signup:', { firstName, email });
   };
 
-  if (!mounted) return null;
+  // if (!mounted) return null;
 
   return (
     <section

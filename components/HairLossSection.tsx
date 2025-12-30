@@ -27,12 +27,6 @@ ChartJS.register(
 );
 
 export default function HairLossSection() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const chartData = {
     labels: ['20', '25', '30', '35', '40', '45', '50', '55', '60', '65', '70', '75', '80', '85', '90'],
     datasets: [
@@ -129,7 +123,7 @@ export default function HairLossSection() {
             family: 'Inter, sans-serif',
           },
           stepSize: 20,
-          callback: function(value: any) {
+          callback: function (value: any) {
             return value;
           },
         },
@@ -151,8 +145,6 @@ export default function HairLossSection() {
       mode: 'index' as const,
     },
   };
-
-  if (!mounted) return null;
 
   return (
     <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-16 overflow-hidden" style={{
@@ -190,8 +182,8 @@ export default function HairLossSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-                Hair loss affects over <span className="font-bold text-[#1a2f23]">50% of men and women by age 50</span>. 
-                Stress, poor nutrition, environmental toxins, and hormonal imbalances are destroying natural 
+                Hair loss affects over <span className="font-bold text-[#1a2f23]">50% of men and women by age 50</span>.
+                Stress, poor nutrition, environmental toxins, and hormonal imbalances are destroying natural
                 hair follicle health at an alarming rate.
               </motion.p>
 
@@ -202,7 +194,7 @@ export default function HairLossSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                The impact? Thinning hair, receding hairlines, and loss of confidence—making it harder to 
+                The impact? Thinning hair, receding hairlines, and loss of confidence—making it harder to
                 feel your best in work, relationships, and life.
               </motion.p>
 
@@ -215,8 +207,8 @@ export default function HairLossSection() {
               >
                 <p className="text-lg leading-relaxed">
                   <span className="text-[#1a2f23] font-bold text-xl font-serif">The good news:</span>
-                  <span className="text-gray-700 font-light"> Zumfali helps you reclaim your hair health with natural, 
-                  scientifically-backed ingredients for strength, growth, and vitality.</span>
+                  <span className="text-gray-700 font-light"> Zumfali helps you reclaim your hair health with natural,
+                    scientifically-backed ingredients for strength, growth, and vitality.</span>
                 </p>
               </motion.div>
             </div>

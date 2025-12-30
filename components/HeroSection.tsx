@@ -6,14 +6,6 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 export default function HeroSection() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
   return (
     <section className="relative w-full min-h-[100dvh] bg-[#BCA379] flex flex-col lg:flex-row overflow-hidden pt-24 lg:pt-0">
       {/* Mobile: Image on Top. Desktop: Image on Right (order-2) */}
@@ -23,8 +15,8 @@ export default function HeroSection() {
         <div className="relative w-full h-full">
           <Image
             src="/edited-photo.png"
-            alt="Woman with healthy hair"
-            title="Woman with healthy hair"
+            alt="Zumfali Premium Natural Hair Growth Oil"
+            title="Zumfali Premium Natural Hair Growth Oil"
             fill
             className="object-cover object-top"
             priority
@@ -44,15 +36,15 @@ export default function HeroSection() {
         >
           {/* Top Label */}
           <div className="mb-3">
-            <span className="text-[#E5D178] font-bold text-2xl sm:text-3xl font-serif">10,000 </span>
+            <span className="text-[#E5D178] font-bold text-2xl sm:text-3xl font-serif">10,000+ </span>
             <span className="text-[#1a1a1a] font-bold text-2xl sm:text-3xl font-serif tracking-wide">Women Can't be Wrong.</span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-[2.2rem] sm:text-[2.8rem] lg:text-[3.5rem] font-serif font-bold text-[#0A0A0A] leading-[1.1] mb-6 tracking-tight whitespace-normal sm:whitespace-nowrap">
-            TRANSFORM DRY, DAMAGED <br />
-            STRANDS INTO, NOURISHED <br />
-            HAIR
+            ZUMFALI PREMIUM NATURAL <br />
+            HAIR GROWTH OIL FOR <br />
+            NOURISHED HAIR
           </h1>
 
           {/* Subline / Tagline - Fixed "Grease", Single Line */}

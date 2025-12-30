@@ -39,16 +39,8 @@ const benefits = [
 ];
 
 export default function SolutionSection() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
   return (
-    <section 
+    <section
       className="relative py-20 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-16 overflow-hidden bg-white"
     >
       <div className="relative z-10 max-w-7xl mx-auto">
@@ -76,7 +68,7 @@ export default function SolutionSection() {
             Your Hair Deserves <br />
             <span className="italic text-[#bb9c30]">Nature&apos;s Best</span>
           </h2>
-          
+
           <motion.p
             className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-light"
             initial={{ opacity: 0 }}
@@ -124,38 +116,38 @@ export default function SolutionSection() {
           transition={{ duration: 0.8 }}
         >
           <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
-             <div className="flex-1 text-center md:text-left">
-                <h3 className="text-3xl md:text-4xl font-serif text-[#1a2f23] mb-6 leading-tight">
-                  Like a Tree, Healthy Hair Begins at the <span className="italic text-[#bb9c30]">Roots</span>
-                </h3>
-                <p className="text-gray-600 text-lg leading-relaxed mb-8 font-light">
-                  When deeply nourished, it grows stronger, fuller, and more alive. 
-                  Our 7-in-1 botanical blend delivers essential nutrients directly to your scalp.
-                </p>
-                
-                <div className="flex flex-wrap justify-center md:justify-start gap-6 text-sm">
-                  <div className="flex items-center gap-2 text-[#d4b554]">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
-                    <span className="text-[#1a2f23]">100% Natural</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[#d4b554]">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
-                    <span className="text-[#1a2f23]">No Harsh Chemicals</span>
-                  </div>
+            <div className="flex-1 text-center md:text-left">
+              <h3 className="text-3xl md:text-4xl font-serif text-[#1a2f23] mb-6 leading-tight">
+                Like a Tree, Healthy Hair Begins at the <span className="italic text-[#bb9c30]">Roots</span>
+              </h3>
+              <p className="text-gray-600 text-lg leading-relaxed mb-8 font-light">
+                When deeply nourished, it grows stronger, fuller, and more alive.
+                Our 7-in-1 botanical blend delivers essential nutrients directly to your scalp.
+              </p>
+
+              <div className="flex flex-wrap justify-center md:justify-start gap-6 text-sm">
+                <div className="flex items-center gap-2 text-[#d4b554]">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                  <span className="text-[#1a2f23]">100% Natural</span>
                 </div>
-             </div>
-             
-             <div className="w-full md:w-auto flex-shrink-0">
-                <Link href="/shop">
-                  <motion.button
+                <div className="flex items-center gap-2 text-[#d4b554]">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                  <span className="text-[#1a2f23]">No Harsh Chemicals</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full md:w-auto flex-shrink-0">
+              <Link href="/shop">
+                <motion.button
                   className="w-full md:w-auto px-10 py-4 bg-[#1a2f23] text-white rounded-full font-medium text-lg shadow-lg shadow-[#1a2f23]/20 hover:bg-[#2d4a38] hover:shadow-xl transition-all"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   Start Your Transformation
                 </motion.button>
-                </Link>
-             </div>
+              </Link>
+            </div>
           </div>
         </motion.div>
       </div>

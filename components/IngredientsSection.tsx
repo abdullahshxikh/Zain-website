@@ -51,14 +51,6 @@ const ingredients = [
 ];
 
 export default function IngredientsSection() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
   return (
     <section
       className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-16 overflow-hidden bg-white"

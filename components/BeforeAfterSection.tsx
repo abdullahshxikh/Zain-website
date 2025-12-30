@@ -26,11 +26,11 @@ export default function BeforeAfterSection() {
     setCurrentIndex((prev) => (prev + 1) % images.length);
   };
 
-  if (!mounted) return null;
+  // if (!mounted) return null;
 
   return (
-    <section 
-      className="relative py-6 sm:py-8 md:py-10 px-4 sm:px-6 lg:px-16 overflow-hidden" 
+    <section
+      className="relative py-6 sm:py-8 md:py-10 px-4 sm:px-6 lg:px-16 overflow-hidden"
       style={{
         backgroundColor: '#3d5a47',
       }}
@@ -136,11 +136,10 @@ export default function BeforeAfterSection() {
               <motion.button
                 key={img}
                 onClick={() => goToSlide(index)}
-                className={`flex-shrink-0 relative w-12 h-12 sm:w-14 sm:h-14 rounded-md overflow-hidden border-2 transition-all ${
-                  currentIndex === index
+                className={`flex-shrink-0 relative w-12 h-12 sm:w-14 sm:h-14 rounded-md overflow-hidden border-2 transition-all ${currentIndex === index
                     ? 'border-[#bb9c30] scale-110 shadow-lg'
                     : 'border-transparent opacity-60 hover:opacity-100 hover:border-[#bb9c30]/50'
-                }`}
+                  }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

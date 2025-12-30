@@ -18,7 +18,7 @@ export default function RunningBanner() {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  // if (!mounted) return null;
 
   return (
     <section

@@ -53,11 +53,11 @@ export default function HowItWorksNewsletterSection() {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  // if (!mounted) return null;
 
   return (
-    <section 
-      className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-16 overflow-hidden bg-[#FAFAF9] border-t border-[#1a2f23]/5" 
+    <section
+      className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-16 overflow-hidden bg-[#FAFAF9] border-t border-[#1a2f23]/5"
     >
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* How It Works Section */}
@@ -90,8 +90,8 @@ export default function HowItWorksNewsletterSection() {
             >
               <div className="relative bg-white rounded-2xl p-8 border border-gray-200 hover:border-[#bb9c30]/40 hover:shadow-lg hover:shadow-black/5 transition-all duration-300 h-full">
                 <div className="flex items-center justify-between mb-8">
-                   <span className="text-5xl">{phase.icon}</span>
-                   <span className="text-[#8c7335] font-bold text-xl tracking-wider">DAY {phase.day}</span>
+                  <span className="text-5xl">{phase.icon}</span>
+                  <span className="text-[#8c7335] font-bold text-xl tracking-wider">DAY {phase.day}</span>
                 </div>
 
                 <h3 className="text-2xl font-serif text-[#1a2f23] mb-4 group-hover:text-[#bb9c30] transition-colors">
@@ -121,7 +121,7 @@ export default function HowItWorksNewsletterSection() {
         {/* Newsletter Section */}
         <div className="max-w-4xl mx-auto text-center relative">
           <div className="absolute inset-0 bg-[#bb9c30]/10 blur-[120px] rounded-full pointer-events-none" />
-          
+
           <motion.div
             className="relative z-10 bg-[#FAFAF9] border border-[#1a2f23]/10 rounded-3xl p-8 sm:p-12"
             initial={{ opacity: 0, y: 30 }}
@@ -130,13 +130,13 @@ export default function HowItWorksNewsletterSection() {
             transition={{ duration: 0.8 }}
           >
             <div className="mb-8">
-               <span className="text-4xl mb-4 block">✉️</span>
-               <h2 className="text-3xl sm:text-4xl font-serif text-[#1a2f23] mb-4">
-                 Join the <span className="text-[#bb9c30] italic">Community</span>
-               </h2>
-               <p className="text-gray-600 font-light max-w-lg mx-auto">
-                 Get exclusive hair care tips, early access to new products, and special discounts.
-               </p>
+              <span className="text-4xl mb-4 block">✉️</span>
+              <h2 className="text-3xl sm:text-4xl font-serif text-[#1a2f23] mb-4">
+                Join the <span className="text-[#bb9c30] italic">Community</span>
+              </h2>
+              <p className="text-gray-600 font-light max-w-lg mx-auto">
+                Get exclusive hair care tips, early access to new products, and special discounts.
+              </p>
             </div>
 
             <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-3 mb-8">
@@ -162,11 +162,11 @@ export default function HowItWorksNewsletterSection() {
 
             <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-500 font-light">
               <div className="flex items-center gap-2">
-                <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
+                <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                 <span>10,000+ subscribers</span>
               </div>
               <div className="flex items-center gap-2">
-                <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
+                <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                 <span>No spam, ever</span>
               </div>
             </div>
