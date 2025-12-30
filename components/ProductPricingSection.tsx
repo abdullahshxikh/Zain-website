@@ -48,7 +48,6 @@ export default function ProductPricingSection() {
                 title="Zumfali 7-in-1 Hair Oil Duo"
                 fill
                 className="object-contain hover:scale-105 transition-transform duration-700"
-                priority
               />
             </div>
           </motion.div>

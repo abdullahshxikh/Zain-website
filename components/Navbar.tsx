@@ -77,8 +77,11 @@ export default function Navbar() {
         transition={{ duration: 0.5 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <div className="flex items-center h-14 sm:h-16 gap-4">
-            {/* Left Navigation */}
+          <div className="flex items-center h-20 sm:h-24 md:h-28 gap-4">
+            {/* Mobile Spacer (for centering) */}
+            <div className="flex-1 lg:hidden" />
+
+            {/* Left Navigation (Desktop) */}
             <div className="hidden lg:flex items-center gap-8 flex-1">
               {leftNavItems.map((item) => (
                 <Link
@@ -113,7 +116,7 @@ export default function Navbar() {
                   title="Zumfali logo"
                   width={320}
                   height={110}
-                  className="h-14 sm:h-20 md:h-24 w-auto"
+                  className="h-20 sm:h-24 md:h-28 w-auto px-2"
                   priority
                 />
                 <span className="sr-only">Zumfali</span>
@@ -184,8 +187,24 @@ export default function Navbar() {
               })}
             </div>
 
-            {/* Mobile Menu Button */}
-            <div className="lg:hidden flex-1 flex justify-end">
+            {/* Mobile Actions */}
+            <div className="lg:hidden flex-1 flex items-center justify-end gap-4">
+              <motion.button
+                type="button"
+                onClick={openCart}
+                className="text-gray-800 relative"
+                whileTap={{ scale: 0.9 }}
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 0 014 0z" />
+                </svg>
+                {itemCount > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 bg-[#bb9c30] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                    {itemCount}
+                  </span>
+                )}
+              </motion.button>
+
               <button
                 className="flex flex-col gap-1.5 w-8 h-8 items-center justify-center"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

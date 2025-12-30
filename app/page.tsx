@@ -1,14 +1,16 @@
+import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import RunningBanner from '@/components/RunningBanner';
-import ProductPricingSection from '@/components/ProductPricingSection';
-import BeforeAfterGallery from '@/components/BeforeAfterGallery';
-import IngredientsSection from '@/components/IngredientsSection';
-import ProductVideoSection from '@/components/ProductVideoSection';
-import HairLossSection from '@/components/HairLossSection';
-import SolutionSection from '@/components/SolutionSection';
-import HowItWorksNewsletterSection from '@/components/HowItWorksNewsletterSection';
-import Footer from '@/components/Footer';
+
+const ProductPricingSection = dynamic(() => import('@/components/ProductPricingSection'), { ssr: true });
+const BeforeAfterGallery = dynamic(() => import('@/components/BeforeAfterGallery'), { ssr: true });
+const IngredientsSection = dynamic(() => import('@/components/IngredientsSection'), { ssr: true });
+const ProductVideoSection = dynamic(() => import('@/components/ProductVideoSection'), { ssr: false });
+const HairLossSection = dynamic(() => import('@/components/HairLossSection'), { ssr: true });
+const SolutionSection = dynamic(() => import('@/components/SolutionSection'), { ssr: true });
+const HowItWorksNewsletterSection = dynamic(() => import('@/components/HowItWorksNewsletterSection'), { ssr: true });
+const Footer = dynamic(() => import('@/components/Footer'), { ssr: true });
 
 export default function Home() {
   return (
