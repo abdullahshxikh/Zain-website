@@ -30,9 +30,9 @@ type BundleOption = {
   saveBadge?: string;
   bestValue?: boolean;
   popular?: boolean;
-  limitedTime?: boolean;
   bonuses?: string[];
   pricePerBottle?: string;
+  limitedTime?: boolean;
 };
 
 const bundles: BundleOption[] = [
@@ -54,9 +54,9 @@ const bundles: BundleOption[] = [
     shipping: '',
     saveBadge: 'Save $49.99',
     popular: true,
-    limitedTime: true,
     bonuses: ['+FREE Comb'],
     pricePerBottle: 'Save 42%',
+    limitedTime: true,
   },
   {
     id: 3,
@@ -493,7 +493,7 @@ export default function ShopPage() {
                         <div className="flex items-center flex-wrap gap-2 mb-1 pr-16">
                           <span className="font-bold text-lg text-[#1a2f23] leading-tight">{bundle.title}</span>
                           {bundle.limitedTime && (
-                            <span className="text-[9px] bg-[#d97706] text-white px-2 py-0.5 rounded font-black uppercase tracking-tighter animate-pulse">
+                            <span className="text-[10px] bg-[#bb9c30] text-white px-2 py-0.5 rounded font-bold">
                               Limited Time
                             </span>
                           )}
