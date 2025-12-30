@@ -42,9 +42,9 @@ export default function HeroSection() {
 
           {/* Main Headline */}
           <h1 className="text-[2.2rem] sm:text-[2.8rem] lg:text-[3.5rem] font-serif font-bold text-[#0A0A0A] leading-[1.1] mb-6 tracking-tight whitespace-normal sm:whitespace-nowrap">
-            ZUMFALI PREMIUM NATURAL <br />
-            HAIR GROWTH OIL FOR <br />
-            HAIR THAT NEEDS IT
+            TRANSFORM DRY, DAMAGED <br />
+            STRANDS INTO, NOURISHED <br />
+            HAIR
           </h1>
 
           {/* Subline / Tagline - Fixed "Grease", Single Line */}
