@@ -30,6 +30,7 @@ type BundleOption = {
   saveBadge?: string;
   bestValue?: boolean;
   popular?: boolean;
+  limitedTime?: boolean;
   bonuses?: string[];
   pricePerBottle?: string;
 };
@@ -53,6 +54,7 @@ const bundles: BundleOption[] = [
     shipping: '',
     saveBadge: 'Save $49.99',
     popular: true,
+    limitedTime: true,
     bonuses: ['+FREE Comb'],
     pricePerBottle: 'Save 42%',
   },
@@ -88,7 +90,7 @@ export default function ShopPage() {
   const getDisplayPrice = (bundleId: number): string => {
     const bundle = bundles.find(b => b.id === bundleId);
     if (!bundle) return '$0.00';
-    
+
     if (subscribeMode) {
       const price = parseFloat(bundle.price.replace('$', ''));
       return `$${(price * 0.8).toFixed(2)}`;
@@ -490,6 +492,11 @@ export default function ShopPage() {
                       <div className="flex-1">
                         <div className="flex items-center flex-wrap gap-2 mb-1 pr-16">
                           <span className="font-bold text-lg text-[#1a2f23] leading-tight">{bundle.title}</span>
+                          {bundle.limitedTime && (
+                            <span className="text-[9px] bg-[#d97706] text-white px-2 py-0.5 rounded font-black uppercase tracking-tighter animate-pulse">
+                              Limited Time
+                            </span>
+                          )}
                           {bundle.saveBadge && (
                             <span className="text-[10px] bg-[#5c8065] text-white px-2 py-0.5 rounded font-bold">
                               {bundle.saveBadge}
@@ -608,7 +615,7 @@ export default function ShopPage() {
                     </div>
                     <span className="font-bold text-lg text-[#1a2f23]">One-time</span>
                   </div>
-                    <span className="font-bold text-xl text-[#1a2f23]">
+                  <span className="font-bold text-xl text-[#1a2f23]">
                     {getDisplayPrice(selectedBundle)}
                   </span>
                 </div>
