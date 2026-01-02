@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useMetaPixel } from '@/hooks/useMetaPixel';
 
 export default function Footer() {
@@ -65,24 +66,34 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3 text-sm text-gray-600 font-light">
               <li>
-                <a href="#home" className="hover:text-[#bb9c30] transition-colors">
+                <Link href="/" className="hover:text-[#bb9c30] transition-colors">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#shop-now" className="hover:text-[#bb9c30] transition-colors">
+                <Link href="/shop" className="hover:text-[#bb9c30] transition-colors">
                   Shop Now
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#about-us" className="hover:text-[#bb9c30] transition-colors">
+                <Link href="/about" className="hover:text-[#bb9c30] transition-colors">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#contact-us" className="hover:text-[#bb9c30] transition-colors">
+                <Link href="/contact" className="hover:text-[#bb9c30] transition-colors">
                   Contact Us
-                </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/#ingredients" className="hover:text-[#bb9c30] transition-colors">
+                  Ingredients
+                </Link>
+              </li>
+              <li>
+                <Link href="/#results" className="hover:text-[#bb9c30] transition-colors">
+                  Real Results
+                </Link>
               </li>
             </ul>
           </div>

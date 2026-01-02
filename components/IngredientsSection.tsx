@@ -53,6 +53,7 @@ const ingredients = [
 export default function IngredientsSection() {
   return (
     <section
+      id="ingredients"
       className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-16 overflow-hidden bg-white"
     >
       <div className="relative z-10 max-w-7xl mx-auto">
@@ -73,11 +74,11 @@ export default function IngredientsSection() {
         </motion.div>
 
         {/* Ingredients Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="flex flex-wrap justify-center gap-6">
           {ingredients.map((ingredient, index) => (
             <motion.div
               key={ingredient.name}
-              className="group relative aspect-[3/4] rounded-xl overflow-hidden cursor-pointer bg-gray-100 shadow-lg"
+              className="group relative aspect-[3/4] rounded-xl overflow-hidden cursor-pointer bg-gray-100 shadow-lg w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

@@ -20,7 +20,7 @@ export default function HeroSection() {
             fill
             className="object-cover object-top"
             priority
-            quality={100}
+            quality={90}
             sizes="(max-width: 1024px) 100vw, 45vw"
           />
         </div>
@@ -29,9 +29,9 @@ export default function HeroSection() {
       {/* Text Section */}
       <div className="relative z-20 w-full lg:w-[55%] flex flex-col justify-start lg:justify-center px-6 sm:px-12 lg:pl-16 lg:pr-0 pb-12 lg:pb-0 order-2 lg:order-1 min-h-[50vh] lg:h-screen pt-12 lg:pt-0">
         <motion.div
-          initial={{ opacity: 0.1, x: -20 }}
+          initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto lg:mx-0 text-center lg:text-left mt-10 lg:mt-0"
         >
           {/* Top Label */}

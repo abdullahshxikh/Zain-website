@@ -46,6 +46,7 @@ const timeline = [
 
 export default function HowItWorksNewsletterSection() {
   const [mounted, setMounted] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const emailRef = useRef<HTMLInputElement | null>(null);
   const { trackSubscribe, trackCompleteRegistration } = useMetaPixel();
 
@@ -57,6 +58,7 @@ export default function HowItWorksNewsletterSection() {
 
   return (
     <section
+      id="newsletter"
       className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-16 overflow-hidden bg-[#FAFAF9] border-t border-[#1a2f23]/5"
     >
       <div className="relative z-10 max-w-7xl mx-auto">
@@ -139,26 +141,43 @@ export default function HowItWorksNewsletterSection() {
               </p>
             </div>
 
-            <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-3 mb-8">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-6 py-3.5 bg-white border border-gray-200 rounded-full text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#bb9c30] transition-colors"
-                ref={emailRef}
-              />
-              <button
-                className="px-8 py-3.5 bg-[#1a2f23] text-white rounded-full font-medium hover:bg-[#2d4a38] transition-colors shadow-lg shadow-[#1a2f23]/20"
-                type="button"
-                onClick={() => {
-                  const email = emailRef.current?.value?.trim();
-                  if (!email) return;
-                  trackSubscribe();
-                  trackCompleteRegistration('newsletter_inline');
-                }}
+            {isSubmitted ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-[#bb9c30]/10 border border-[#bb9c30]/20 rounded-2xl p-6 text-center max-w-md mx-auto mb-8"
               >
-                Subscribe
-              </button>
-            </div>
+                <div className="w-12 h-12 bg-[#bb9c30] rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-serif text-[#1a2f23] mb-1">Welcome to the Family!</h3>
+                <p className="text-gray-600 font-light text-sm">You've successfully subscribed to our newsletter.</p>
+              </motion.div>
+            ) : (
+              <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-3 mb-8">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="flex-1 px-6 py-3.5 bg-white border border-gray-200 rounded-full text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#bb9c30] transition-colors"
+                  ref={emailRef}
+                />
+                <button
+                  className="px-8 py-3.5 bg-[#1a2f23] text-white rounded-full font-medium hover:bg-[#2d4a38] transition-colors shadow-lg shadow-[#1a2f23]/20"
+                  type="button"
+                  onClick={() => {
+                    const email = emailRef.current?.value?.trim();
+                    if (!email) return;
+                    trackSubscribe();
+                    trackCompleteRegistration('newsletter_inline');
+                    setIsSubmitted(true);
+                  }}
+                >
+                  Subscribe
+                </button>
+              </div>
+            )}
 
             <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-500 font-light">
               <div className="flex items-center gap-2">

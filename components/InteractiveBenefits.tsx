@@ -8,18 +8,21 @@ const benefits = [
     tabLabel: 'Restores Follicle Health',
     title: 'Restores Follicle Health',
     description: 'Penetrates deep into the scalp to nourish dormant follicles, stimulating natural growth cycles without harsh chemicals.',
+    image: '/Gemini_Generated_Image_kclmx7kclmx7kclm (1).png'
   },
   {
     id: 'strengthen',
     tabLabel: 'Strengthens Strands',
     title: 'Strengthens Every Strand',
     description: 'Fortifies hair from root to tip, reducing breakage and shedding while improving elasticity and shine.',
+    image: '/Gemini_Generated_Image_wg19biwg19biwg19.png'
   },
   {
     id: 'balance',
     tabLabel: 'Balances Scalp',
     title: 'Balances Scalp Health',
     description: 'Soothes irritation and regulates oil production, creating the optimal environment for thicker, fuller hair growth.',
+    image: '/Gemini_Generated_Image_nn8wajnn8wajnn8w.png'
   }
 ];
 
@@ -33,18 +36,17 @@ export default function InteractiveBenefits() {
           <p className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2">
             Balance Your Scalp, Strength & Shine with Zumfali
           </p>
-          
+
           {/* Custom Tab Navigation */}
           <div className="inline-flex flex-wrap justify-center gap-2 sm:gap-4 p-1 bg-gray-100/50 rounded-full">
             {benefits.map((benefit, index) => (
               <button
                 key={benefit.id}
                 onClick={() => setActiveTab(index)}
-                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 ${
-                  activeTab === index
+                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 ${activeTab === index
                     ? 'bg-[#1a2f23] text-white shadow-lg scale-105'
                     : 'bg-transparent text-gray-600 hover:bg-gray-200'
-                }`}
+                  }`}
               >
                 {benefit.tabLabel}
               </button>
@@ -55,23 +57,31 @@ export default function InteractiveBenefits() {
         {/* Content Area */}
         <div className="relative bg-[#FAFAF9] rounded-3xl overflow-hidden shadow-2xl min-h-[400px] sm:min-h-[500px]">
           <div className="grid grid-cols-1 md:grid-cols-2 h-full min-h-[400px] sm:min-h-[500px]">
-            
-            {/* Left: Static Product Image */}
-            <div className="relative h-64 sm:h-80 md:h-full bg-white flex items-center justify-center p-8 md:p-12">
-               {/* Background Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#bb9c30]/10 to-transparent opacity-50" />
-              <div className="absolute w-64 h-64 bg-[#bb9c30]/20 rounded-full blur-3xl" />
-              
-              <div className="relative w-full h-full max-h-[400px]">
-                <Image
-                  src="/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png"
-                  alt="Zumfali Hair Oil"
-                  title="Zumfali Hair Oil"
-                  fill
-                  className="object-contain drop-shadow-xl"
-                  priority
-                />
-              </div>
+
+            {/* Left: Dynamic Product Image with Animation */}
+            <div className="relative h-64 sm:h-80 md:h-full bg-white flex items-center justify-center overflow-hidden">
+              {/* Background Glow Effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#bb9c30]/10 to-transparent opacity-50 z-0" />
+              <div className="absolute w-64 h-64 bg-[#bb9c30]/20 rounded-full blur-3xl z-0" />
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.05 }}
+                  transition={{ duration: 0.4 }}
+                  className="relative w-full h-full z-10"
+                >
+                  <Image
+                    src={benefits[activeTab].image}
+                    alt={benefits[activeTab].title}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </motion.div>
+              </AnimatePresence>
             </div>
 
             {/* Right: Dynamic Text Content */}
@@ -91,7 +101,7 @@ export default function InteractiveBenefits() {
                   <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
                     {benefits[activeTab].description}
                   </p>
-                  
+
                   {/* Decorative Element */}
                   <div className="mt-8 w-16 h-1 bg-[#bb9c30] rounded-full" />
                 </motion.div>

@@ -149,7 +149,7 @@ export default function ProductVideoSection() {
   const currentReview = customerReviews[currentReviewIndex];
 
   return (
-    <section className="relative min-h-screen bg-black overflow-hidden">
+    <section id="video" className="relative min-h-screen bg-black overflow-hidden">
       {/* Full-width Video Container */}
       <div className="relative w-full h-screen">
         <video

@@ -25,8 +25,8 @@ const pairs = [
 
 export default function BeforeAfterGallery() {
   return (
-    <section className="relative py-16 overflow-hidden" style={{ backgroundColor: '#FAFAF9' }}>
-      
+    <section id="results" className="relative py-16 overflow-hidden" style={{ backgroundColor: '#FAFAF9' }}>
+
       {/* Header */}
       <motion.div
         className="relative z-10 text-center mb-12 px-4"
