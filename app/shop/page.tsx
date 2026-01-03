@@ -42,7 +42,6 @@ const bundles: BundleOption[] = [
     price: '$39.99',
     originalPrice: '$59.99',
     shipping: '+ $8.00 Shipping',
-    saveBadge: 'Save $20.00',
     bonuses: [],
     pricePerBottle: 'Save 33%',
   },
@@ -346,7 +345,7 @@ export default function ShopPage() {
                       e.stopPropagation();
                       setActiveImage((prev) => (prev - 1 + productImages.length) % productImages.length);
                     }}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-[#1a2f23] hover:bg-white transition-all focus:opacity-100 z-10"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm hidden md:flex items-center justify-center text-[#1a2f23] hover:bg-white transition-all focus:opacity-100 z-10"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
                   </button>
@@ -355,7 +354,7 @@ export default function ShopPage() {
                       e.stopPropagation();
                       setActiveImage((prev) => (prev + 1) % productImages.length);
                     }}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-[#1a2f23] hover:bg-white transition-all focus:opacity-100 z-10"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm hidden md:flex items-center justify-center text-[#1a2f23] hover:bg-white transition-all focus:opacity-100 z-10"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                   </button>

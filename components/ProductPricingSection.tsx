@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 const bulletPoints = [
@@ -108,58 +109,16 @@ export default function ProductPricingSection() {
                 Reserve Your Bundle
               </h3>
 
-              {isSubmitted ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="bg-[#bb9c30]/10 border border-[#bb9c30]/20 rounded-xl p-8 text-center"
+              <Link href="/shop" className="block w-full">
+                <motion.button
+                  className="w-full py-4 rounded-xl font-medium text-lg text-white shadow-lg shadow-[#bb9c30]/20 transition-all uppercase tracking-widest"
+                  style={{ background: 'linear-gradient(135deg, #bb9c30 0%, #d4b554 100%)' }}
+                  whileHover={{ scale: 1.01, shadow: '0 20px 40px -10px rgba(187, 156, 48, 0.4)' }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  <div className="w-16 h-16 bg-[#bb9c30] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#bb9c30]/30">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-serif text-[#1a2f23] mb-2">Reservation Confirmed!</h3>
-                  <p className="text-gray-600 font-light">
-                    Thank you, {firstName}. We've reserved your bundle. Check your email ({email}) for details.
-                  </p>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <input
-                      type="text"
-                      placeholder="First name"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      className="w-full px-4 py-4 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#bb9c30] focus:border-[#bb9c30] transition-all"
-                      required
-                    />
-                    <input
-                      type="email"
-                      placeholder="Email address"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-4 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#bb9c30] focus:border-[#bb9c30] transition-all"
-                      required
-                    />
-                  </div>
-
-                  <motion.button
-                    type="submit"
-                    className="w-full py-4 rounded-xl font-medium text-lg text-white shadow-lg shadow-[#bb9c30]/20 transition-all"
-                    style={{ background: 'linear-gradient(135deg, #bb9c30 0%, #d4b554 100%)' }}
-                    whileHover={{ scale: 1.01, shadow: '0 20px 40px -10px rgba(187, 156, 48, 0.4)' }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Get Early Access + Free Comb
-                  </motion.button>
-                </form>
-              )}
-
-              <p className="text-gray-400 text-xs text-center mt-4 tracking-wide uppercase">
-                Limited spots available for launch
-              </p>
+                  Buy Now
+                </motion.button>
+              </Link>
             </motion.div>
           </motion.div>
         </div>
