@@ -190,6 +190,30 @@ export default function CartDrawer() {
             {/* Footer */}
             {items.length > 0 && (
               <div className="p-4 bg-white border-t border-gray-100 space-y-4">
+
+                {/* Upsell Card */}
+                <div className="bg-[#E5D178] rounded-xl p-4 flex items-center justify-between gap-3 shadow-sm border border-[#d9c063]">
+                  <div className="relative w-12 h-12 bg-white rounded-lg overflow-hidden flex-shrink-0 border border-black/5">
+                    <Image
+                      src="/zumfali-comb.png"
+                      alt="Zumfali Hair Comb"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[#1a2f23] text-sm font-bold leading-tight font-mono">
+                      Want to add <br />
+                      "Zumfali" Comb?
+                    </p>
+                    <p className="text-[#1a2f23] text-sm font-bold mt-0.5">$5.99</p>
+                  </div>
+                  <button
+                    className="px-4 py-2 bg-white border-2 border-[#1a2f23] rounded-full text-[10px] font-bold uppercase tracking-wider text-[#1a2f23] hover:bg-[#1a2f23] hover:text-white transition-colors shadow-[2px_2px_0px_0px_#1a2f23] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] whitespace-nowrap"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
                 {totalSavings > 0 && (
                   <div className="flex justify-between items-center text-[#bb9c30] font-bold">
                     <span>Savings</span>
