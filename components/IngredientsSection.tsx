@@ -40,7 +40,7 @@ const ingredients = [
     name: 'Vitamin E',
     description: 'Protects the hair and nourishes it.',
     dosage: '300 IU',
-    image: 'https://www.shutterstock.com/shutterstock/videos/3692341885/thumb/4.jpg?ip=x480',
+    image: '/Screenshot 2026-01-05 at 9.45.42 PM.png',
   },
   {
     name: 'Argan Oil',

@@ -7,9 +7,40 @@ import { useCart } from '@/context/CartContext';
 import { useMetaPixel } from '@/hooks/useMetaPixel';
 
 export default function CartDrawer() {
-  const { items, isOpen, closeCart, updateQuantity, removeFromCart, checkout, cartTotal } = useCart();
+  const { items, isOpen, closeCart, updateQuantity, removeFromCart, checkout, cartTotal, shopifyClient, addToCart } = useCart();
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
-  const { trackInitiateCheckout } = useMetaPixel();
+  const { trackInitiateCheckout, trackAddToCart } = useMetaPixel();
+
+  const [combProduct, setCombProduct] = useState<any>(null);
+
+  useEffect(() => {
+    if (!shopifyClient) return;
+    shopifyClient.product.fetchAll().then((products: any[]) => {
+      const target = products.find((p: any) => {
+        const numericId = String(p.id).split('/').pop();
+        return numericId === '9979185332521';
+      });
+      if (target) setCombProduct(target);
+    });
+  }, [shopifyClient]);
+
+  const handleAddComb = () => {
+    if (!combProduct || !combProduct.variants || !combProduct.variants.length) return;
+    const variant = combProduct.variants[0];
+
+    // Pixel tracking
+    trackAddToCart(variant.id, combProduct.title, 5.99);
+
+    addToCart({
+      variantId: variant.id,
+      title: combProduct.title,
+      variantTitle: variant.title,
+      price: '$5.99',
+      quantity: 1,
+      image: '/zumfali-comb.png',
+      originalPrice: undefined
+    });
+  };
 
   // Timer logic for "Reserved For"
   useEffect(() => {
@@ -192,28 +223,31 @@ export default function CartDrawer() {
               <div className="p-4 bg-white border-t border-gray-100 space-y-4">
 
                 {/* Upsell Card */}
-                <div className="bg-[#E5D178] rounded-xl p-4 flex items-center justify-between gap-3 shadow-sm border border-[#d9c063]">
-                  <div className="relative w-12 h-12 bg-white rounded-lg overflow-hidden flex-shrink-0 border border-black/5">
-                    <Image
-                      src="/zumfali-comb.png"
-                      alt="Zumfali Hair Comb"
-                      fill
-                      className="object-cover"
-                    />
+                {!items.some(item => item.title.toLowerCase().includes('comb') || (combProduct && item.title === combProduct.title)) && (
+                  <div className="bg-[#E5D178] rounded-xl p-4 flex items-center justify-between gap-3 shadow-sm border border-[#d9c063]">
+                    <div className="relative w-12 h-12 bg-white rounded-lg overflow-hidden flex-shrink-0 border border-black/5">
+                      <Image
+                        src="/zumfali-comb.png"
+                        alt="Zumfali Hair Comb"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[#1a2f23] text-sm font-bold leading-tight">
+                        Want to add <br />
+                        Zumfali Comb?
+                      </p>
+                      <p className="text-[#1a2f23] text-sm font-bold mt-0.5">$5.99</p>
+                    </div>
+                    <button
+                      onClick={handleAddComb}
+                      className="px-4 py-2 bg-white border-2 border-[#1a2f23] rounded-full text-[10px] font-bold uppercase tracking-wider text-[#1a2f23] hover:bg-[#1a2f23] hover:text-white transition-colors shadow-[2px_2px_0px_0px_#1a2f23] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] whitespace-nowrap"
+                    >
+                      Add to Cart
+                    </button>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[#1a2f23] text-sm font-bold leading-tight font-mono">
-                      Want to add <br />
-                      "Zumfali" Comb?
-                    </p>
-                    <p className="text-[#1a2f23] text-sm font-bold mt-0.5">$5.99</p>
-                  </div>
-                  <button
-                    className="px-4 py-2 bg-white border-2 border-[#1a2f23] rounded-full text-[10px] font-bold uppercase tracking-wider text-[#1a2f23] hover:bg-[#1a2f23] hover:text-white transition-colors shadow-[2px_2px_0px_0px_#1a2f23] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] whitespace-nowrap"
-                  >
-                    Add to Cart
-                  </button>
-                </div>
+                )}
                 {totalSavings > 0 && (
                   <div className="flex justify-between items-center text-[#bb9c30] font-bold">
                     <span>Savings</span>
