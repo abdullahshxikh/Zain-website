@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+
 
 const bulletPoints = [
   'A nourishing blend that supports growth, restores natural shine, and helps reduce hair fall.',
@@ -12,21 +12,6 @@ const bulletPoints = [
 ];
 
 export default function ProductPricingSection() {
-  const [mounted, setMounted] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [email, setEmail] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log('Early signup:', { firstName, email });
-    setIsSubmitted(true);
-  };
 
   // if (!mounted) return null;
 
@@ -97,7 +82,7 @@ export default function ProductPricingSection() {
               ))}
             </motion.div>
 
-            {/* Early Signup Offer Box */}
+            {/* Buy Now Box */}
             <motion.div
               className="relative mt-10 p-8 sm:p-10 rounded-2xl bg-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] border border-gray-100"
               initial={{ opacity: 0, y: 20 }}
@@ -105,10 +90,6 @@ export default function ProductPricingSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <h3 className="text-2xl font-serif text-gray-900 text-center mb-6">
-                Reserve Your Bundle
-              </h3>
-
               <Link href="/shop" className="block w-full">
                 <motion.button
                   className="w-full py-4 rounded-xl font-medium text-lg text-white shadow-lg shadow-[#bb9c30]/20 transition-all uppercase tracking-widest"

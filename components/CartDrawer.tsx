@@ -181,7 +181,9 @@ export default function CartDrawer() {
                         </button>
                       </div>
 
-                      <div className="text-xs text-gray-500 mb-2">{item.variantTitle}</div>
+                      {item.variantTitle !== 'Default Title' && (
+                        <div className="text-xs text-gray-500 mb-2">{item.variantTitle}</div>
+                      )}
 
                       <div className="flex items-center justify-between">
                         <div className="flex items-center border border-gray-300 rounded-md">
