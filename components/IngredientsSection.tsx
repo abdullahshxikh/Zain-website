@@ -8,43 +8,43 @@ import Image from 'next/image';
 const ingredients = [
   {
     name: 'Coconut Oil',
-    description: 'Reduces breakage and keeps the hair strong.',
+    description: 'Helps strengthen hair and reduce breakage.',
     dosage: '1,800 mg',
     image: 'https://as1.ftcdn.net/jpg/01/18/99/44/1000_F_118994494_3VQkxobv15bucFpzu9Sh9pCHy8XHQ2QJ.jpg',
   },
   {
     name: 'Black Seed Oil',
-    description: 'Keeps the scalp healthy and reduces hair fall.',
+    description: 'Great for scalp health and reducing hair fall.',
     dosage: '1,500 mg',
     image: 'https://media.istockphoto.com/id/474577579/photo/nigella-sativa-oil.jpg?s=612x612&w=0&k=20&c=j9MUtko34pCvIkhfvVN6DFyuV22nk2m7GHjj2pMU7nQ=',
   },
   {
     name: 'Castor Oil',
-    description: 'Makes hair look thicker and shinier.',
+    description: 'Makes hair thicker and adds shine.',
     dosage: '1,500 mg',
     image: 'https://media.istockphoto.com/id/1495245850/photo/ricinus-communis-dried-seeds-and-oil-from-the-fruit-of-the-castor-bean-plant.jpg?s=612x612&w=0&k=20&c=5lqbW85jRrHWHAHnd4wE96LCvxxYVS97Nj5zeJrvs8k=',
   },
   {
     name: 'Pumpkin Seed Oil',
-    description: 'Adds nutrients for growth support.',
+    description: 'Packed with nutrients for healthy growth.',
     dosage: '1,200 mg',
     image: 'https://media.istockphoto.com/id/2208759696/photo/pumpkin-seeds-oil-on-black-background.jpg?s=612x612&w=0&k=20&c=Pd4jjj-hjyO-ZGB-Ktu3Ib3Q_m2sIXCroDG5srdJX2s=',
   },
   {
     name: 'Rosemary Oil',
-    description: 'Well known natural growth booster.',
+    description: 'Known for stimulating hair follicles.',
     dosage: '2,000 mg',
     image: 'https://media.istockphoto.com/id/1323361526/photo/bottle-of-essential-oil-with-fresh-rosemary.jpg?s=612x612&w=0&k=20&c=YKd8GZ5piGf48svWHnT7HAccOsdUFBPQnAxOns-Wiu4=',
   },
   {
     name: 'Vitamin E',
-    description: 'Protects the hair and nourishes it.',
+    description: 'Protects and nourishes your hair.',
     dosage: '300 IU',
     image: '/Screenshot 2026-01-05 at 9.45.42 PM.png',
   },
   {
     name: 'Argan Oil',
-    description: 'Deeply moisturizes and adds natural shine.',
+    description: 'Deep hydration for natural shine.',
     dosage: '1,200 mg',
     image: 'https://media.istockphoto.com/id/598807974/photo/argan-oil.jpg?s=612x612&w=0&k=20&c=wyTlbG03_yZIOEDeu0sodTA9AxRDyUDlkG_vKuKNkfs=',
   },
@@ -69,7 +69,7 @@ export default function IngredientsSection() {
             7 Powerful Ingredients
           </h2>
           <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto font-light">
-            Nature's finest oils scientifically formulated for maximum hair growth and vitality.
+            A simple, strong blend of botanicals that support healthy hair.
           </p>
         </motion.div>
 

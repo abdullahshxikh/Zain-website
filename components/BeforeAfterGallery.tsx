@@ -39,7 +39,7 @@ export default function BeforeAfterGallery() {
           Real Results, <span className="italic text-[#bb9c30]">Real People</span>
         </h2>
         <p className="text-base md:text-lg text-gray-600 font-light max-w-2xl mx-auto">
-          See the transformation. Experience the difference. Join thousands who've rediscovered their confidence.
+          See the difference for yourself. Join thousands loving their results.
         </p>
       </motion.div>
 

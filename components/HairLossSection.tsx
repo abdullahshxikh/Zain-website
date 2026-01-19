@@ -161,7 +161,7 @@ export default function HairLossSection() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 font-serif text-[#1a2f23]">
-            The Decline of Hair Health: <span className="text-[#bb9c30]">A Modern Epidemic</span>
+            Understanding <span className="text-[#bb9c30]">Hair Health</span>
           </h2>
         </motion.div>
 
@@ -182,9 +182,7 @@ export default function HairLossSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-                Hair loss affects over <span className="font-bold text-[#1a2f23]">50% of men and women by age 50</span>.
-                Stress, poor nutrition, environmental toxins, and hormonal imbalances are destroying natural
-                hair follicle health at an alarming rate.
+                Hair health changes as we age. Stress, environment, and daily habits can take a toll, often staring in your <span className="font-bold text-[#1a2f23]">30s</span>.
               </motion.p>
 
               <motion.p
@@ -194,8 +192,7 @@ export default function HairLossSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                The impact? Thinning hair, receding hairlines, and loss of confidence—making it harder to
-                feel your best in work, relationships, and life.
+                Thinning hair isn't just a physical change—it affects how you feel.
               </motion.p>
 
               <motion.div
@@ -207,8 +204,7 @@ export default function HairLossSection() {
               >
                 <p className="text-lg leading-relaxed">
                   <span className="text-[#1a2f23] font-bold text-xl font-serif">The good news:</span>
-                  <span className="text-gray-700 font-light"> Zumfali helps you reclaim your hair health with natural,
-                    scientifically-backed ingredients for strength, growth, and vitality.</span>
+                  <span className="text-gray-700 font-light"> Zumfali helps. Our natural ingredients support stronger, healthier hair.</span>
                 </p>
               </motion.div>
             </div>

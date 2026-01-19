@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 
 const bulletPoints = [
-  'A nourishing blend that supports growth, restores natural shine, and helps reduce hair fall.',
+  'Nourishes hair, supports growth, and reduces breakage.',
   'With all Natural Ingredients: Mustard · Coconut · Black Seed · Castor · Pumpkin · Rosemary · Vitamin E Oil',
   'For All Hair Types · No Greasy Residue · 30 mL Dropper + 10 mL Roll On',
 ];

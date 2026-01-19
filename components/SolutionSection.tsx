@@ -8,33 +8,33 @@ import { useEffect, useState } from 'react';
 const benefits = [
   {
     icon: '🌱',
-    title: 'Stimulate Natural Growth',
-    description: 'Activate dormant follicles with botanical power',
+    title: 'Support Natural Growth',
+    description: 'Nourishes the scalp for better growth.',
   },
   {
     icon: '💧',
-    title: 'Deep Scalp Nourishment',
-    description: 'Essential nutrients penetrate to the root',
+    title: 'Targeted Scalp Care',
+    description: 'Feeds nutrients right to the root.',
   },
   {
     icon: '💪',
-    title: 'Strengthen From Within',
-    description: 'Build resilient, break-resistant strands',
+    title: 'Enhance Hair Strength',
+    description: 'Strengthens strands to stop breakage.',
   },
   {
     icon: '🛡️',
-    title: 'Protect & Prevent Loss',
-    description: 'Shield against thinning and damage',
+    title: 'Gentle Protection',
+    description: 'Protects hair from damage.',
   },
   {
     icon: '✨',
     title: 'Restore Natural Shine',
-    description: 'Unlock radiant, healthy-looking hair',
+    description: 'Brings back your natural shine.',
   },
   {
     icon: '🌿',
-    title: 'Balance & Vitality',
-    description: 'Maintain optimal scalp ecosystem',
+    title: 'Balanced Scalp Health',
+    description: 'Keeps your scalp healthy.',
   },
 ];
 
@@ -76,7 +76,7 @@ export default function SolutionSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Zumfali combines ancient botanical wisdom with modern science to deliver <span className="text-[#1a2f23] font-medium">transformative results</span> without compromise.
+            Zumfali combines nature with science to give you <span className="text-[#1a2f23] font-medium">real results</span>.
           </motion.p>
         </motion.div>
 
@@ -121,8 +121,7 @@ export default function SolutionSection() {
                 Like a Tree, Healthy Hair Begins at the <span className="italic text-[#bb9c30]">Roots</span>
               </h3>
               <p className="text-gray-600 text-lg leading-relaxed mb-8 font-light">
-                When deeply nourished, it grows stronger, fuller, and more alive.
-                Our 7-in-1 botanical blend delivers essential nutrients directly to your scalp.
+                Healthy hair starts at the root. Our blend delivers nutrients right where you need them.
               </p>
 
               <div className="flex flex-wrap justify-center md:justify-start gap-6 text-sm">

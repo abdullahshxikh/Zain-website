@@ -58,13 +58,13 @@ export default function AboutPage() {
 
                             <div className="space-y-6 text-lg text-gray-600 leading-relaxed font-light">
                                 <p>
-                                    Zumfali is a hair care revolution (and occasionally a confidence booster) that’s been turning the beauty industry upside down, shaking up the routine since 2024. We aren't big on complex, 10-step rituals. But we're <span className="italic font-medium text-[#bb9c30]">super</span> into feeding your hair flavor-packed nutrients that actually work.
+                                    Zumfali is a hair care dedicated to simplifying the beauty industry with a focus on results since 2024. We aren't big on complex, 10-step rituals. Instead, we're focused on feeding your hair nutrient-dense ingredients that actually work.
                                 </p>
                                 <p>
-                                    Founded on a simple belief that nature holds the cure, Zumfali bridges the gap between ancient Ayurvedic traditions and modern science. We saw a market flooded with watered-down solutions and decided to bottle pure potency instead.
+                                    Founded on the belief that nature offers the ultimate care, Zumfali bridges the gap between traditional wisdom and modern science. We saw a market flooded with diluted solutions and decided to bottle pure potency instead.
                                 </p>
                                 <p>
-                                    Our signature 7-in-1 blend isn't just oil; it's a labor of love, designed to nourish the scalp, strengthen the strand, and restore the shine you thought was gone forever.
+                                    Our signature 7-in-1 blend is more than just oil; it's a labor of love, designed to nourish the scalp, strengthen every strand, and restore a healthy, natural shine.
                                 </p>
                             </div>
                         </motion.div>
@@ -80,9 +80,9 @@ export default function AboutPage() {
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                             {[
-                                { title: 'Pure Potency', desc: 'No fillers using only premium, cold-pressed oils sourced from ethical growers.', icon: '🌿' },
+                                { title: 'Pure Potency', desc: 'No fillers; we use only premium, cold-pressed oils sourced from ethical growers.', icon: '🌿' },
                                 { title: 'Science Backed', desc: 'Formulated with precise ratios to maximize absorption and follicle stimulation.', icon: '🧬' },
-                                { title: 'Community Driven', desc: 'Built for real women with real hair concerns, guided by your feedback.', icon: '🤝' },
+                                { title: 'Community Driven', desc: 'Built for everyone with hair concerns, guided by your feedback.', icon: '🤝' },
                             ].map((item, i) => (
                                 <motion.div
                                     key={i}

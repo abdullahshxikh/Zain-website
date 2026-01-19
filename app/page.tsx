@@ -50,10 +50,10 @@ export default function Home() {
       <Navbar />
       <main className="min-h-screen">
         <HeroSection />
+        <BeforeAfterGallery />
         <RunningBanner />
         <ProductPricingSection />
         <IngredientsSection />
-        <BeforeAfterGallery />
         <HairLossSection />
         <ProductVideoSection />
         <SolutionSection />
