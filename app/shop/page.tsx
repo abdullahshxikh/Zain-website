@@ -247,6 +247,22 @@ export default function ShopPage() {
   }, []);
 
   const handleAddToCart = () => {
+    if (subscribeMode) {
+      const quantity = 1;
+      const sellingPlan = '694070968617';
+      const variantMap: Record<number, string> = {
+        1: '51383441293609', // Buy 1
+        2: '51383441326377', // Buy 2
+        3: '51383441359145', // Buy 3
+      };
+
+      const variantId = variantMap[selectedBundle];
+      if (variantId) {
+        window.location.href = `https://zumfali.co/cart/add?items[][id]=${variantId}&items[][quantity]=${quantity}&items[][selling_plan]=${sellingPlan}`;
+        return;
+      }
+    }
+
     if (!shopifyClient || !shopifyProduct) return;
 
     const variants = shopifyProduct.variants || [];
@@ -267,15 +283,6 @@ export default function ShopPage() {
     let targetVariant: any | null = null;
 
     if (searchText) {
-      // If subscribe mode is enabled, look for subscription variants
-      if (subscribeMode) {
-        targetVariant = variants.find((v: any) => {
-          const t = String(v.title).toLowerCase();
-          return t.includes(searchText.toLowerCase()) &&
-            (t.includes('subscribe') || t.includes('subscription') || t.includes('auto'));
-        });
-      }
-
       // Find the one-time purchase variant that matches the bundle selection
       if (!targetVariant) {
         targetVariant = variants.find((v: any) => {
