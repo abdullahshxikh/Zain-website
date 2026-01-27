@@ -30,7 +30,7 @@ export default function ProblemSolution() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
           {/* Left Side - Image / Slider */}
           <div className="relative rounded-3xl overflow-hidden shadow-2xl lg:h-[600px] bg-gray-50">
-             <Swiper
+            <Swiper
               modules={[Navigation, Pagination]}
               grabCursor={false}
               allowTouchMove={false}
@@ -82,11 +82,7 @@ export default function ProblemSolution() {
               </p>
             </div>
 
-            <div className="pt-4">
-               <button className="w-12 h-12 rounded-full bg-[#1a2f23] text-white flex items-center justify-center hover:bg-[#2d4a38] transition-colors shadow-lg">
-                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
-               </button>
-            </div>
+
           </div>
         </div>
       </div>

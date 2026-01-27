@@ -45,23 +45,23 @@ const bundles: BundleOption[] = [
   {
     id: 2,
     title: 'Most Popular',
-    price: '$69.99',
+    price: '$59.99',
     originalPrice: '$119.98',
     shipping: 'FREE SHIPPING',
-    saveBadge: 'Save ~40%',
+    saveBadge: 'Save ~50%',
     popular: true,
     bonuses: ['FREE Hair Growth Guide (PDF)'],
   },
   {
     id: 3,
     title: 'Best Value',
-    price: '$109.99',
+    price: '$89.99',
     originalPrice: '$239.96',
     shipping: 'FREE SHIPPING',
-    saveBadge: 'Save ~55%',
+    saveBadge: 'Save ~62%',
     bestValue: true,
     bonuses: ['Hair Growth Guide PDF', 'Scalp Massage Ebook'],
-    pricePerBottle: '$27.50/bottle',
+    pricePerBottle: '$18.00/bottle',
   },
 ];
 
@@ -156,15 +156,15 @@ export default function ProductPage() {
         targetVariant = variants.find((v: any) => {
           const t = String(v.title).toLowerCase();
           return t.includes(searchText.toLowerCase()) &&
-                 (t.includes('subscribe') || t.includes('subscription') || t.includes('auto'));
+            (t.includes('subscribe') || t.includes('subscription') || t.includes('auto'));
         });
       }
 
       // Find the one-time purchase variant that matches the bundle selection
       if (!targetVariant) {
         targetVariant = variants.find((v: any) => {
-           const t = String(v.title).toLowerCase();
-           return t.includes(searchText.toLowerCase());
+          const t = String(v.title).toLowerCase();
+          return t.includes(searchText.toLowerCase());
         });
       }
     }
@@ -219,7 +219,7 @@ export default function ProductPage() {
       <main className="min-h-screen pt-32 pb-20 bg-[#FAFAF9]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-            
+
             {/* Left Column - Product Images */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -242,7 +242,7 @@ export default function ProductPage() {
                     Best Seller
                   </div>
                 </div>
-                
+
                 {/* Thumbnails */}
                 <div className="grid grid-cols-4 gap-4">
                   {[1, 2, 3, 4].map((i) => (
@@ -308,16 +308,16 @@ export default function ProductPage() {
               <div className="space-y-3 mb-10">
                 {['Scalp nourishment and hydration', 'Strengthens hair from root to tip', 'Restores natural shine and vitality'].map((benefit, i) => (
                   <div key={i} className="flex items-center gap-3 text-gray-700">
-                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1a2f23]/5 flex items-center justify-center text-[#1a2f23]">
-                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
-                     </span>
-                     <span className="font-medium">{benefit}</span>
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1a2f23]/5 flex items-center justify-center text-[#1a2f23]">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                    </span>
+                    <span className="font-medium">{benefit}</span>
                   </div>
                 ))}
               </div>
 
               <div className="h-px bg-gray-200 mb-8" />
-              
+
               <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-6 text-center">Bundle & Save</h3>
 
               {/* Bundles Selector */}
@@ -326,11 +326,10 @@ export default function ProductPage() {
                   <div
                     key={bundle.id}
                     onClick={() => setSelectedBundle(bundle.id)}
-                    className={`relative cursor-pointer rounded-xl border-2 transition-all duration-300 overflow-hidden ${
-                      selectedBundle === bundle.id
+                    className={`relative cursor-pointer rounded-xl border-2 transition-all duration-300 overflow-hidden ${selectedBundle === bundle.id
                         ? 'border-[#1a2f23] bg-[#1a2f23]/5 shadow-lg shadow-[#1a2f23]/5'
                         : 'border-gray-200 bg-white hover:border-[#bb9c30]/50'
-                    }`}
+                      }`}
                   >
                     {/* Badges */}
                     {bundle.popular && (
@@ -346,9 +345,8 @@ export default function ProductPage() {
 
                     <div className="flex items-center p-5">
                       {/* Radio Circle */}
-                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-5 transition-colors ${
-                        selectedBundle === bundle.id ? 'border-[#1a2f23]' : 'border-gray-300'
-                      }`}>
+                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-5 transition-colors ${selectedBundle === bundle.id ? 'border-[#1a2f23]' : 'border-gray-300'
+                        }`}>
                         {selectedBundle === bundle.id && (
                           <div className="w-3 h-3 rounded-full bg-[#1a2f23]" />
                         )}
@@ -403,15 +401,13 @@ export default function ProductPage() {
 
               {/* Purchase Mode Toggle */}
               <div className="border-2 rounded-xl overflow-hidden mb-8 bg-white border-gray-200">
-                <div 
+                <div
                   onClick={() => setSubscribeMode(false)}
-                  className={`p-5 flex items-center cursor-pointer border-b border-gray-100 transition-colors ${
-                    !subscribeMode ? 'bg-gray-50' : 'bg-white'
-                  }`}
+                  className={`p-5 flex items-center cursor-pointer border-b border-gray-100 transition-colors ${!subscribeMode ? 'bg-gray-50' : 'bg-white'
+                    }`}
                 >
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${
-                    !subscribeMode ? 'border-[#1a2f23]' : 'border-gray-300'
-                  }`}>
+                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${!subscribeMode ? 'border-[#1a2f23]' : 'border-gray-300'
+                    }`}>
                     {!subscribeMode && <div className="w-3 h-3 rounded-full bg-[#1a2f23]" />}
                   </div>
                   <div className="flex-1">
@@ -420,33 +416,31 @@ export default function ProductPage() {
                   <span className="font-bold text-lg text-[#1a2f23]">{bundles.find(b => b.id === selectedBundle)?.price}</span>
                 </div>
 
-                <div 
+                <div
                   onClick={() => setSubscribeMode(true)}
-                  className={`p-5 flex items-center cursor-pointer transition-colors relative overflow-hidden ${
-                    subscribeMode ? 'bg-[#1a2f23]/5' : 'bg-white'
-                  }`}
+                  className={`p-5 flex items-center cursor-pointer transition-colors relative overflow-hidden ${subscribeMode ? 'bg-[#1a2f23]/5' : 'bg-white'
+                    }`}
                 >
                   <div className="absolute top-0 right-0 bg-[#1a2f23] text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
                     Most Flexible
                   </div>
 
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${
-                    subscribeMode ? 'border-[#1a2f23]' : 'border-gray-300'
-                  }`}>
+                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${subscribeMode ? 'border-[#1a2f23]' : 'border-gray-300'
+                    }`}>
                     {subscribeMode && <div className="w-3 h-3 rounded-full bg-[#1a2f23]" />}
                   </div>
                   <div className="flex-1 pt-4 sm:pt-0">
                     <div className="flex items-center gap-2 mb-1">
                       <span className={`font-bold text-lg ${subscribeMode ? 'text-[#1a2f23]' : 'text-gray-600'}`}>Subscribe & Save (Monthly)</span>
                     </div>
-                    
+
                     <ul className="space-y-1 mt-2">
                       <li className="flex items-center gap-2 text-sm text-gray-600">
-                        <svg className="w-4 h-4 text-[#1a2f23]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
+                        <svg className="w-4 h-4 text-[#1a2f23]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                         Save extra on every order
                       </li>
                       <li className="flex items-center gap-2 text-sm text-gray-600">
-                         <svg className="w-4 h-4 text-[#1a2f23]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <svg className="w-4 h-4 text-[#1a2f23]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         Cancel Anytime
                       </li>
                     </ul>
@@ -479,14 +473,14 @@ export default function ProductPage() {
               </div>
 
               <p className="text-center text-xs text-gray-400 mt-6 flex items-center justify-center gap-2">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                 Secure 256-bit SSL Encryption
               </p>
 
             </motion.div>
           </div>
         </div>
-        
+
         <ProblemSolution />
         <ReviewGrid />
         <InteractiveBenefits />
