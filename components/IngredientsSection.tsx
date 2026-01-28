@@ -40,13 +40,19 @@ const ingredients = [
     name: 'Vitamin E',
     description: 'Protects and nourishes your hair.',
     dosage: '300 IU',
-    image: '/Screenshot 2026-01-05 at 9.45.42 PM.png',
+    image: '/Screenshot 2026-01-05 at 9.45.42 PM.png',
   },
   {
     name: 'Argan Oil',
     description: 'Deep hydration for natural shine.',
     dosage: '1,200 mg',
     image: 'https://media.istockphoto.com/id/598807974/photo/argan-oil.jpg?s=612x612&w=0&k=20&c=wyTlbG03_yZIOEDeu0sodTA9AxRDyUDlkG_vKuKNkfs=',
+  },
+  {
+    name: 'Mustard Oil',
+    description: 'Stimulates blood flow to promote growth.',
+    dosage: '1,400 mg',
+    image: '/Screenshot 2026-01-27 at 10.52.53 PM.png',
   },
 ];
 
@@ -66,7 +72,7 @@ export default function IngredientsSection() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#1a2f23] mb-6">
-            7 Powerful Ingredients
+            8 Powerful Ingredients
           </h2>
           <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto font-light">
             A simple, strong blend of botanicals that support healthy hair.
