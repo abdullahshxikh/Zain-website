@@ -123,22 +123,6 @@ export default function ProductPage() {
   }, []);
 
   const handleBuyNow = async () => {
-    if (subscribeMode) {
-      const quantity = 1;
-      const sellingPlan = '694070968617';
-      const variantMap: Record<number, string> = {
-        1: '51383441293609', // Buy 1
-        2: '51383441326377', // Buy 2
-        3: '51383441359145', // Buy 3
-      };
-
-      const variantId = variantMap[selectedBundle];
-      if (variantId) {
-        window.location.href = `https://zumfali.co/cart/add?items[][id]=${variantId}&items[][quantity]=${quantity}&items[][selling_plan]=${sellingPlan}`;
-        return;
-      }
-    }
-
     if (!accountLoggedIn) {
       // Users must be signed up before purchasing; send them to Shopify signup.
       redirectToShopifySignup();
