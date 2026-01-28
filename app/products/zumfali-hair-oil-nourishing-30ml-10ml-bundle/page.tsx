@@ -37,32 +37,32 @@ const bundles: BundleOption[] = [
   {
     id: 1,
     title: 'Starter',
-    price: '$29.99',
+    price: '$35.99',
     originalPrice: '$49.99',
     shipping: 'Shipping Calculated',
-    saveBadge: 'Save ~40%',
+    saveBadge: 'Save ~28%',
     bonuses: [],
   },
   {
     id: 2,
     title: 'Most Popular',
-    price: '$49.99',
+    price: '$59.99',
     originalPrice: '$119.98',
     shipping: 'FREE SHIPPING',
-    saveBadge: 'Save ~58%',
+    saveBadge: 'Save ~50%',
     popular: true,
     bonuses: ['FREE Hair Growth Guide (PDF)'],
   },
   {
     id: 3,
     title: 'Best Value',
-    price: '$69.99',
+    price: '$83.99',
     originalPrice: '$239.96',
     shipping: 'FREE SHIPPING',
-    saveBadge: 'Save ~71%',
+    saveBadge: 'Save ~65%',
     bestValue: true,
     bonuses: ['Hair Growth Guide PDF', 'Scalp Massage Ebook'],
-    pricePerBottle: '$14.00/bottle',
+    pricePerBottle: '$28.00/bottle',
   },
 ];
 
@@ -72,6 +72,21 @@ export default function ProductPage() {
   const [accountLoggedIn, setAccountLoggedIn] = useState(false);
   const { trackInitiateCheckout, trackAddToCart } = useMetaPixel();
   const { addToCart, openCart } = useCart();
+
+  const getDisplayPrice = (bundleId: number): string => {
+    const bundle = bundles.find(b => b.id === bundleId);
+    if (!bundle) return '$0.00';
+
+    if (subscribeMode) {
+      const subscribePrices: Record<number, string> = {
+        1: '$29.99',
+        2: '$49.99',
+        3: '$69.99'
+      };
+      return subscribePrices[bundleId] || bundle.price;
+    }
+    return bundle.price;
+  };
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -107,7 +122,8 @@ export default function ProductPage() {
     }
 
     const bundle = bundles.find((b) => b.id === selectedBundle);
-    const priceNum = parseFloat(String(bundle?.price || '0').replace(/[^0-9.]/g, ''));
+    const displayPrice = getDisplayPrice(selectedBundle);
+    const priceNum = parseFloat(displayPrice.replace(/[^0-9.]/g, ''));
 
     trackInitiateCheckout(
       [
@@ -126,7 +142,7 @@ export default function ProductPage() {
       variantId,
       title: 'Zumfali 7-in-1 Hair Oil',
       variantTitle,
-      price: bundle?.price || '',
+      price: displayPrice,
       quantity: 1,
       image: '/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png',
       originalPrice: bundle?.originalPrice,
@@ -209,7 +225,7 @@ export default function ProductPage() {
 
               <div className="flex items-baseline gap-3 mb-6">
                 <span className="text-3xl font-bold text-[#1a2f23]">
-                  {bundles.find(b => b.id === selectedBundle)?.price}
+                  {getDisplayPrice(selectedBundle)}
                 </span>
                 {bundles.find(b => b.id === selectedBundle)?.originalPrice && (
                   <span className="text-xl text-gray-400 line-through decoration-red-500/40">
@@ -310,7 +326,7 @@ export default function ProductPage() {
                         {bundle.originalPrice && (
                           <div className="text-gray-400 line-through text-sm decoration-red-500/40 mb-1">{bundle.originalPrice}</div>
                         )}
-                        <div className="font-bold text-xl text-[#1a2f23]">{bundle.price}</div>
+                        <div className="font-bold text-xl text-[#1a2f23]">{getDisplayPrice(bundle.id)}</div>
                         {bundle.pricePerBottle && (
                           <div className="text-[10px] text-gray-500 font-medium mt-1">{bundle.pricePerBottle}</div>
                         )}
@@ -353,8 +369,14 @@ export default function ProductPage() {
                     {subscribeMode && <div className="w-3 h-3 rounded-full bg-[#1a2f23]" />}
                   </div>
                   <div className="flex-1 pt-4 sm:pt-0">
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="flex items-center justify-between mb-1">
                       <span className={`font-bold text-lg ${subscribeMode ? 'text-[#1a2f23]' : 'text-gray-600'}`}>Subscribe & Save (Monthly)</span>
+                      <span className="font-bold text-lg text-[#1a2f23]">
+                        {(() => {
+                          const prices: any = { 1: '$29.99', 2: '$49.99', 3: '$69.99' };
+                          return prices[selectedBundle];
+                        })()}
+                      </span>
                     </div>
 
                     <ul className="space-y-1 mt-2">

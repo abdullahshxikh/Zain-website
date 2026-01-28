@@ -39,34 +39,34 @@ const bundles: BundleOption[] = [
   {
     id: 1,
     title: 'Buy 1 Bottle',
-    price: '$29.99',
+    price: '$35.99',
     originalPrice: '$59.99',
     shipping: '+ $8.00 Shipping',
     bonuses: [],
-    pricePerBottle: 'Save 50%',
+    pricePerBottle: '',
   },
   {
     id: 2,
     title: 'Buy 2 Bottles',
-    price: '$49.99',
+    price: '$59.99',
     originalPrice: '$119.98',
     shipping: '',
     saveBadge: 'Save $69.99',
     popular: true,
     bonuses: ['+FREE Comb'],
-    pricePerBottle: 'Save 58%',
+    pricePerBottle: '',
     limitedTime: true,
   },
   {
     id: 3,
     title: 'Buy 3 Bottles',
-    price: '$69.99',
+    price: '$83.99',
     originalPrice: '$179.97',
     shipping: '',
     saveBadge: 'Save $109.98',
     bestValue: true,
     bonuses: ['+FREE Comb', '+PDF Guide'],
-    pricePerBottle: 'Save 61%',
+    pricePerBottle: '',
   },
 ];
 
@@ -90,9 +90,13 @@ export default function ShopPage() {
     if (!bundle) return '$0.00';
 
     if (subscribeMode) {
-      const price = parseFloat(bundle.price.replace('$', ''));
-      const discounted = price * 0.8; // 20% off
-      return `$${discounted.toFixed(2)}`;
+      // Map to exact required subscribe prices
+      const subscribePrices: Record<number, string> = {
+        1: '$29.99',
+        2: '$49.99',
+        3: '$69.99'
+      };
+      return subscribePrices[bundleId] || bundle.price;
     }
     return bundle.price;
   };
@@ -171,7 +175,8 @@ export default function ShopPage() {
         variantId = '51383441293609';
     }
 
-    const priceNum = parseFloat(bundle.price.replace('$', ''));
+    const displayPrice = getDisplayPrice(bundle.id);
+    const priceNum = parseFloat(displayPrice.replace(/[^0-9.]/g, ''));
 
     // Track AddToCart
     trackAddToCart(
@@ -186,7 +191,7 @@ export default function ShopPage() {
       variantId,
       title: 'Zumfali 7-in-1 Hair Oil', // Generic title or specific
       variantTitle: bundle.title,
-      price: bundle.price,
+      price: displayPrice,
       quantity: 1,
       image: productImages[0],
       originalPrice: bundle.originalPrice,
