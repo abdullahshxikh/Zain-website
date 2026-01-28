@@ -1,3 +1,7 @@
+/**
+ * Shopify Storefront API utilities for cart management, customer creation (newsletters),
+ * and dynamic pricing retrieval.
+ */
 const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
 const storefrontAccessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN;
 
