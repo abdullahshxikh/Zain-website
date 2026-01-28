@@ -127,14 +127,39 @@ export default function Footer() {
               new Zumfali drops.
             </p>
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
                 const form = e.currentTarget;
-                const email = new FormData(form).get('email');
+                const email = new FormData(form).get('email') as string;
                 if (!email) return;
+
+                // Track the subscription attempt
                 trackSubscribe();
                 trackCompleteRegistration('newsletter_footer');
-                form.reset();
+
+                // Submit to API
+                try {
+                  const response = await fetch('/api/newsletter', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email }),
+                  });
+
+                  if (response.ok) {
+                    // Show success message
+                    const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+                    const originalText = button.textContent;
+                    button.textContent = '✓ Subscribed!';
+                    button.disabled = true;
+                    setTimeout(() => {
+                      button.textContent = originalText;
+                      button.disabled = false;
+                    }, 3000);
+                    form.reset();
+                  }
+                } catch (error) {
+                  console.error('Newsletter signup failed:', error);
+                }
               }}
               className="flex flex-col gap-3"
             >

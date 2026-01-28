@@ -7,34 +7,22 @@ import { useCart } from '@/context/CartContext';
 import { useMetaPixel } from '@/hooks/useMetaPixel';
 
 export default function CartDrawer() {
-  const { items, isOpen, closeCart, updateQuantity, removeFromCart, checkout, cartTotal, shopifyClient, addToCart } = useCart();
+  const { items, isOpen, closeCart, updateQuantity, removeFromCart, checkout, cartTotal, addToCart, loading } = useCart();
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
   const { trackInitiateCheckout, trackAddToCart } = useMetaPixel();
 
-  const [combProduct, setCombProduct] = useState<any>(null);
-
-  useEffect(() => {
-    if (!shopifyClient) return;
-    shopifyClient.product.fetchAll().then((products: any[]) => {
-      const target = products.find((p: any) => {
-        const numericId = String(p.id).split('/').pop();
-        return numericId === '9979185332521';
-      });
-      if (target) setCombProduct(target);
-    });
-  }, [shopifyClient]);
+  // Removed legacy shopifyClient comb fetching logic as we migrated to Storefront API
+  // and don't have the Comb Variant ID handy in the prompt.
+  // If the Comb ID is needed, it should be provided or fetched via a separate GQL query.
 
   const handleAddComb = () => {
-    if (!combProduct || !combProduct.variants || !combProduct.variants.length) return;
-    const variant = combProduct.variants[0];
-
     // Pixel tracking
-    trackAddToCart(variant.id, combProduct.title, 5.99);
+    trackAddToCart('52395851645225', 'Zumfali Comb', 5.99);
 
     addToCart({
-      variantId: variant.id,
-      title: combProduct.title,
-      variantTitle: variant.title,
+      variantId: '52395851645225',
+      title: 'Zumfali Comb',
+      variantTitle: 'Default Title',
       price: '$5.99',
       quantity: 1,
       image: '/zumfali-comb.png',
@@ -140,7 +128,13 @@ export default function CartDrawer() {
             </div>
 
             {/* Items List */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-6">
+            <div className="flex-1 overflow-y-auto p-4 space-y-6 relative">
+              {loading && (
+                <div className="absolute inset-0 bg-white/50 z-10 flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1a2f23]"></div>
+                </div>
+              )}
+
               {items.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-gray-500">
                   <svg className="w-16 h-16 mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -156,7 +150,7 @@ export default function CartDrawer() {
                 </div>
               ) : (
                 items.map((item) => (
-                  <div key={item.variantId} className="flex gap-4">
+                  <div key={item.id} className="flex gap-4">
                     <div className="relative w-20 h-20 bg-gray-50 rounded-lg border border-gray-100 flex-shrink-0 overflow-hidden">
                       <Image
                         src={item.image}
@@ -172,8 +166,9 @@ export default function CartDrawer() {
                           {item.title}
                         </h3>
                         <button
-                          onClick={() => removeFromCart(item.variantId)}
+                          onClick={() => item.id && removeFromCart(item.id)}
                           className="text-gray-400 hover:text-red-500 transition-colors"
+                          disabled={loading}
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -184,19 +179,26 @@ export default function CartDrawer() {
                       {item.variantTitle !== 'Default Title' && (
                         <div className="text-xs text-gray-500 mb-2">{item.variantTitle}</div>
                       )}
+                      {item.sellingPlanId && (
+                        <div className="text-[10px] bg-[#bb9c30]/10 text-[#bb9c30] px-2 py-0.5 rounded inline-block font-bold mb-2">
+                          Subscribe & Save
+                        </div>
+                      )}
 
                       <div className="flex items-center justify-between">
                         <div className="flex items-center border border-gray-300 rounded-md">
                           <button
-                            onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
-                            className="w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors"
+                            onClick={() => item.id && updateQuantity(item.id, item.quantity - 1)}
+                            className="w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors disabled:opacity-50"
+                            disabled={loading}
                           >
                             -
                           </button>
                           <span className="w-8 text-center text-sm font-medium">{item.quantity}</span>
                           <button
-                            onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
-                            className="w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors"
+                            onClick={() => item.id && updateQuantity(item.id, item.quantity + 1)}
+                            className="w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors disabled:opacity-50"
+                            disabled={loading}
                           >
                             +
                           </button>
@@ -223,9 +225,8 @@ export default function CartDrawer() {
             {/* Footer */}
             {items.length > 0 && (
               <div className="p-4 bg-white border-t border-gray-100 space-y-4">
-
                 {/* Upsell Card */}
-                {!items.some(item => item.title.toLowerCase().includes('comb') || (combProduct && item.title === combProduct.title)) && (
+                {!items.some(item => item.variantId.includes('52395851645225') || item.title.toLowerCase().includes('comb')) && (
                   <div className="bg-[#E5D178] rounded-xl p-4 flex items-center justify-between gap-3 shadow-sm border border-[#d9c063]">
                     <div className="relative w-12 h-12 bg-white rounded-lg overflow-hidden flex-shrink-0 border border-black/5">
                       <Image
@@ -244,12 +245,14 @@ export default function CartDrawer() {
                     </div>
                     <button
                       onClick={handleAddComb}
-                      className="px-4 py-2 bg-white border-2 border-[#1a2f23] rounded-full text-[10px] font-bold uppercase tracking-wider text-[#1a2f23] hover:bg-[#1a2f23] hover:text-white transition-colors shadow-[2px_2px_0px_0px_#1a2f23] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] whitespace-nowrap"
+                      disabled={loading}
+                      className="px-4 py-2 bg-white border-2 border-[#1a2f23] rounded-full text-[10px] font-bold uppercase tracking-wider text-[#1a2f23] hover:bg-[#1a2f23] hover:text-white transition-colors shadow-[2px_2px_0px_0px_#1a2f23] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] whitespace-nowrap disabled:opacity-50"
                     >
                       Add to Cart
                     </button>
                   </div>
                 )}
+
                 {totalSavings > 0 && (
                   <div className="flex justify-between items-center text-[#bb9c30] font-bold">
                     <span>Savings</span>
@@ -275,9 +278,10 @@ export default function CartDrawer() {
                     );
                     checkout();
                   }}
-                  className="w-full py-4 bg-[#1b5e20] text-white rounded-lg font-bold text-lg uppercase tracking-wider shadow-xl hover:bg-[#2d4a38] transition-all transform hover:-translate-y-1"
+                  disabled={loading}
+                  className="w-full py-4 bg-[#1b5e20] text-white rounded-lg font-bold text-lg uppercase tracking-wider shadow-xl hover:bg-[#2d4a38] transition-all transform hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  Check out
+                  {loading ? 'Processing...' : 'Check out'}
                 </button>
 
                 <div className="flex justify-center pt-2">

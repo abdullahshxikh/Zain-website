@@ -18,6 +18,7 @@ import {
   redirectToShopifySignup,
 } from '@/lib/shopifyAuth';
 import { useMetaPixel } from '@/hooks/useMetaPixel';
+import { useCart } from '@/context/CartContext';
 
 type BundleOption = {
   id: number;
@@ -36,10 +37,10 @@ const bundles: BundleOption[] = [
   {
     id: 1,
     title: 'Starter',
-    price: '$39.99',
+    price: '$31.99',
     originalPrice: '$49.99',
     shipping: 'Shipping Calculated',
-    saveBadge: 'Save ~20%',
+    saveBadge: 'Save ~36%',
     bonuses: [],
   },
   {
@@ -68,54 +69,9 @@ const bundles: BundleOption[] = [
 export default function ProductPage() {
   const [selectedBundle, setSelectedBundle] = useState<number>(2);
   const [subscribeMode, setSubscribeMode] = useState(false);
-  const [shopifyClient, setShopifyClient] = useState<any | null>(null);
-  const [shopifyProduct, setShopifyProduct] = useState<any | null>(null);
   const [accountLoggedIn, setAccountLoggedIn] = useState(false);
-  const { trackInitiateCheckout } = useMetaPixel();
-
-  // Minimal Shopify integration: load SDK once, fetch product once, no embedded UI
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const scriptURL =
-      'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
-
-    function ShopifyBuyInit() {
-      const ShopifyBuy = (window as any).ShopifyBuy;
-      if (!ShopifyBuy) return;
-
-      const client = ShopifyBuy.buildClient({
-        domain: 'avw1pr-qj.myshopify.com',
-        storefrontAccessToken: '74472e64ff2b3cc2204f58c4d56eb5bb',
-      });
-
-      // Fetch all products and keep only the one we care about
-      client.product.fetchAll().then((products: any[]) => {
-        const target = products.find((p: any) => {
-          const numericId = String(p.id).split('/').pop();
-          return numericId === '9848343953705';
-        });
-
-        setShopifyClient(client);
-        setShopifyProduct(target || null);
-      });
-    }
-
-    function loadScript() {
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = scriptURL;
-      (document.head || document.body).appendChild(script);
-      script.onload = ShopifyBuyInit;
-    }
-
-    const ShopifyBuy = (window as any).ShopifyBuy;
-    if (ShopifyBuy) {
-      ShopifyBuyInit();
-    } else {
-      loadScript();
-    }
-  }, []);
+  const { trackInitiateCheckout, trackAddToCart } = useMetaPixel();
+  const { addToCart, openCart } = useCart();
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -124,93 +80,60 @@ export default function ProductPage() {
 
   const handleBuyNow = async () => {
     if (!accountLoggedIn) {
-      // Users must be signed up before purchasing; send them to Shopify signup.
+      // Users must be signed up before purchasing
       redirectToShopifySignup();
       return;
     }
 
-    if (!shopifyClient || !shopifyProduct) return;
+    let variantId = '';
+    let variantTitle = '';
 
-    const variants = shopifyProduct.variants || [];
-    if (!variants.length) return;
-
-    // Map bundle selection to actual Shopify variant titles
-    // Based on your Shopify product variants:
-    // Bundle 1 = "Buy 1 (30ml + 10ml)" - $29.99
-    // Bundle 2 = "Buy 2 Get 1 Free" - $59.99  
-    // Bundle 3 = "Buy 3 Get 2 Free" - $89.99
-    const bundleToVariantMap: Record<number, string> = {
-      1: 'Buy 1',
-      2: 'Buy 2 Get 1 Free',
-      3: 'Buy 3 Get 2 Free',
-    };
-
-    const searchText = bundleToVariantMap[selectedBundle];
-    let targetVariant: any | null = null;
-
-    if (searchText) {
-      // If subscribe mode is enabled, look for subscription variants
-      // (Note: Currently your product only has one-time purchase variants.
-      // If you add subscription variants later, they should contain 'subscribe' in the title)
-      if (subscribeMode) {
-        targetVariant = variants.find((v: any) => {
-          const t = String(v.title).toLowerCase();
-          return t.includes(searchText.toLowerCase()) &&
-            (t.includes('subscribe') || t.includes('subscription') || t.includes('auto'));
-        });
-      }
-
-      // Find the one-time purchase variant that matches the bundle selection
-      if (!targetVariant) {
-        targetVariant = variants.find((v: any) => {
-          const t = String(v.title).toLowerCase();
-          return t.includes(searchText.toLowerCase());
-        });
-      }
+    switch (selectedBundle) {
+      case 1:
+        variantId = '51383441293609';
+        variantTitle = 'Buy 1 (30ml + 10ml)';
+        break;
+      case 2:
+        variantId = '51383441326377';
+        variantTitle = 'Buy 2 Get 1 Free';
+        break;
+      case 3:
+        variantId = '51383441359145';
+        variantTitle = 'Buy 3 Get 2 Free';
+        break;
+      default:
+        variantId = '51383441326377';
+        variantTitle = 'Buy 2 Get 1 Free';
     }
 
-    if (!targetVariant) {
-      console.warn('Could not find matching variant for bundle:', selectedBundle);
-      console.warn('Searched for:', searchText);
-      console.warn('Available variants:', variants.map((v: any) => v.title));
-      targetVariant = variants[0];
-    }
+    const bundle = bundles.find((b) => b.id === selectedBundle);
+    const priceNum = parseFloat(String(bundle?.price || '0').replace(/[^0-9.]/g, ''));
 
-    try {
-      const selectedBundleData = bundles.find((b) => b.id === selectedBundle);
-      const value = parseFloat(String(selectedBundleData?.price || '0').replace(/[^0-9.]/g, ''));
-
-      trackInitiateCheckout(
-        [
-          {
-            id: String(targetVariant.id),
-            quantity: 1,
-            item_price: isNaN(value) ? undefined : value,
-          },
-        ],
-        isNaN(value) ? 0 : value
-      );
-
-      const checkout = await shopifyClient.checkout.create();
-      const lineItems = [
+    trackInitiateCheckout(
+      [
         {
-          variantId: targetVariant.id,
+          id: variantId,
           quantity: 1,
+          item_price: priceNum,
         },
-      ];
+      ],
+      priceNum
+    );
 
-      const updatedCheckout = await shopifyClient.checkout.addLineItems(
-        checkout.id,
-        lineItems
-      );
+    const sellingPlanId = subscribeMode ? '694070968617' : undefined;
 
-      // Redirect in the same tab to Shopify checkout
-      if (updatedCheckout && updatedCheckout.webUrl) {
-        window.location.href = updatedCheckout.webUrl;
-      }
-    } catch (err) {
-      console.error('Error creating Shopify checkout', err);
-    }
+    await addToCart({
+      variantId,
+      title: 'Zumfali 7-in-1 Hair Oil',
+      variantTitle,
+      price: bundle?.price || '',
+      quantity: 1,
+      image: '/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png',
+      originalPrice: bundle?.originalPrice,
+      sellingPlanId
+    });
+
+    openCart();
   };
 
   return (

@@ -1,170 +1,186 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { isShopifyLoggedIn, redirectToShopifySignup } from '@/lib/shopifyAuth';
+import { createCart, addToCart as shopifyAddToCart, getCart, updateCartLines, removeCartLines, CartLineInput } from '@/lib/shopify';
 
 export interface CartItem {
+  id?: string; // Cart Line ID
   variantId: string;
   title: string;
   variantTitle: string;
   price: string;
   quantity: number;
   image: string;
-  originalPrice?: string; // For display
+  originalPrice?: string;
+  sellingPlanId?: string; // For subscriptions
 }
 
 interface CartContextType {
   items: CartItem[];
-  addToCart: (item: CartItem) => void;
-  removeFromCart: (variantId: string) => void;
-  updateQuantity: (variantId: string, quantity: number) => void;
+  addToCart: (item: Partial<CartItem> & { variantId: string; quantity: number, sellingPlanId?: string }) => Promise<void>;
+  removeFromCart: (cartLineId: string) => Promise<void>;
+  updateQuantity: (cartLineId: string, quantity: number) => Promise<void>;
   isOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
-  checkout: () => Promise<void>;
+  checkout: () => void;
   cartTotal: number;
   itemCount: number;
-  shopifyClient: any;
+  cartId: string | null;
+  loading: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [cartId, setCartId] = useState<string | null>(null);
+  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [shopifyClient, setShopifyClient] = useState<any>(null);
-  const [isClient, setIsClient] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // Initialize Shopify Client (Logic from ShopPage)
+  // Initialize cart from localStorage
   useEffect(() => {
-    setIsClient(true);
-    if (typeof window === 'undefined') return;
-
-    // Load from localStorage
-    const savedCart = localStorage.getItem('zumfali_cart');
-    if (savedCart) {
-      try {
-        setItems(JSON.parse(savedCart));
-      } catch (e) {
-        console.error('Failed to parse cart from localStorage', e);
-      }
-    }
-
-    const scriptURL =
-      'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
-
-    function ShopifyBuyInit() {
-      const ShopifyBuy = (window as any).ShopifyBuy;
-      if (!ShopifyBuy) return;
-
-      const client = ShopifyBuy.buildClient({
-        domain: 'avw1pr-qj.myshopify.com',
-        storefrontAccessToken: '74472e64ff2b3cc2204f58c4d56eb5bb',
-      });
-      setShopifyClient(client);
-    }
-
-    function loadScript() {
-      if (document.querySelector(`script[src="${scriptURL}"]`)) {
-        if ((window as any).ShopifyBuy) {
-           ShopifyBuyInit();
-        } else {
-           // Script exists but maybe not loaded yet, could listen to onload, but this is simple check
-        }
-        return;
-      }
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = scriptURL;
-      (document.head || document.body).appendChild(script);
-      script.onload = ShopifyBuyInit;
-    }
-
-    const ShopifyBuy = (window as any).ShopifyBuy;
-    if (ShopifyBuy) {
-      ShopifyBuyInit();
-    } else {
-      loadScript();
+    const savedCartId = localStorage.getItem('zumfali_cart_id');
+    if (savedCartId) {
+      setCartId(savedCartId);
+      refreshCart(savedCartId);
     }
   }, []);
 
-  // Save to localStorage whenever items change
-  useEffect(() => {
-    if (!isClient) return;
-    localStorage.setItem('zumfali_cart', JSON.stringify(items));
-  }, [items, isClient]);
-
-  const addToCart = (newItem: CartItem) => {
-    setItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.variantId === newItem.variantId);
-      if (existingItem) {
-        return prevItems.map((item) =>
-          item.variantId === newItem.variantId
-            ? { ...item, quantity: item.quantity + newItem.quantity }
-            : item
-        );
+  const refreshCart = async (id: string) => {
+    try {
+      setLoading(true);
+      const cart = await getCart(id);
+      if (cart) {
+        setCheckoutUrl(cart.checkoutUrl);
+        mapCartLinesToItems(cart.lines.edges);
+      } else {
+        // Cart likely expired or invalid
+        localStorage.removeItem('zumfali_cart_id');
+        setCartId(null);
+        setItems([]);
       }
-      return [...prevItems, newItem];
-    });
+    } catch (error) {
+      console.error('Error fetching cart:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const mapCartLinesToItems = (edges: any[]) => {
+    const mappedItems: CartItem[] = edges.map(({ node }: any) => {
+      // Sometimes merchandise might be null if product deleted
+      if (!node.merchandise) return null;
+
+      return {
+        id: node.id,
+        variantId: node.merchandise.id,
+        title: node.merchandise.product.title,
+        variantTitle: node.merchandise.title,
+        price: `${node.merchandise.price.currencyCode} ${node.merchandise.price.amount}`,
+        quantity: node.quantity,
+        image: node.merchandise.product.featuredImage?.url || '/product-image.png',
+      };
+    }).filter(Boolean) as CartItem[];
+    setItems(mappedItems);
+  };
+
+  const handleAddToCart = async (newItem: Partial<CartItem> & { variantId: string; quantity: number, sellingPlanId?: string }) => {
+    setLoading(true);
     setIsOpen(true);
-  };
 
-  const removeFromCart = (variantId: string) => {
-    setItems((prevItems) => prevItems.filter((item) => item.variantId !== variantId));
-  };
-
-  const updateQuantity = (variantId: string, quantity: number) => {
-    if (quantity < 1) {
-      removeFromCart(variantId);
-      return;
+    // Ensure we use global ID format if not already
+    let merchandiseId = newItem.variantId;
+    if (!merchandiseId.startsWith('gid://')) {
+      merchandiseId = `gid://shopify/ProductVariant/${merchandiseId}`;
     }
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.variantId === variantId ? { ...item, quantity } : item
-      )
-    );
-  };
 
-  const openCart = () => setIsOpen(true);
-  const closeCart = () => setIsOpen(false);
-
-  const checkout = async () => {
-    if (!items.length) return;
-    
-    // Auth is now enforced at the "Add to Cart" step, so we don't strictly need to block here.
-    // However, if the session expired, Shopify checkout might prompt them again, which is fine.
-    
-    if (!shopifyClient) {
-      console.error('Shopify client not initialized');
-      return;
+    let sellingPlanId = newItem.sellingPlanId;
+    if (sellingPlanId && !sellingPlanId.startsWith('gid://')) {
+      sellingPlanId = `gid://shopify/SellingPlan/${sellingPlanId}`;
     }
+
+    const lineInput: CartLineInput = {
+      merchandiseId,
+      quantity: newItem.quantity,
+      sellingPlanId,
+    };
+
+    console.log('Adding to cart:', lineInput);
 
     try {
-      const checkout = await shopifyClient.checkout.create();
-      const lineItems = items.map((item) => ({
-        variantId: item.variantId,
-        quantity: item.quantity,
-      }));
-
-      const updatedCheckout = await shopifyClient.checkout.addLineItems(
-        checkout.id,
-        lineItems
-      );
-
-      if (updatedCheckout && updatedCheckout.webUrl) {
-        window.location.href = updatedCheckout.webUrl;
+      let cart;
+      if (!cartId) {
+        console.log('Creating new cart...');
+        cart = await createCart([lineInput]);
+        if (cart) {
+          setCartId(cart.id);
+          localStorage.setItem('zumfali_cart_id', cart.id);
+        }
+      } else {
+        console.log('Adding to existing cart:', cartId);
+        cart = await shopifyAddToCart(cartId, [lineInput]);
       }
-    } catch (err) {
-      console.error('Error creating Shopify checkout', err);
+
+      console.log('Cart operation result:', cart);
+
+      if (cart) {
+        setCheckoutUrl(cart.checkoutUrl);
+        mapCartLinesToItems(cart.lines.edges);
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Helper to calculate total price (approximate, for display)
+  const handleRemoveFromCart = async (cartLineId: string) => {
+    if (!cartId) return;
+    setLoading(true);
+    try {
+      const cart = await removeCartLines(cartId, [cartLineId]);
+      if (cart) {
+        mapCartLinesToItems(cart.lines.edges);
+      }
+    } catch (error) {
+      console.error('Error removing from cart:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpdateQuantity = async (cartLineId: string, quantity: number) => {
+    if (!cartId) return;
+    if (quantity < 1) {
+      handleRemoveFromCart(cartLineId);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const cart = await updateCartLines(cartId, [{ id: cartLineId, quantity }]);
+      if (cart) {
+        mapCartLinesToItems(cart.lines.edges);
+      }
+    } catch (error) {
+      console.error('Error updating quantity:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const checkout = () => {
+    if (checkoutUrl) {
+      window.location.href = checkoutUrl;
+    }
+  };
+
   const cartTotal = items.reduce((total, item) => {
-    // Ensure price is a string before replacing
-    const priceStr = String(item.price || '0');
-    const price = parseFloat(priceStr.replace(/[^0-9.]/g, ''));
-    return total + (isNaN(price) ? 0 : price) * item.quantity;
+    // rudimentary parse
+    const amount = parseFloat(item.price.replace(/[^0-9.]/g, ''));
+    return total + (isNaN(amount) ? 0 : amount) * item.quantity;
   }, 0);
 
   const itemCount = items.reduce((total, item) => total + item.quantity, 0);
@@ -173,16 +189,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
     <CartContext.Provider
       value={{
         items,
-        addToCart,
-        removeFromCart,
-        updateQuantity,
+        addToCart: handleAddToCart,
+        removeFromCart: handleRemoveFromCart,
+        updateQuantity: handleUpdateQuantity,
         isOpen,
-        openCart,
-        closeCart,
+        openCart: () => setIsOpen(true),
+        closeCart: () => setIsOpen(false),
         checkout,
         cartTotal,
         itemCount,
-        shopifyClient
+        cartId,
+        loading
       }}
     >
       {children}

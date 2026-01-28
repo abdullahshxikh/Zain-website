@@ -30,9 +30,20 @@ export default function NewsletterPopup() {
     }, 400);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
+
+    // Send to backend SDK
+    try {
+      await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+    } catch (err) {
+      console.error('Failed to subscribe', err);
+    }
 
     trackSubscribe();
     trackCompleteRegistration('newsletter_popup_quiz');
