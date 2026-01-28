@@ -40,7 +40,7 @@ const ingredients = [
     name: 'Vitamin E',
     description: 'Protects and nourishes your hair.',
     dosage: '300 IU',
-    image: '/Screenshot 2026-01-05 at 9.45.42 PM.png',
+    image: '/vitamin-e.png',
   },
   {
     name: 'Argan Oil',
@@ -52,7 +52,7 @@ const ingredients = [
     name: 'Mustard Oil',
     description: 'Stimulates blood flow to promote growth.',
     dosage: '1,400 mg',
-    image: '/Screenshot 2026-01-27 at 10.52.53 PM.png',
+    image: '/mustard-oil.png',
   },
 ];
 
