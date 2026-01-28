@@ -59,6 +59,12 @@ export async function createCart(lines: CartLineInput[]) {
               node {
                 id
                 quantity
+                cost {
+                  totalAmount {
+                    amount
+                    currencyCode
+                  }
+                }
                 merchandise {
                   ... on ProductVariant {
                     id
@@ -119,6 +125,12 @@ export async function addToCart(cartId: string, lines: CartLineInput[]) {
               node {
                 id
                 quantity
+                cost {
+                  totalAmount {
+                    amount
+                    currencyCode
+                  }
+                }
                 merchandise {
                   ... on ProductVariant {
                     id
@@ -178,6 +190,12 @@ export async function getCart(cartId: string) {
             node {
               id
               quantity
+              cost {
+                totalAmount {
+                  amount
+                  currencyCode
+                }
+              }
               merchandise {
                 ... on ProductVariant {
                   id
@@ -228,6 +246,12 @@ export async function updateCartLines(cartId: string, lines: { id: string; quant
               node {
                 id
                 quantity
+                cost {
+                  totalAmount {
+                    amount
+                    currencyCode
+                  }
+                }
                 merchandise {
                   ... on ProductVariant {
                     id
@@ -279,6 +303,12 @@ export async function removeCartLines(cartId: string, lineIds: string[]) {
               node {
                 id
                 quantity
+                cost {
+                  totalAmount {
+                    amount
+                    currencyCode
+                  }
+                }
                 merchandise {
                   ... on ProductVariant {
                     id

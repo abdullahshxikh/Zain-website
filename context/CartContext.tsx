@@ -73,12 +73,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
       // Sometimes merchandise might be null if product deleted
       if (!node.merchandise) return null;
 
+      // Use the line item cost which includes subscription discounts
+      const itemCost = node.cost?.totalAmount || node.merchandise.price;
+
       return {
         id: node.id,
         variantId: node.merchandise.id,
         title: node.merchandise.product.title,
         variantTitle: node.merchandise.title,
-        price: `${node.merchandise.price.currencyCode} ${node.merchandise.price.amount}`,
+        price: `${itemCost.currencyCode} ${itemCost.amount}`,
         quantity: node.quantity,
         image: node.merchandise.product.featuredImage?.url || '/product-image.png',
       };
