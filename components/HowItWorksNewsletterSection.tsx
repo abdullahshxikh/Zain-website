@@ -166,12 +166,25 @@ export default function HowItWorksNewsletterSection() {
                 <button
                   className="px-8 py-3.5 bg-[#1a2f23] text-white rounded-full font-medium hover:bg-[#2d4a38] transition-colors shadow-lg shadow-[#1a2f23]/20"
                   type="button"
-                  onClick={() => {
+                  onClick={async () => {
                     const email = emailRef.current?.value?.trim();
                     if (!email) return;
-                    trackSubscribe();
-                    trackCompleteRegistration('newsletter_inline');
-                    setIsSubmitted(true);
+
+                    try {
+                      const response = await fetch('/api/newsletter', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email }),
+                      });
+
+                      if (response.ok) {
+                        trackSubscribe();
+                        trackCompleteRegistration('newsletter_inline');
+                        setIsSubmitted(true);
+                      }
+                    } catch (error) {
+                      console.error('Newsletter signup failed:', error);
+                    }
                   }}
                 >
                   Subscribe

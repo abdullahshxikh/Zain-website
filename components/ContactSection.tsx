@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import Link from 'next/link';
+import { useMetaPixel } from '@/hooks/useMetaPixel';
 
 const faqs = [
     {
@@ -24,6 +25,7 @@ const faqs = [
 ];
 
 export default function ContactSection() {
+    const { trackSubscribe, trackCompleteRegistration } = useMetaPixel();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -296,7 +298,41 @@ export default function ContactSection() {
                     <h2 className="text-3xl sm:text-5xl font-serif text-white mb-6">Join the Zumfali Family</h2>
                     <p className="text-gray-300 mb-8 text-lg">Sign up for our newsletter to receive exclusive offers, hair care tips, and 10% off your first order.</p>
 
-                    <form className="max-w-lg mx-auto flex flex-col sm:flex-row gap-4">
+                    <form
+                        className="max-w-lg mx-auto flex flex-col sm:flex-row gap-4"
+                        onSubmit={async (e) => {
+                            e.preventDefault();
+                            const form = e.currentTarget;
+                            const input = form.querySelector('input[type="email"]') as HTMLInputElement;
+                            const email = input.value;
+                            if (!email) return;
+
+                            try {
+                                const response = await fetch('/api/newsletter', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ email }),
+                                });
+
+                                if (response.ok) {
+                                    trackSubscribe();
+                                    trackCompleteRegistration('newsletter_contact_page');
+
+                                    const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+                                    const originalText = button.textContent;
+                                    button.textContent = '✓ Subscribed!';
+                                    button.disabled = true;
+                                    setTimeout(() => {
+                                        button.textContent = originalText;
+                                        button.disabled = false;
+                                    }, 3000);
+                                    form.reset();
+                                }
+                            } catch (error) {
+                                console.error('Newsletter signup failed:', error);
+                            }
+                        }}
+                    >
                         <input
                             type="email"
                             placeholder="Enter your email address"
