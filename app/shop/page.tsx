@@ -48,7 +48,7 @@ const bundles: BundleOption[] = [
   {
     id: 2,
     title: 'Buy 2 Bottles',
-    price: '$49.99',
+    price: '$59.99',
     originalPrice: '$119.98',
     shipping: '',
     saveBadge: 'Save $69.99',
@@ -60,7 +60,7 @@ const bundles: BundleOption[] = [
   {
     id: 3,
     title: 'Buy 3 Bottles',
-    price: '$69.99',
+    price: '$74.99',
     originalPrice: '$179.97',
     shipping: '',
     saveBadge: 'Save $109.98',
@@ -93,8 +93,8 @@ export default function ShopPage() {
       // Map to exact required subscribe prices
       const subscribePrices: Record<number, string> = {
         1: '$24.99',
-        2: '$39.99',
-        3: '$55.99'
+        2: '$47.99',
+        3: '$59.99'
       };
       return subscribePrices[bundleId] || bundle.price;
     }
@@ -437,7 +437,7 @@ export default function ShopPage() {
                     <div className="text-right">
                       <div className="flex flex-col items-end">
                         <span className="font-bold text-xl text-[#1a2f23]">
-                          {selectedBundle === 1 ? '$24.99' : selectedBundle === 2 ? '$39.99' : '$55.99'}
+                          {selectedBundle === 1 ? '$24.99' : selectedBundle === 2 ? '$47.99' : '$59.99'}
                         </span>
                       </div>
                     </div>
