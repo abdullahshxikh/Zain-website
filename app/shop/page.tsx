@@ -39,7 +39,7 @@ const bundles: BundleOption[] = [
   {
     id: 1,
     title: 'Buy 1 Bottle',
-    price: '$35.99',
+    price: '$31.25',
     originalPrice: '$59.99',
     shipping: '+ $8.00 Shipping',
     bonuses: [],
@@ -48,7 +48,7 @@ const bundles: BundleOption[] = [
   {
     id: 2,
     title: 'Buy 2 Bottles',
-    price: '$59.99',
+    price: '$49.99',
     originalPrice: '$119.98',
     shipping: '',
     saveBadge: 'Save $69.99',
@@ -60,7 +60,7 @@ const bundles: BundleOption[] = [
   {
     id: 3,
     title: 'Buy 3 Bottles',
-    price: '$83.99',
+    price: '$69.99',
     originalPrice: '$179.97',
     shipping: '',
     saveBadge: 'Save $109.98',
@@ -92,9 +92,9 @@ export default function ShopPage() {
     if (subscribeMode) {
       // Map to exact required subscribe prices
       const subscribePrices: Record<number, string> = {
-        1: '$29.99',
-        2: '$49.99',
-        3: '$69.99'
+        1: '$24.99',
+        2: '$39.99',
+        3: '$55.99'
       };
       return subscribePrices[bundleId] || bundle.price;
     }
@@ -102,7 +102,7 @@ export default function ShopPage() {
   };
 
   const [productImages, setProductImages] = useState([
-    '/targeting grwth anytime a portable rokl in. desigen for dges and thinig ares felivers precise nourishmwnt and promotes concintend growth on the go 3/2.png',
+    '/variant-1-new.png',
     '/prod-1.png',
     '/prod-2.png',
     '/prod-3.png',
@@ -111,9 +111,9 @@ export default function ShopPage() {
 
   useEffect(() => {
     const bundleImages: Record<number, string> = {
-      1: '/targeting grwth anytime a portable rokl in. desigen for dges and thinig ares felivers precise nourishmwnt and promotes concintend growth on the go 3/2.png',
-      2: '/targeting grwth anytime a portable rokl in. desigen for dges and thinig ares felivers precise nourishmwnt and promotes concintend growth on the go 3/3.png',
-      3: '/targeting grwth anytime a portable rokl in. desigen for dges and thinig ares felivers precise nourishmwnt and promotes concintend growth on the go 3/4.png',
+      1: '/variant-1-new.png',
+      2: '/comb.png',
+      3: '/comb.png',
     };
 
     const newImage = bundleImages[selectedBundle];
@@ -299,16 +299,6 @@ export default function ShopPage() {
                 <span className="text-3xl font-bold text-[#1a2f23]">
                   {getDisplayPrice(selectedBundle)}
                 </span>
-                {subscribeMode && bundles.find(b => b.id === selectedBundle)?.price && (
-                  <span className="text-xl text-gray-400 line-through decoration-red-500/40">
-                    {bundles.find(b => b.id === selectedBundle)?.price}
-                  </span>
-                )}
-                {!subscribeMode && bundles.find(b => b.id === selectedBundle)?.originalPrice && (
-                  <span className="text-xl text-gray-400 line-through decoration-red-500/40">
-                    {bundles.find(b => b.id === selectedBundle)?.originalPrice}
-                  </span>
-                )}
                 {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
                   <span className="px-3 py-1 bg-[#bb9c30] text-white text-xs font-bold rounded-full uppercase tracking-wider shadow-sm">
                     {bundles.find(b => b.id === selectedBundle)?.saveBadge}
@@ -400,12 +390,6 @@ export default function ShopPage() {
                         <div className="font-bold text-xl text-[#1a2f23]">
                           {subscribeMode ? getDisplayPrice(bundle.id) : bundle.price}
                         </div>
-                        {subscribeMode && bundle.price && (
-                          <div className="text-gray-400 line-through text-sm decoration-gray-400">{bundle.price}</div>
-                        )}
-                        {!subscribeMode && bundle.originalPrice && (
-                          <div className="text-gray-400 line-through text-sm decoration-gray-400">{bundle.originalPrice}</div>
-                        )}
                       </div>
                     </div>
 
@@ -452,14 +436,8 @@ export default function ShopPage() {
                     </div>
                     <div className="text-right">
                       <div className="flex flex-col items-end">
-                        <span className="text-gray-400 line-through text-sm font-medium">
-                          {bundles.find(b => b.id === selectedBundle)?.price}
-                        </span>
                         <span className="font-bold text-xl text-[#1a2f23]">
-                          {/* Calculate roughly 20% off for display demo */}
-                          {bundles.find(b => b.id === selectedBundle)?.price ?
-                            `$${(parseFloat(bundles.find(b => b.id === selectedBundle)!.price.replace('$', '')) * 0.8).toFixed(2)}`
-                            : ''}
+                          {selectedBundle === 1 ? '$24.99' : selectedBundle === 2 ? '$39.99' : '$55.99'}
                         </span>
                       </div>
                     </div>
@@ -502,7 +480,7 @@ export default function ShopPage() {
                     <span className="font-bold text-lg text-[#1a2f23]">One-time</span>
                   </div>
                   <span className="font-bold text-xl text-[#1a2f23]">
-                    {getDisplayPrice(selectedBundle)}
+                    {bundles.find(b => b.id === selectedBundle)?.price}
                   </span>
                 </div>
               </div>
@@ -596,16 +574,7 @@ export default function ShopPage() {
                       <span className="font-extrabold text-[#1a2f23] text-lg">
                         {getDisplayPrice(selectedBundle)}
                       </span>
-                      {subscribeMode && bundles.find(b => b.id === selectedBundle)?.price && (
-                        <span className="text-sm text-gray-400 line-through font-medium">
-                          {bundles.find(b => b.id === selectedBundle)?.price}
-                        </span>
-                      )}
-                      {!subscribeMode && bundles.find(b => b.id === selectedBundle)?.originalPrice && (
-                        <span className="text-sm text-gray-400 line-through font-medium">
-                          {bundles.find(b => b.id === selectedBundle)?.originalPrice}
-                        </span>
-                      )}
+
                       {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
                         <span className="bg-[#e0d8c3] text-[#8c7335] text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
                           <svg className="w-3 h-3 fill-current" viewBox="0 0 20 20"><path d="M17.707 9.293l-2.646-2.647a1 1 0 01-.293-.707V4.375a1 1 0 00-1-1h-1.569a1 1 0 01-.707-.293L8.845.438a1 1 0 00-1.415 0L4.784 3.084a1 1 0 01-.707.293H2.508a1 1 0 00-1 1v1.569a1 1 0 01-.293.707L.438 8.845a1 1 0 000 1.415l2.647 2.646a1 1 0 01.293.707v1.569a1 1 0 001 1h1.569a1 1 0 01.707.293l2.646 2.647a1 1 0 001.415 0l2.646-2.647a1 1 0 01.707-.293h1.569a1 1 0 001-1v-1.569a1 1 0 01.293-.707l2.646-2.646a1 1 0 000-1.415zM12 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
