@@ -51,7 +51,7 @@ const bundles: BundleOption[] = [
     price: '$59.99',
     originalPrice: '$119.98',
     shipping: '',
-    saveBadge: 'Save $69.99',
+    saveBadge: '',
     popular: true,
     bonuses: ['+FREE Comb'],
     pricePerBottle: '',
@@ -63,7 +63,7 @@ const bundles: BundleOption[] = [
     price: '$74.99',
     originalPrice: '$179.97',
     shipping: '',
-    saveBadge: 'Save $109.98',
+    saveBadge: 'Save $18.76',
     bestValue: true,
     bonuses: ['+FREE Comb', '+PDF Guide'],
     pricePerBottle: '',
@@ -232,7 +232,6 @@ export default function ShopPage() {
                     if (subscribeMode) {
                       discountText = '20% OFF';
                     } else {
-                      if (selectedBundle === 2) discountText = '4% OFF'; // $2.51 savings on $62.50
                       if (selectedBundle === 3) discountText = '20% OFF'; // $18.76 savings on $93.75
                     }
 
