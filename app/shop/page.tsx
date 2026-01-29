@@ -384,34 +384,54 @@ export default function ShopPage() {
 
                       {/* Text Details */}
                       <div className="flex-1">
-                        <div className="flex items-center flex-wrap gap-2 mb-1 pr-16">
+                        <div className="flex items-center flex-wrap gap-2 mb-1 pr-16 relative">
                           <span className="font-bold text-lg text-[#1a2f23] leading-tight">{bundle.title}</span>
                           {bundle.limitedTime && (
                             <span className="text-[10px] bg-[#bb9c30] text-white px-2 py-0.5 rounded font-bold">
                               Limited Time
                             </span>
                           )}
-                          {bundle.id === 3 ? (
-                            <span className="text-[10px] bg-[#5c8065] text-white px-2 py-0.5 rounded font-bold">
-                              {subscribeMode ? 'Save $33.76' : 'Save $18.76'}
-                            </span>
-                          ) : bundle.saveBadge && (
-                            <span className="text-[10px] bg-[#5c8065] text-white px-2 py-0.5 rounded font-bold">
-                              {bundle.saveBadge}
-                            </span>
-                          )}
+                          {/* Badges removed from here as per new layout structure preference, strictly spacing */}
                         </div>
-                        <p className="text-sm text-gray-500 italic">{bundle.pricePerBottle}</p>
-                        {bundle.shipping && (
-                          <p className="text-xs text-gray-500 font-medium mt-1">{bundle.shipping}</p>
+
+                        {/* "You save" text below title */}
+                        {(() => {
+                          const currentPriceStr = subscribeMode ? getDisplayPrice(bundle.id) : bundle.price;
+                          const originalPriceStr = bundle.originalPrice || '$0';
+                          const currentVal = parseFloat(currentPriceStr.replace(/[^0-9.]/g, ''));
+                          const originalVal = parseFloat(originalPriceStr.replace(/[^0-9.]/g, ''));
+                          const savings = originalVal - currentVal;
+
+                          if (savings > 0) {
+                            return (
+                              <p className="text-sm text-[#1a2f23] font-medium mb-0.5">
+                                You save ${savings.toFixed(2)}
+                              </p>
+                            );
+                          }
+                          return null;
+                        })()}
+
+                        {/* Shipping Text */}
+                        {bundle.id === 1 ? (
+                          <p className="text-xs text-gray-500 font-medium mt-1">+ $8.00 Shipping</p>
+                        ) : (
+                          <div className="inline-block border border-[#bb9c30] text-[#bb9c30] text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider mt-1">
+                            FREE SHIPPING
+                          </div>
                         )}
                       </div>
 
                       {/* Price */}
                       <div className="text-right flex flex-col justify-center flex-shrink-0 ml-2">
-                        <div className="font-bold text-xl text-[#1a2f23]">
+                        <div className="font-bold text-xl text-[#bb9c30]">
                           {subscribeMode ? getDisplayPrice(bundle.id) : bundle.price}
                         </div>
+                        {bundle.originalPrice && (
+                          <div className="text-xs text-gray-400 line-through decoration-gray-400 mt-0.5">
+                            {bundle.originalPrice}
+                          </div>
+                        )}
                       </div>
                     </div>
 
