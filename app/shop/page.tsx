@@ -391,7 +391,11 @@ export default function ShopPage() {
                               Limited Time
                             </span>
                           )}
-                          {bundle.saveBadge && (
+                          {bundle.id === 3 ? (
+                            <span className="text-[10px] bg-[#5c8065] text-white px-2 py-0.5 rounded font-bold">
+                              {subscribeMode ? 'Save $33.76' : 'Save $18.76'}
+                            </span>
+                          ) : bundle.saveBadge && (
                             <span className="text-[10px] bg-[#5c8065] text-white px-2 py-0.5 rounded font-bold">
                               {bundle.saveBadge}
                             </span>
