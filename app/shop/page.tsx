@@ -226,6 +226,25 @@ export default function ShopPage() {
                     priority
                   />
 
+                  {/* Discount Badge */}
+                  {(() => {
+                    let discountText = '';
+                    if (subscribeMode) {
+                      discountText = '20% OFF';
+                    } else {
+                      if (selectedBundle === 2) discountText = '4% OFF'; // $2.51 savings on $62.50
+                      if (selectedBundle === 3) discountText = '20% OFF'; // $18.76 savings on $93.75
+                    }
+
+                    if (!discountText) return null;
+
+                    return (
+                      <div className="absolute top-4 left-4 z-20 bg-black/50 backdrop-blur-md text-white px-4 py-1.5 rounded-full text-sm font-bold tracking-wider pointer-events-none">
+                        {discountText}
+                      </div>
+                    );
+                  })()}
+
                   {/* Navigation Arrows */}
                   <button
                     onClick={(e) => {
