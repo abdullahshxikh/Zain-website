@@ -477,8 +477,11 @@ export default function ShopPage() {
                       <span className="font-bold text-lg text-[#1a2f23]">Subscribe & save</span>
                     </div>
                     <div className="text-right">
-                      <div className="flex flex-col items-end">
-                        <span className="font-bold text-xl text-[#1a2f23]">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-gray-400 line-through decoration-gray-400">
+                          {bundles.find(b => b.id === selectedBundle)?.price}
+                        </span>
+                        <span className="font-bold text-xl text-[#bb9c30]">
                           {selectedBundle === 1 ? '$24.99' : selectedBundle === 2 ? '$47.99' : '$59.99'}
                         </span>
                       </div>

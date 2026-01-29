@@ -205,14 +205,43 @@ export default function CartDrawer() {
                         </div>
 
                         <div className="text-right">
-                          {item.originalPrice && (
-                            <div className="text-xs text-gray-400 line-through">
-                              {/* Calculate total original price roughly */}
-                              ${(parseFloat(String(item.originalPrice || '0').replace(/[^0-9.]/g, '')) * item.quantity).toFixed(2)}
-                            </div>
-                          )}
-                          <div className="font-bold text-[#1a2f23]">
-                            ${(parseFloat(String(item.price || '0').replace(/[^0-9.]/g, '')) * item.quantity).toFixed(2)}
+                          <div className="text-right">
+                            {(() => {
+                              const originalStr = String(item.originalPrice || '0');
+                              const priceStr = String(item.price || '0');
+                              const quantity = item.quantity;
+
+                              const originalVal = parseFloat(originalStr.replace(/[^0-9.]/g, ''));
+                              const priceVal = parseFloat(priceStr.replace(/[^0-9.]/g, ''));
+
+                              const originalTotal = originalVal * quantity;
+                              const priceTotal = priceVal * quantity;
+                              const savings = originalTotal - priceTotal;
+
+                              if (savings > 0) {
+                                return (
+                                  <div className="flex flex-col items-end">
+                                    <div className="flex items-center gap-1.5">
+                                      <span className="text-xs text-gray-400 line-through decoration-gray-400">
+                                        ${originalTotal.toFixed(2)}
+                                      </span>
+                                      <span className="font-bold text-[#bb9c30] text-base">
+                                        ${priceTotal.toFixed(2)}
+                                      </span>
+                                    </div>
+                                    <span className="text-[10px] font-bold text-[#1a2f23]">
+                                      (You save ${savings.toFixed(2)})
+                                    </span>
+                                  </div>
+                                );
+                              }
+
+                              return (
+                                <div className="font-bold text-[#1a2f23]">
+                                  ${priceTotal.toFixed(2)}
+                                </div>
+                              );
+                            })()}
                           </div>
                         </div>
                       </div>
