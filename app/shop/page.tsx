@@ -38,34 +38,34 @@ const bundles: BundleOption[] = [
   {
     id: 1,
     title: 'Buy 1 Bottle',
-    price: '$39.99',
-    originalPrice: '$59.99',
+    price: '$31.25',
+    originalPrice: '$41.25',
     shipping: '+ $8.00 Shipping',
-    saveBadge: 'Save $20.00',
+    saveBadge: 'SAVE $10.00',
     bonuses: [],
-    pricePerBottle: 'Save 33%',
+    pricePerBottle: 'Starter Pack',
   },
   {
     id: 2,
     title: 'Buy 2 Bottles',
-    price: '$69.99',
-    originalPrice: '$119.98',
-    shipping: '',
-    saveBadge: 'Save $49.99',
+    price: '$59.99',
+    originalPrice: '$123.75',
+    shipping: 'FREE SHIPPING',
+    saveBadge: 'SAVE $63.76',
     popular: true,
     bonuses: ['+FREE Comb'],
-    pricePerBottle: 'Save 42%',
+    pricePerBottle: 'Most Popular',
   },
   {
     id: 3,
     title: 'Buy 3 Bottles',
-    price: '$99.99',
-    originalPrice: '$179.97',
-    shipping: '',
-    saveBadge: 'Save $79.98',
+    price: '$74.99',
+    originalPrice: '$206.25',
+    shipping: 'FREE SHIPPING',
+    saveBadge: 'SAVE $131.26',
     bestValue: true,
     bonuses: ['+FREE Comb', '+PDF Guide'],
-    pricePerBottle: 'Save 44%',
+    pricePerBottle: 'Best Value',
   },
 ];
 
@@ -93,9 +93,9 @@ export default function ShopPage() {
 
   useEffect(() => {
     const bundleImages: Record<number, string> = {
-      1: '/targeting grwth anytime a portable rokl in. desigen for dges and thinig ares felivers precise nourishmwnt and promotes concintend growth on the go 3/2.png',
-      2: '/targeting grwth anytime a portable rokl in. desigen for dges and thinig ares felivers precise nourishmwnt and promotes concintend growth on the go 3/3.png',
-      3: '/targeting grwth anytime a portable rokl in. desigen for dges and thinig ares felivers precise nourishmwnt and promotes concintend growth on the go 3/4.png',
+      1: '/variant-1-new.png',
+      2: '/variant-2-3-new.png',
+      3: '/variant-2-3-new.png',
     };
 
     const newImage = bundleImages[selectedBundle];
@@ -169,11 +169,16 @@ export default function ShopPage() {
     // Add to Cart Logic
     const sellingPlanId = subscribeMode ? '694070968617' : undefined;
 
+    // Append save badge to variant title for cart display
+    const finalVariantTitle = selectedBundleData?.saveBadge
+      ? `${variantTitle} - ${selectedBundleData.saveBadge}`
+      : variantTitle;
+
     addToCart({
       variantId: variantId,
       title: 'Zumfali 7-in-1 Complete Hair Growth Oil',
-      variantTitle: variantTitle,
-      price: selectedBundleData?.price || '$0.00',
+      variantTitle: finalVariantTitle,
+      price: subscribeMode ? getSubscribePrice(selectedBundle) : (selectedBundleData?.price || '$0.00'),
       quantity: 1,
       image: productImages[0],
       originalPrice: selectedBundleData?.originalPrice,
@@ -229,6 +234,14 @@ export default function ShopPage() {
                   </button>
 
 
+                  {/* Savings Card - Translucent Box */}
+                  {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
+                    <div className="absolute top-6 right-6 bg-white/80 backdrop-blur-md p-4 rounded-xl border border-white/60 shadow-lg z-20">
+                      <p className="font-bold text-[#1a2f23] text-lg uppercase tracking-wider">
+                        {bundles.find(b => b.id === selectedBundle)?.saveBadge}
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 {/* Thumbnails */}
@@ -279,7 +292,7 @@ export default function ShopPage() {
 
               <div className="flex items-baseline gap-3 mb-6">
                 <span className="text-3xl font-bold text-[#1a2f23]">
-                  {bundles.find(b => b.id === selectedBundle)?.price}
+                  {subscribeMode ? getSubscribePrice(selectedBundle) : bundles.find(b => b.id === selectedBundle)?.price}
                 </span>
                 {bundles.find(b => b.id === selectedBundle)?.originalPrice && (
                   <span className="text-xl text-gray-400 line-through decoration-red-500/40">
@@ -415,13 +428,10 @@ export default function ShopPage() {
                     <div className="text-right">
                       <div className="flex flex-col items-end">
                         <span className="text-gray-400 line-through text-sm font-medium">
-                          {bundles.find(b => b.id === selectedBundle)?.price}
+                          {bundles.find(b => b.id === selectedBundle)?.originalPrice}
                         </span>
                         <span className="font-bold text-xl text-[#1a2f23]">
-                          {/* Calculate roughly 20% off for display demo */}
-                          {bundles.find(b => b.id === selectedBundle)?.price ?
-                            `$${(parseFloat(bundles.find(b => b.id === selectedBundle)!.price.replace('$', '')) * 0.8).toFixed(2)}`
-                            : ''}
+                          {getSubscribePrice(selectedBundle)}
                         </span>
                       </div>
                     </div>
@@ -607,3 +617,12 @@ export default function ShopPage() {
     </>
   );
 }
+
+const getSubscribePrice = (bundleId: number): string => {
+  const prices: Record<number, string> = {
+    1: '$24.99',
+    2: '$47.99',
+    3: '$59.99'
+  };
+  return prices[bundleId] || '$0.00';
+};

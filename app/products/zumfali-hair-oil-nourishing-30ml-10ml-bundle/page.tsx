@@ -37,32 +37,32 @@ const bundles: BundleOption[] = [
   {
     id: 1,
     title: 'Starter',
-    price: '$35.99',
-    originalPrice: '$49.99',
+    price: '$31.25',
+    originalPrice: '$41.25',
     shipping: 'Shipping Calculated',
-    saveBadge: 'Save ~28%',
+    saveBadge: 'SAVE $10.00',
     bonuses: [],
   },
   {
     id: 2,
     title: 'Most Popular',
     price: '$59.99',
-    originalPrice: '$119.98',
+    originalPrice: '$123.75',
     shipping: 'FREE SHIPPING',
-    saveBadge: 'Save ~50%',
+    saveBadge: 'SAVE $63.76',
     popular: true,
     bonuses: ['FREE Hair Growth Guide (PDF)'],
   },
   {
     id: 3,
     title: 'Best Value',
-    price: '$83.99',
-    originalPrice: '$239.96',
+    price: '$74.99',
+    originalPrice: '$206.25',
     shipping: 'FREE SHIPPING',
-    saveBadge: 'Save ~65%',
+    saveBadge: 'SAVE $131.26',
     bestValue: true,
     bonuses: ['Hair Growth Guide PDF', 'Scalp Massage Ebook'],
-    pricePerBottle: '$28.00/bottle',
+    pricePerBottle: '$15.00/bottle',
   },
 ];
 
@@ -79,13 +79,18 @@ export default function ProductPage() {
 
     if (subscribeMode) {
       const subscribePrices: Record<number, string> = {
-        1: '$29.99',
-        2: '$49.99',
-        3: '$69.99'
+        1: '$24.99',
+        2: '$47.99',
+        3: '$59.99'
       };
       return subscribePrices[bundleId] || bundle.price;
     }
     return bundle.price;
+  };
+
+  const getProductImage = (bundleId: number) => {
+    if (bundleId === 1) return '/variant-1-new.png';
+    return '/variant-2-3-new.png';
   };
 
   useEffect(() => {
@@ -138,13 +143,18 @@ export default function ProductPage() {
 
     const sellingPlanId = subscribeMode ? '694070968617' : undefined;
 
+    // Append save badge to variant title for cart display
+    const finalVariantTitle = bundle?.saveBadge
+      ? `${variantTitle} - ${bundle.saveBadge}`
+      : variantTitle;
+
     await addToCart({
       variantId,
       title: 'Zumfali 7-in-1 Hair Oil',
-      variantTitle,
+      variantTitle: finalVariantTitle,
       price: displayPrice,
       quantity: 1,
-      image: '/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png',
+      image: getProductImage(selectedBundle),
       originalPrice: bundle?.originalPrice,
       sellingPlanId
     });
@@ -169,7 +179,7 @@ export default function ProductPage() {
               <div className="sticky top-32">
                 <div className="relative w-full aspect-square bg-white rounded-[2rem] overflow-hidden shadow-lg border border-gray-100 mb-4">
                   <Image
-                    src="/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png"
+                    src={getProductImage(selectedBundle)}
                     alt="Zumfali 7-in-1 Hair Oil"
                     title="Zumfali 7-in-1 Hair Oil"
                     fill
@@ -180,6 +190,15 @@ export default function ProductPage() {
                   <div className="absolute top-6 left-6 bg-[#1a2f23] text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest shadow-md">
                     Best Seller
                   </div>
+
+                  {/* Savings Card - Translucent Box */}
+                  {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
+                    <div className="absolute top-6 right-6 bg-white/80 backdrop-blur-md p-4 rounded-xl border border-white/60 shadow-lg z-20">
+                      <p className="font-bold text-[#1a2f23] text-lg uppercase tracking-wider">
+                        {bundles.find(b => b.id === selectedBundle)?.saveBadge}
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 {/* Thumbnails */}
@@ -187,7 +206,7 @@ export default function ProductPage() {
                   {[1, 2, 3, 4].map((i) => (
                     <div key={i} className="relative aspect-square bg-white rounded-xl overflow-hidden border border-gray-100 cursor-pointer hover:border-[#bb9c30] transition-colors group shadow-md">
                       <Image
-                        src="/Screenshot_2025-11-28_at_10.40.29_PM-removebg-preview.png"
+                        src={getProductImage(selectedBundle)}
                         alt={`Zumfali 7-in-1 Hair Oil view ${i}`}
                         title={`Zumfali 7-in-1 Hair Oil view ${i}`}
                         fill
@@ -293,7 +312,7 @@ export default function ProductPage() {
 
                       {/* Image Thumbnail */}
                       <div className="relative w-12 h-12 flex-shrink-0 mr-5">
-                        <Image src="/product-image.png" alt="Zumfali hair oil bottle" title="Zumfali hair oil bottle" fill className="object-contain" />
+                        <Image src={getProductImage(bundle.id)} alt="Zumfali hair oil bottle" title="Zumfali hair oil bottle" fill className="object-contain" />
                       </div>
 
                       {/* Details */}
@@ -373,7 +392,7 @@ export default function ProductPage() {
                       <span className={`font-bold text-lg ${subscribeMode ? 'text-[#1a2f23]' : 'text-gray-600'}`}>Subscribe & Save (Monthly)</span>
                       <span className="font-bold text-lg text-[#1a2f23]">
                         {(() => {
-                          const prices: any = { 1: '$29.99', 2: '$49.99', 3: '$69.99' };
+                          const prices: any = { 1: '$24.99', 2: '$47.99', 3: '$59.99' };
                           return prices[selectedBundle];
                         })()}
                       </span>
