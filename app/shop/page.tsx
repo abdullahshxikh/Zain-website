@@ -11,7 +11,7 @@ import ProblemSolution from '@/components/ProblemSolution';
 import HairLossSection from '@/components/HairLossSection';
 import ProductFunnel from '@/components/ProductFunnel';
 import ClinicallyTested from '@/components/ClinicallyTested';
-import IngredientsSection from '@/components/IngredientsSection';
+import ReviewGrid from '@/components/ReviewGrid';
 import InteractiveBenefits from '@/components/InteractiveBenefits';
 import VideoTestimonials from '@/components/VideoTestimonials';
 import DetailedFAQ from '@/components/DetailedFAQ';
@@ -32,77 +32,60 @@ type BundleOption = {
   popular?: boolean;
   bonuses?: string[];
   pricePerBottle?: string;
-  limitedTime?: boolean;
 };
 
 const bundles: BundleOption[] = [
   {
     id: 1,
     title: 'Buy 1 Bottle',
-    price: '$31.25',
+    price: '$39.99',
     originalPrice: '$59.99',
     shipping: '+ $8.00 Shipping',
+    saveBadge: 'Save $20.00',
     bonuses: [],
-    pricePerBottle: '',
+    pricePerBottle: 'Save 33%',
   },
   {
     id: 2,
     title: 'Buy 2 Bottles',
-    price: '$59.99',
+    price: '$69.99',
     originalPrice: '$119.98',
     shipping: '',
-    saveBadge: '',
+    saveBadge: 'Save $49.99',
     popular: true,
     bonuses: ['+FREE Comb'],
-    pricePerBottle: '',
-    limitedTime: true,
+    pricePerBottle: 'Save 42%',
   },
   {
     id: 3,
     title: 'Buy 3 Bottles',
-    price: '$74.99',
+    price: '$99.99',
     originalPrice: '$179.97',
     shipping: '',
-    saveBadge: 'Save $18.76',
+    saveBadge: 'Save $79.98',
     bestValue: true,
     bonuses: ['+FREE Comb', '+PDF Guide'],
-    pricePerBottle: '',
+    pricePerBottle: 'Save 44%',
   },
 ];
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function ShopPage() {
-  const { addToCart, openCart } = useCart();
+  const { shopifyClient, addToCart, openCart } = useCart();
   const searchParams = useSearchParams();
   const router = useRouter();
   const { trackViewContent, trackAddToCart } = useMetaPixel();
 
   const [selectedBundle, setSelectedBundle] = useState<number>(1);
   const [subscribeMode, setSubscribeMode] = useState(true);
+  const [shopifyProduct, setShopifyProduct] = useState<any | null>(null);
   const [accountLoggedIn, setAccountLoggedIn] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
 
-  // Helper function to get the display price based on subscribe mode
-  const getDisplayPrice = (bundleId: number): string => {
-    const bundle = bundles.find(b => b.id === bundleId);
-    if (!bundle) return '$0.00';
-
-    if (subscribeMode) {
-      // Map to exact required subscribe prices
-      const subscribePrices: Record<number, string> = {
-        1: '$24.99',
-        2: '$47.99',
-        3: '$59.99'
-      };
-      return subscribePrices[bundleId] || bundle.price;
-    }
-    return bundle.price;
-  };
-
   const [productImages, setProductImages] = useState([
-    '/variant-1-new.png',
+    '/targeting grwth anytime a portable rokl in. desigen for dges and thinig ares felivers precise nourishmwnt and promotes concintend growth on the go 3/2.png',
     '/prod-1.png',
     '/prod-2.png',
     '/prod-3.png',
@@ -111,9 +94,9 @@ export default function ShopPage() {
 
   useEffect(() => {
     const bundleImages: Record<number, string> = {
-      1: '/variant-1-new.png',
-      2: '/comb.png',
-      3: '/comb.png',
+      1: '/targeting grwth anytime a portable rokl in. desigen for dges and thinig ares felivers precise nourishmwnt and promotes concintend growth on the go 3/2.png',
+      2: '/targeting grwth anytime a portable rokl in. desigen for dges and thinig ares felivers precise nourishmwnt and promotes concintend growth on the go 3/3.png',
+      3: '/targeting grwth anytime a portable rokl in. desigen for dges and thinig ares felivers precise nourishmwnt and promotes concintend growth on the go 3/4.png',
     };
 
     const newImage = bundleImages[selectedBundle];
@@ -127,10 +110,12 @@ export default function ShopPage() {
     }
   }, [selectedBundle]);
 
+  // Minimal Shopify integration: load SDK once, fetch product once, no embedded UI
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
     const handleScroll = () => {
+      // Show sticky bar after scrolling past the main pricing area (approx 800px)
       if (window.scrollY > 800) {
         setShowStickyBar(true);
       } else {
@@ -142,60 +127,175 @@ export default function ShopPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // ViewContent tracking
   useEffect(() => {
-    // Hardcoded Product ID or Variant ID for tracking
-    // Using Bundle 2 Variant ID as default view content
-    trackViewContent('51383441326377', 59.99);
-  }, [trackViewContent]);
+    if (typeof window === 'undefined') return;
+    if (!shopifyClient) return;
 
-  // Check login status
+    // Fetch all products and keep only the one we care about
+    shopifyClient.product.fetchAll().then((products: any[]) => {
+      const target = products.find((p: any) => {
+        const numericId = String(p.id).split('/').pop();
+        return numericId === '9848343953705';
+      });
+
+      setShopifyProduct(target || null);
+    });
+  }, [shopifyClient]);
+
+  // Fire ViewContent once when product is loaded
+  useEffect(() => {
+    if (!shopifyProduct) return;
+    const productId = String(shopifyProduct.id).split('/').pop() || String(shopifyProduct.id);
+    const defaultPrice = parseFloat(bundles[1].price.replace('$', '')); // Bundle 2 (most popular)
+    trackViewContent(productId, defaultPrice);
+  }, [shopifyProduct, trackViewContent]);
+
+  // Handle auto-restore cart from redirection
+  useEffect(() => {
+    if (!shopifyClient || !shopifyProduct) return;
+
+    const restoreCartId = searchParams?.get('restore_cart');
+    const subscribeParam = searchParams?.get('subscribe');
+
+    if (restoreCartId) {
+      const bundleId = parseInt(restoreCartId);
+      const isSubscribe = subscribeParam === 'true';
+
+      if (!isNaN(bundleId)) {
+        // Set state for UI consistency
+        setSelectedBundle(bundleId);
+        setSubscribeMode(isSubscribe);
+
+        // Trigger add to cart (custom logic duplicator or extract function)
+        // Since we can't easily call handleAddToCart with stale state closures, we duplicate the logic briefly
+        // or safer: clean the URL and rely on user click? No, "bypass".
+
+        // Let's invoke logic directly
+        const variants = shopifyProduct.variants || [];
+        if (!variants.length) return;
+
+        const bundleToVariantMap: Record<number, string> = {
+          1: 'Buy 1',
+          2: 'Buy 2',
+          3: 'Buy 3',
+        };
+        const searchText = bundleToVariantMap[bundleId];
+        let targetVariant: any | null = null;
+
+        if (searchText) {
+          if (isSubscribe) {
+            targetVariant = variants.find((v: any) => {
+              const t = String(v.title).toLowerCase();
+              return t.includes(searchText.toLowerCase()) &&
+                (t.includes('subscribe') || t.includes('subscription') || t.includes('auto'));
+            });
+          }
+          if (!targetVariant) {
+            targetVariant = variants.find((v: any) => {
+              const t = String(v.title).toLowerCase();
+              return t.includes(searchText.toLowerCase());
+            });
+          }
+        }
+
+        if (targetVariant) {
+          const selectedBundleData = bundles.find(b => b.id === bundleId);
+          const variantPrice = parseFloat(selectedBundleData?.price?.replace('$', '') || '0');
+
+          // Fire Meta Pixel AddToCart event for auto-restore
+          trackAddToCart(
+            targetVariant.id,
+            targetVariant.title,
+            variantPrice
+          );
+
+          addToCart({
+            variantId: targetVariant.id,
+            title: shopifyProduct.title,
+            variantTitle: targetVariant.title,
+            price: selectedBundleData?.price || '$0.00',
+            quantity: 1,
+            image: productImages[0], // Approximate
+            originalPrice: selectedBundleData?.originalPrice
+          });
+          openCart();
+
+          // Clean URL
+          router.replace('/shop', { scroll: false });
+        }
+      }
+    }
+  }, [shopifyClient, shopifyProduct, searchParams, addToCart, openCart, router, trackAddToCart]);
+
+  // Check login status after component mounts and after any navigation
   useEffect(() => {
     if (typeof window === 'undefined') return;
     setAccountLoggedIn(isShopifyLoggedIn());
   }, []);
 
-  const handleAddToCart = async () => {
-    const bundle = bundles.find(b => b.id === selectedBundle);
-    if (!bundle) return;
+  const handleAddToCart = () => {
+    if (!shopifyClient || !shopifyProduct) return;
 
-    let variantId = '';
-    // Map bundle to variant ID
-    switch (bundle.id) {
-      case 1:
-        variantId = '51383441293609';
-        break;
-      case 2:
-        variantId = '51383441326377';
-        break;
-      case 3:
-        variantId = '51383441359145';
-        break;
-      default:
-        variantId = '51383441293609';
+    const variants = shopifyProduct.variants || [];
+    if (!variants.length) return;
+
+    // Map bundle selection to actual Shopify variant titles
+    // Based on your Shopify product variants:
+    // Bundle 1 = "Buy 1"
+    // Bundle 2 = "Buy 2"  
+    // Bundle 3 = "Buy 3"
+    const bundleToVariantMap: Record<number, string> = {
+      1: 'Buy 1',
+      2: 'Buy 2',
+      3: 'Buy 3',
+    };
+
+    const searchText = bundleToVariantMap[selectedBundle];
+    let targetVariant: any | null = null;
+
+    if (searchText) {
+      // If subscribe mode is enabled, look for subscription variants
+      if (subscribeMode) {
+        targetVariant = variants.find((v: any) => {
+          const t = String(v.title).toLowerCase();
+          return t.includes(searchText.toLowerCase()) &&
+            (t.includes('subscribe') || t.includes('subscription') || t.includes('auto'));
+        });
+      }
+
+      // Find the one-time purchase variant that matches the bundle selection
+      if (!targetVariant) {
+        targetVariant = variants.find((v: any) => {
+          const t = String(v.title).toLowerCase();
+          return t.includes(searchText.toLowerCase());
+        });
+      }
     }
 
-    const displayPrice = getDisplayPrice(bundle.id);
-    const priceNum = parseFloat(displayPrice.replace(/[^0-9.]/g, ''));
+    if (!targetVariant) {
+      console.warn('Could not find matching variant for bundle:', selectedBundle);
+      targetVariant = variants[0];
+    }
 
-    // Track AddToCart
+    // Fire Meta Pixel AddToCart event BEFORE adding to cart
+    const selectedBundleData = bundles.find(b => b.id === selectedBundle);
+    const variantPrice = parseFloat(selectedBundleData?.price?.replace('$', '') || '0');
+
     trackAddToCart(
-      variantId,
-      bundle.title,
-      priceNum
+      targetVariant.id,
+      targetVariant.title,
+      variantPrice
     );
 
-    const sellingPlanId = subscribeMode ? '694070968617' : undefined;
-
-    await addToCart({
-      variantId,
-      title: 'Zumfali 7-in-1 Hair Oil', // Generic title or specific
-      variantTitle: bundle.title,
-      price: displayPrice,
+    // Add to Cart Logic
+    addToCart({
+      variantId: targetVariant.id,
+      title: shopifyProduct.title,
+      variantTitle: targetVariant.title,
+      price: selectedBundleData?.price || '$0.00',
       quantity: 1,
       image: productImages[0],
-      originalPrice: bundle.originalPrice,
-      sellingPlanId
+      originalPrice: selectedBundleData?.originalPrice
     });
 
     openCart();
@@ -226,31 +326,13 @@ export default function ShopPage() {
                     priority
                   />
 
-                  {/* Discount Badge */}
-                  {(() => {
-                    let discountText = '';
-                    if (subscribeMode) {
-                      discountText = '20% OFF';
-                    } else {
-                      if (selectedBundle === 3) discountText = '20% OFF'; // $18.76 savings on $93.75
-                    }
-
-                    if (!discountText) return null;
-
-                    return (
-                      <div className="absolute top-4 left-4 z-20 bg-black/50 backdrop-blur-md text-white px-4 py-1.5 rounded-full text-sm font-bold tracking-wider pointer-events-none">
-                        {discountText}
-                      </div>
-                    );
-                  })()}
-
                   {/* Navigation Arrows */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       setActiveImage((prev) => (prev - 1 + productImages.length) % productImages.length);
                     }}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm hidden md:flex items-center justify-center text-[#1a2f23] hover:bg-white transition-all focus:opacity-100 z-10"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-[#1a2f23] hover:bg-white transition-all focus:opacity-100 z-10"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
                   </button>
@@ -259,7 +341,7 @@ export default function ShopPage() {
                       e.stopPropagation();
                       setActiveImage((prev) => (prev + 1) % productImages.length);
                     }}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm hidden md:flex items-center justify-center text-[#1a2f23] hover:bg-white transition-all focus:opacity-100 z-10"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-[#1a2f23] hover:bg-white transition-all focus:opacity-100 z-10"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                   </button>
@@ -315,16 +397,16 @@ export default function ShopPage() {
 
               <div className="flex items-baseline gap-3 mb-6">
                 <span className="text-3xl font-bold text-[#1a2f23]">
-                  {getDisplayPrice(selectedBundle)}
+                  {bundles.find(b => b.id === selectedBundle)?.price}
                 </span>
+                {bundles.find(b => b.id === selectedBundle)?.originalPrice && (
+                  <span className="text-xl text-gray-400 line-through decoration-red-500/40">
+                    {bundles.find(b => b.id === selectedBundle)?.originalPrice}
+                  </span>
+                )}
                 {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
                   <span className="px-3 py-1 bg-[#bb9c30] text-white text-xs font-bold rounded-full uppercase tracking-wider shadow-sm">
                     {bundles.find(b => b.id === selectedBundle)?.saveBadge}
-                  </span>
-                )}
-                {subscribeMode && (
-                  <span className="px-3 py-1 bg-[#bb9c30] text-white text-xs font-bold rounded-full uppercase tracking-wider shadow-sm">
-                    Save 20%
                   </span>
                 )}
               </div>
@@ -384,53 +466,25 @@ export default function ShopPage() {
 
                       {/* Text Details */}
                       <div className="flex-1">
-                        <div className="flex items-center flex-wrap gap-2 mb-1 pr-16 relative">
+                        <div className="flex items-center flex-wrap gap-2 mb-1 pr-16">
                           <span className="font-bold text-lg text-[#1a2f23] leading-tight">{bundle.title}</span>
-                          {bundle.limitedTime && (
-                            <span className="text-[10px] bg-[#bb9c30] text-white px-2 py-0.5 rounded font-bold">
-                              Limited Time
+                          {bundle.saveBadge && (
+                            <span className="text-[10px] bg-[#5c8065] text-white px-2 py-0.5 rounded font-bold">
+                              {bundle.saveBadge}
                             </span>
                           )}
-                          {/* Badges removed from here as per new layout structure preference, strictly spacing */}
                         </div>
-
-                        {/* "You save" text below title */}
-                        {(() => {
-                          const currentPriceStr = subscribeMode ? getDisplayPrice(bundle.id) : bundle.price;
-                          const originalPriceStr = bundle.originalPrice || '$0';
-                          const currentVal = parseFloat(currentPriceStr.replace(/[^0-9.]/g, ''));
-                          const originalVal = parseFloat(originalPriceStr.replace(/[^0-9.]/g, ''));
-                          const savings = originalVal - currentVal;
-
-                          if (savings > 0) {
-                            return (
-                              <p className="text-sm text-[#1a2f23] font-medium mb-0.5">
-                                You save ${savings.toFixed(2)}
-                              </p>
-                            );
-                          }
-                          return null;
-                        })()}
-
-                        {/* Shipping Text */}
-                        {bundle.id === 1 ? (
-                          <p className="text-xs text-gray-500 font-medium mt-1">+ $8.00 Shipping</p>
-                        ) : (
-                          <div className="inline-block border border-[#bb9c30] text-[#bb9c30] text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider mt-1">
-                            FREE SHIPPING
-                          </div>
+                        <p className="text-sm text-gray-500 italic">{bundle.pricePerBottle}</p>
+                        {bundle.shipping && (
+                          <p className="text-xs text-gray-500 font-medium mt-1">{bundle.shipping}</p>
                         )}
                       </div>
 
                       {/* Price */}
                       <div className="text-right flex flex-col justify-center flex-shrink-0 ml-2">
-                        <div className="font-bold text-xl text-[#bb9c30]">
-                          {subscribeMode ? getDisplayPrice(bundle.id) : bundle.price}
-                        </div>
+                        <div className="font-bold text-xl text-[#1a2f23]">{bundle.price}</div>
                         {bundle.originalPrice && (
-                          <div className="text-xs text-gray-400 line-through decoration-gray-400 mt-0.5">
-                            {bundle.originalPrice}
-                          </div>
+                          <div className="text-gray-400 line-through text-sm decoration-gray-400">{bundle.originalPrice}</div>
                         )}
                       </div>
                     </div>
@@ -477,12 +531,15 @@ export default function ShopPage() {
                       <span className="font-bold text-lg text-[#1a2f23]">Subscribe & save</span>
                     </div>
                     <div className="text-right">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-gray-400 line-through decoration-gray-400">
+                      <div className="flex flex-col items-end">
+                        <span className="text-gray-400 line-through text-sm font-medium">
                           {bundles.find(b => b.id === selectedBundle)?.price}
                         </span>
-                        <span className="font-bold text-xl text-[#bb9c30]">
-                          {selectedBundle === 1 ? '$24.99' : selectedBundle === 2 ? '$47.99' : '$59.99'}
+                        <span className="font-bold text-xl text-[#1a2f23]">
+                          {/* Calculate roughly 20% off for display demo */}
+                          {bundles.find(b => b.id === selectedBundle)?.price ?
+                            `$${(parseFloat(bundles.find(b => b.id === selectedBundle)!.price.replace('$', '')) * 0.8).toFixed(2)}`
+                            : ''}
                         </span>
                       </div>
                     </div>
@@ -583,7 +640,7 @@ export default function ShopPage() {
 
         <ProblemSolution />
         <HairLossSection />
-        <IngredientsSection />
+        <ReviewGrid />
         <InteractiveBenefits />
         <ClinicallyTested />
         <VideoTestimonials />
@@ -617,9 +674,13 @@ export default function ShopPage() {
                     </h4>
                     <div className="flex items-center gap-2">
                       <span className="font-extrabold text-[#1a2f23] text-lg">
-                        {getDisplayPrice(selectedBundle)}
+                        {bundles.find(b => b.id === selectedBundle)?.price}
                       </span>
-
+                      {bundles.find(b => b.id === selectedBundle)?.originalPrice && (
+                        <span className="text-sm text-gray-400 line-through font-medium">
+                          {bundles.find(b => b.id === selectedBundle)?.originalPrice}
+                        </span>
+                      )}
                       {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
                         <span className="bg-[#e0d8c3] text-[#8c7335] text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
                           <svg className="w-3 h-3 fill-current" viewBox="0 0 20 20"><path d="M17.707 9.293l-2.646-2.647a1 1 0 01-.293-.707V4.375a1 1 0 00-1-1h-1.569a1 1 0 01-.707-.293L8.845.438a1 1 0 00-1.415 0L4.784 3.084a1 1 0 01-.707.293H2.508a1 1 0 00-1 1v1.569a1 1 0 01-.293.707L.438 8.845a1 1 0 000 1.415l2.647 2.646a1 1 0 01.293.707v1.569a1 1 0 001 1h1.569a1 1 0 01.707.293l2.646 2.647a1 1 0 001.415 0l2.646-2.647a1 1 0 01.707-.293h1.569a1 1 0 001-1v-1.569a1 1 0 01.293-.707l2.646-2.646a1 1 0 000-1.415zM12 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>

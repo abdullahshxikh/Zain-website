@@ -30,8 +30,8 @@ export function redirectToShopifyLogout() {
   clearShopifyLoggedIn();
 
   // Redirect to our dedicated logout handler page
-  const returnUrl = encodeURIComponent(`${SITE_URL}/logout`);
-  window.location.href = `${SHOPIFY_LOGOUT_URL}?return_url=${returnUrl}`;
+  const returnUrl = encodeURIComponent(SITE_URL);
+  window.location.href = `${SHOPIFY_LOGOUT_URL}?return_to=${returnUrl}`;
 }
 
 export function markShopifyLoggedIn() {
