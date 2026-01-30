@@ -49,9 +49,9 @@ const bundles: BundleOption[] = [
     id: 2,
     title: 'Buy 2 Bottles',
     price: '$59.99',
-    originalPrice: '$123.75',
+    originalPrice: '$82.50',
     shipping: 'FREE SHIPPING',
-    saveBadge: 'SAVE $63.76',
+    saveBadge: 'SAVE $22.51',
     popular: true,
     bonuses: ['+FREE Comb'],
     pricePerBottle: 'Most Popular',
@@ -60,9 +60,9 @@ const bundles: BundleOption[] = [
     id: 3,
     title: 'Buy 3 Bottles',
     price: '$74.99',
-    originalPrice: '$206.25',
+    originalPrice: '$123.75',
     shipping: 'FREE SHIPPING',
-    saveBadge: 'SAVE $131.26',
+    saveBadge: 'SAVE $48.76',
     bestValue: true,
     bonuses: ['+FREE Comb', '+PDF Guide'],
     pricePerBottle: 'Best Value',
@@ -144,6 +144,16 @@ export default function ShopPage() {
     setAccountLoggedIn(isShopifyLoggedIn());
   }, []);
 
+  const getSaveBadge = (bundleId: number, isSubscribe: boolean): string => {
+    const bundle = bundles.find(b => b.id === bundleId);
+    if (!bundle || !bundle.originalPrice) return '';
+
+    const original = parseFloat(bundle.originalPrice.replace('$', ''));
+    const current = parseFloat((isSubscribe ? getSubscribePrice(bundleId) : bundle.price).replace('$', ''));
+    const savings = original - current;
+    return `SAVE $${savings.toFixed(2)}`;
+  };
+
   const handleAddToCart = () => {
     // Map bundle selection to Shopify variant IDs
     const bundleToVariantMap: Record<number, string> = {
@@ -170,8 +180,9 @@ export default function ShopPage() {
     const sellingPlanId = subscribeMode ? '694070968617' : undefined;
 
     // Append save badge to variant title for cart display
-    const finalVariantTitle = selectedBundleData?.saveBadge
-      ? `${variantTitle} - ${selectedBundleData.saveBadge}`
+    const currentSaveBadge = getSaveBadge(selectedBundle, subscribeMode);
+    const finalVariantTitle = currentSaveBadge
+      ? `${variantTitle} - ${currentSaveBadge}`
       : variantTitle;
 
     addToCart({
@@ -235,10 +246,10 @@ export default function ShopPage() {
 
 
                   {/* Savings Card - Translucent Box */}
-                  {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
+                  {selectedBundle && (
                     <div className="absolute top-6 right-6 bg-white/80 backdrop-blur-md p-4 rounded-xl border border-white/60 shadow-lg z-20">
                       <p className="font-bold text-[#1a2f23] text-lg uppercase tracking-wider">
-                        {bundles.find(b => b.id === selectedBundle)?.saveBadge}
+                        {getSaveBadge(selectedBundle, subscribeMode)}
                       </p>
                     </div>
                   )}
@@ -299,9 +310,9 @@ export default function ShopPage() {
                     {bundles.find(b => b.id === selectedBundle)?.originalPrice}
                   </span>
                 )}
-                {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
+                {selectedBundle && (
                   <span className="px-3 py-1 bg-[#bb9c30] text-white text-xs font-bold rounded-full uppercase tracking-wider shadow-sm">
-                    {bundles.find(b => b.id === selectedBundle)?.saveBadge}
+                    {getSaveBadge(selectedBundle, subscribeMode)}
                   </span>
                 )}
               </div>
@@ -363,11 +374,9 @@ export default function ShopPage() {
                       <div className="flex-1">
                         <div className="flex items-center flex-wrap gap-2 mb-1 pr-16">
                           <span className="font-bold text-lg text-[#1a2f23] leading-tight">{bundle.title}</span>
-                          {bundle.saveBadge && (
-                            <span className="text-[10px] bg-[#5c8065] text-white px-2 py-0.5 rounded font-bold">
-                              {bundle.saveBadge}
-                            </span>
-                          )}
+                          <span className="text-[10px] bg-[#5c8065] text-white px-2 py-0.5 rounded font-bold">
+                            {getSaveBadge(bundle.id, subscribeMode)}
+                          </span>
                         </div>
                         <p className="text-sm text-gray-500 italic">{bundle.pricePerBottle}</p>
                         {bundle.shipping && (
@@ -377,7 +386,9 @@ export default function ShopPage() {
 
                       {/* Price */}
                       <div className="text-right flex flex-col justify-center flex-shrink-0 ml-2">
-                        <div className="font-bold text-xl text-[#1a2f23]">{bundle.price}</div>
+                        <div className="font-bold text-xl text-[#1a2f23]">
+                          {subscribeMode ? getSubscribePrice(bundle.id) : bundle.price}
+                        </div>
                         {bundle.originalPrice && (
                           <div className="text-gray-400 line-through text-sm decoration-gray-400">{bundle.originalPrice}</div>
                         )}
@@ -576,7 +587,7 @@ export default function ShopPage() {
                       {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
                         <span className="bg-[#e0d8c3] text-[#8c7335] text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
                           <svg className="w-3 h-3 fill-current" viewBox="0 0 20 20"><path d="M17.707 9.293l-2.646-2.647a1 1 0 01-.293-.707V4.375a1 1 0 00-1-1h-1.569a1 1 0 01-.707-.293L8.845.438a1 1 0 00-1.415 0L4.784 3.084a1 1 0 01-.707.293H2.508a1 1 0 00-1 1v1.569a1 1 0 01-.293.707L.438 8.845a1 1 0 000 1.415l2.647 2.646a1 1 0 01.293.707v1.569a1 1 0 001 1h1.569a1 1 0 01.707.293l2.646 2.647a1 1 0 001.415 0l2.646-2.647a1 1 0 01.707-.293h1.569a1 1 0 001-1v-1.569a1 1 0 01.293-.707l2.646-2.646a1 1 0 000-1.415zM12 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                          {bundles.find(b => b.id === selectedBundle)?.saveBadge?.replace('Save ', '')} OFF
+                          {getSaveBadge(selectedBundle, subscribeMode).replace('SAVE ', '')}
                         </span>
                       )}
                     </div>

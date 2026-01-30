@@ -36,7 +36,7 @@ type BundleOption = {
 const bundles: BundleOption[] = [
   {
     id: 1,
-    title: 'Starter',
+    title: 'Buy 1 Bottle',
     price: '$31.25',
     originalPrice: '$41.25',
     shipping: 'Shipping Calculated',
@@ -45,24 +45,24 @@ const bundles: BundleOption[] = [
   },
   {
     id: 2,
-    title: 'Most Popular',
+    title: 'Buy 2 Bottles',
     price: '$59.99',
-    originalPrice: '$123.75',
+    originalPrice: '$82.50',
     shipping: 'FREE SHIPPING',
-    saveBadge: 'SAVE $63.76',
+    saveBadge: 'SAVE $22.51',
     popular: true,
     bonuses: ['FREE Hair Growth Guide (PDF)'],
   },
   {
     id: 3,
-    title: 'Best Value',
+    title: 'Buy 3 Bottles',
     price: '$74.99',
-    originalPrice: '$206.25',
+    originalPrice: '$123.75',
     shipping: 'FREE SHIPPING',
-    saveBadge: 'SAVE $131.26',
+    saveBadge: 'SAVE $48.76',
     bestValue: true,
     bonuses: ['Hair Growth Guide PDF', 'Scalp Massage Ebook'],
-    pricePerBottle: '$15.00/bottle',
+    pricePerBottle: '$25.00/bottle',
   },
 ];
 
@@ -97,6 +97,16 @@ export default function ProductPage() {
     if (typeof window === 'undefined') return;
     setAccountLoggedIn(isShopifyLoggedIn());
   }, []);
+
+  const getSaveBadge = (bundleId: number, isSubscribe: boolean): string => {
+    const bundle = bundles.find(b => b.id === bundleId);
+    if (!bundle || !bundle.originalPrice) return '';
+
+    const original = parseFloat(bundle.originalPrice.replace('$', ''));
+    const current = parseFloat((isSubscribe ? getDisplayPrice(bundleId) : bundle.price).replace('$', ''));
+    const savings = original - current;
+    return `SAVE $${savings.toFixed(2)}`;
+  };
 
   const handleBuyNow = async () => {
     if (!accountLoggedIn) {
@@ -144,8 +154,9 @@ export default function ProductPage() {
     const sellingPlanId = subscribeMode ? '694070968617' : undefined;
 
     // Append save badge to variant title for cart display
-    const finalVariantTitle = bundle?.saveBadge
-      ? `${variantTitle} - ${bundle.saveBadge}`
+    const currentSaveBadge = getSaveBadge(selectedBundle, subscribeMode);
+    const finalVariantTitle = currentSaveBadge
+      ? `${variantTitle} - ${currentSaveBadge}`
       : variantTitle;
 
     await addToCart({
@@ -192,10 +203,10 @@ export default function ProductPage() {
                   </div>
 
                   {/* Savings Card - Translucent Box */}
-                  {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
+                  {selectedBundle && (
                     <div className="absolute top-6 right-6 bg-white/80 backdrop-blur-md p-4 rounded-xl border border-white/60 shadow-lg z-20">
                       <p className="font-bold text-[#1a2f23] text-lg uppercase tracking-wider">
-                        {bundles.find(b => b.id === selectedBundle)?.saveBadge}
+                        {getSaveBadge(selectedBundle, subscribeMode)}
                       </p>
                     </div>
                   )}
@@ -251,9 +262,9 @@ export default function ProductPage() {
                     {bundles.find(b => b.id === selectedBundle)?.originalPrice}
                   </span>
                 )}
-                {bundles.find(b => b.id === selectedBundle)?.saveBadge && (
+                {selectedBundle && (
                   <span className="px-3 py-1 bg-[#bb9c30] text-white text-xs font-bold rounded-full uppercase tracking-wider shadow-sm">
-                    {bundles.find(b => b.id === selectedBundle)?.saveBadge}
+                    {getSaveBadge(selectedBundle, subscribeMode)}
                   </span>
                 )}
               </div>
@@ -319,11 +330,9 @@ export default function ProductPage() {
                       <div className="flex-1 pr-4">
                         <div className="flex items-center gap-3 mb-1">
                           <span className="font-bold text-lg text-[#1a2f23]">{bundle.title}</span>
-                          {bundle.saveBadge && (
-                            <span className="text-[10px] bg-green-100 text-green-800 px-2 py-0.5 rounded-full font-bold">
-                              {bundle.saveBadge}
-                            </span>
-                          )}
+                          <span className="text-[10px] bg-green-100 text-green-800 px-2 py-0.5 rounded-full font-bold">
+                            {getSaveBadge(bundle.id, subscribeMode)}
+                          </span>
                         </div>
                         {bundle.bonuses && bundle.bonuses.length > 0 && (
                           <div className="mt-1 space-y-1">
