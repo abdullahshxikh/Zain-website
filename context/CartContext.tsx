@@ -74,14 +74,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
       if (!node.merchandise) return null;
 
       // Use the line item cost which includes subscription discounts
-      const itemCost = node.cost?.totalAmount || node.merchandise.price;
+      // Calculate unit price from total amount (which is quantity * price)
+      let amount = parseFloat(node.merchandise.price.amount);
+      const currency = node.merchandise.price.currencyCode;
+
+      if (node.cost?.totalAmount) {
+        amount = parseFloat(node.cost.totalAmount.amount) / node.quantity;
+      }
 
       return {
         id: node.id,
         variantId: node.merchandise.id,
         title: node.merchandise.product.title,
         variantTitle: node.merchandise.title,
-        price: `${itemCost.currencyCode} ${itemCost.amount}`,
+        price: `${currency} ${amount.toFixed(2)}`,
         quantity: node.quantity,
         image: node.merchandise.product.featuredImage?.url || '/product-image.png',
       };
