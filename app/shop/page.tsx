@@ -72,14 +72,13 @@ const bundles: BundleOption[] = [
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function ShopPage() {
-  const { shopifyClient, addToCart, openCart } = useCart();
+  const { addToCart, openCart } = useCart();
   const searchParams = useSearchParams();
   const router = useRouter();
   const { trackViewContent, trackAddToCart } = useMetaPixel();
 
   const [selectedBundle, setSelectedBundle] = useState<number>(1);
   const [subscribeMode, setSubscribeMode] = useState(true);
-  const [shopifyProduct, setShopifyProduct] = useState<any | null>(null);
   const [accountLoggedIn, setAccountLoggedIn] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
@@ -127,105 +126,17 @@ export default function ShopPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+
+
+  // Fire ViewContent once when component mounts
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (!shopifyClient) return;
-
-    // Fetch all products and keep only the one we care about
-    shopifyClient.product.fetchAll().then((products: any[]) => {
-      const target = products.find((p: any) => {
-        const numericId = String(p.id).split('/').pop();
-        return numericId === '9848343953705';
-      });
-
-      setShopifyProduct(target || null);
-    });
-  }, [shopifyClient]);
-
-  // Fire ViewContent once when product is loaded
-  useEffect(() => {
-    if (!shopifyProduct) return;
-    const productId = String(shopifyProduct.id).split('/').pop() || String(shopifyProduct.id);
+    const productId = '9848343953705'; // Zumfali product ID
     const defaultPrice = parseFloat(bundles[1].price.replace('$', '')); // Bundle 2 (most popular)
     trackViewContent(productId, defaultPrice);
-  }, [shopifyProduct, trackViewContent]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  // Handle auto-restore cart from redirection
-  useEffect(() => {
-    if (!shopifyClient || !shopifyProduct) return;
 
-    const restoreCartId = searchParams?.get('restore_cart');
-    const subscribeParam = searchParams?.get('subscribe');
-
-    if (restoreCartId) {
-      const bundleId = parseInt(restoreCartId);
-      const isSubscribe = subscribeParam === 'true';
-
-      if (!isNaN(bundleId)) {
-        // Set state for UI consistency
-        setSelectedBundle(bundleId);
-        setSubscribeMode(isSubscribe);
-
-        // Trigger add to cart (custom logic duplicator or extract function)
-        // Since we can't easily call handleAddToCart with stale state closures, we duplicate the logic briefly
-        // or safer: clean the URL and rely on user click? No, "bypass".
-
-        // Let's invoke logic directly
-        const variants = shopifyProduct.variants || [];
-        if (!variants.length) return;
-
-        const bundleToVariantMap: Record<number, string> = {
-          1: 'Buy 1',
-          2: 'Buy 2',
-          3: 'Buy 3',
-        };
-        const searchText = bundleToVariantMap[bundleId];
-        let targetVariant: any | null = null;
-
-        if (searchText) {
-          if (isSubscribe) {
-            targetVariant = variants.find((v: any) => {
-              const t = String(v.title).toLowerCase();
-              return t.includes(searchText.toLowerCase()) &&
-                (t.includes('subscribe') || t.includes('subscription') || t.includes('auto'));
-            });
-          }
-          if (!targetVariant) {
-            targetVariant = variants.find((v: any) => {
-              const t = String(v.title).toLowerCase();
-              return t.includes(searchText.toLowerCase());
-            });
-          }
-        }
-
-        if (targetVariant) {
-          const selectedBundleData = bundles.find(b => b.id === bundleId);
-          const variantPrice = parseFloat(selectedBundleData?.price?.replace('$', '') || '0');
-
-          // Fire Meta Pixel AddToCart event for auto-restore
-          trackAddToCart(
-            targetVariant.id,
-            targetVariant.title,
-            variantPrice
-          );
-
-          addToCart({
-            variantId: targetVariant.id,
-            title: shopifyProduct.title,
-            variantTitle: targetVariant.title,
-            price: selectedBundleData?.price || '$0.00',
-            quantity: 1,
-            image: productImages[0], // Approximate
-            originalPrice: selectedBundleData?.originalPrice
-          });
-          openCart();
-
-          // Clean URL
-          router.replace('/shop', { scroll: false });
-        }
-      }
-    }
-  }, [shopifyClient, shopifyProduct, searchParams, addToCart, openCart, router, trackAddToCart]);
 
   // Check login status after component mounts and after any navigation
   useEffect(() => {
@@ -234,64 +145,36 @@ export default function ShopPage() {
   }, []);
 
   const handleAddToCart = () => {
-    if (!shopifyClient || !shopifyProduct) return;
-
-    const variants = shopifyProduct.variants || [];
-    if (!variants.length) return;
-
-    // Map bundle selection to actual Shopify variant titles
-    // Based on your Shopify product variants:
-    // Bundle 1 = "Buy 1"
-    // Bundle 2 = "Buy 2"  
-    // Bundle 3 = "Buy 3"
-    const bundleToVariantMap: Record<number, string> = {
-      1: 'Buy 1',
-      2: 'Buy 2',
-      3: 'Buy 3',
+    // Map bundle selection to Shopify variant IDs
+    // These are the actual variant IDs from your Shopify product
+    const bundleToVariantMap: Record<number, { oneTime: string; subscription?: string }> = {
+      1: { oneTime: '49982773330217' }, // Buy 1
+      2: { oneTime: '49982773362985' }, // Buy 2
+      3: { oneTime: '49982773395753' }, // Buy 3
     };
 
-    const searchText = bundleToVariantMap[selectedBundle];
-    let targetVariant: any | null = null;
+    const variantIds = bundleToVariantMap[selectedBundle];
+    if (!variantIds) return;
 
-    if (searchText) {
-      // If subscribe mode is enabled, look for subscription variants
-      if (subscribeMode) {
-        targetVariant = variants.find((v: any) => {
-          const t = String(v.title).toLowerCase();
-          return t.includes(searchText.toLowerCase()) &&
-            (t.includes('subscribe') || t.includes('subscription') || t.includes('auto'));
-        });
-      }
-
-      // Find the one-time purchase variant that matches the bundle selection
-      if (!targetVariant) {
-        targetVariant = variants.find((v: any) => {
-          const t = String(v.title).toLowerCase();
-          return t.includes(searchText.toLowerCase());
-        });
-      }
-    }
-
-    if (!targetVariant) {
-      console.warn('Could not find matching variant for bundle:', selectedBundle);
-      targetVariant = variants[0];
-    }
+    // Use subscription variant if subscribe mode is enabled, otherwise use one-time
+    const variantId = subscribeMode && variantIds.subscription ? variantIds.subscription : variantIds.oneTime;
 
     // Fire Meta Pixel AddToCart event BEFORE adding to cart
     const selectedBundleData = bundles.find(b => b.id === selectedBundle);
     const variantPrice = parseFloat(selectedBundleData?.price?.replace('$', '') || '0');
+    const variantTitle = selectedBundleData?.title || '';
 
     trackAddToCart(
-      targetVariant.id,
-      targetVariant.title,
+      variantId,
+      variantTitle,
       variantPrice
     );
 
     // Add to Cart Logic
     addToCart({
-      variantId: targetVariant.id,
-      title: shopifyProduct.title,
-      variantTitle: targetVariant.title,
+      variantId: variantId,
+      title: 'Zumfali 7-in-1 Complete Hair Growth Oil',
+      variantTitle: variantTitle,
       price: selectedBundleData?.price || '$0.00',
       quantity: 1,
       image: productImages[0],
