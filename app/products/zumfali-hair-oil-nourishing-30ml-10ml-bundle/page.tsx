@@ -125,15 +125,15 @@ export default function ProductPage() {
         break;
       case 2:
         variantId = '51383441326377';
-        variantTitle = 'Buy 2 Get 1 Free';
+        variantTitle = 'Buy 2 Bottles';
         break;
       case 3:
         variantId = '51383441359145';
-        variantTitle = 'Buy 3 Get 2 Free';
+        variantTitle = 'Buy 3 Bottles';
         break;
       default:
         variantId = '51383441326377';
-        variantTitle = 'Buy 2 Get 1 Free';
+        variantTitle = 'Buy 2 Bottles';
     }
 
     const bundle = bundles.find((b) => b.id === selectedBundle);

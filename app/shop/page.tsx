@@ -577,7 +577,7 @@ export default function ShopPage() {
                     </h4>
                     <div className="flex items-center gap-2">
                       <span className="font-extrabold text-[#1a2f23] text-lg">
-                        {bundles.find(b => b.id === selectedBundle)?.price}
+                        {subscribeMode ? getSubscribePrice(selectedBundle) : bundles.find(b => b.id === selectedBundle)?.price}
                       </span>
                       {bundles.find(b => b.id === selectedBundle)?.originalPrice && (
                         <span className="text-sm text-gray-400 line-through font-medium">
