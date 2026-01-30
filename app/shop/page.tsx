@@ -146,18 +146,14 @@ export default function ShopPage() {
 
   const handleAddToCart = () => {
     // Map bundle selection to Shopify variant IDs
-    // These are the actual variant IDs from your Shopify product
-    const bundleToVariantMap: Record<number, { oneTime: string; subscription?: string }> = {
-      1: { oneTime: '49982773330217' }, // Buy 1
-      2: { oneTime: '49982773362985' }, // Buy 2
-      3: { oneTime: '49982773395753' }, // Buy 3
+    const bundleToVariantMap: Record<number, string> = {
+      1: '51383441293609', // Buy 1
+      2: '51383441326377', // Buy 2
+      3: '51383441359145', // Buy 3
     };
 
-    const variantIds = bundleToVariantMap[selectedBundle];
-    if (!variantIds) return;
-
-    // Use subscription variant if subscribe mode is enabled, otherwise use one-time
-    const variantId = subscribeMode && variantIds.subscription ? variantIds.subscription : variantIds.oneTime;
+    const variantId = bundleToVariantMap[selectedBundle];
+    if (!variantId) return;
 
     // Fire Meta Pixel AddToCart event BEFORE adding to cart
     const selectedBundleData = bundles.find(b => b.id === selectedBundle);
@@ -171,6 +167,8 @@ export default function ShopPage() {
     );
 
     // Add to Cart Logic
+    const sellingPlanId = subscribeMode ? '694070968617' : undefined;
+
     addToCart({
       variantId: variantId,
       title: 'Zumfali 7-in-1 Complete Hair Growth Oil',
@@ -178,7 +176,8 @@ export default function ShopPage() {
       price: selectedBundleData?.price || '$0.00',
       quantity: 1,
       image: productImages[0],
-      originalPrice: selectedBundleData?.originalPrice
+      originalPrice: selectedBundleData?.originalPrice,
+      sellingPlanId: sellingPlanId
     });
 
     openCart();
