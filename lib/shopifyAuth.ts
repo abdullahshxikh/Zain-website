@@ -1,7 +1,7 @@
 const SHOPIFY_ACCOUNT_BASE = 'https://shopify.com/91374911785/account';
 const SHOPIFY_LOGIN_URL = `${SHOPIFY_ACCOUNT_BASE}/login`;
 const SHOPIFY_SIGNUP_URL = `${SHOPIFY_ACCOUNT_BASE}/register`;
-const SHOPIFY_LOGOUT_URL = `${SHOPIFY_ACCOUNT_BASE}/logout`;
+const SHOPIFY_LOGOUT_URL = 'https://shopify.com/91374911785/auth/logout';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://zumfali.co';
 const SHOPIFY_RETURN_URL = `${SITE_URL}/account`;
