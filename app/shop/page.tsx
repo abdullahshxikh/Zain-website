@@ -422,11 +422,9 @@ export default function ShopPage() {
                     : 'border-gray-200 bg-white hover:border-[#bb9c30]/30'
                     }`}
                 >
-                  {subscribeMode && (
-                    <div className="absolute -top-3 right-4 bg-[#bb9c30] text-white text-xs font-bold px-3 py-1 rounded shadow-sm">
-                      Save 20% For First Order
-                    </div>
-                  )}
+                  <div className="absolute -top-3 right-4 bg-[#bb9c30] text-white text-xs font-bold px-3 py-1 rounded shadow-sm">
+                    Save 20% For First Order
+                  </div>
 
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-3">
@@ -448,25 +446,23 @@ export default function ShopPage() {
                     </div>
                   </div>
 
-                  {subscribeMode && (
-                    <div className="pl-8 animate-fadeIn">
-                      <div className="text-sm text-gray-600 space-y-2 mb-4">
-                        <p className="flex items-center gap-2">
-                          <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                          Get an additional 20% off your first purchase and 10% off all recurring orders.
-                        </p>
-                        <p className="flex items-center gap-2">
-                          <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                          No commitment. Cancel anytime
-                        </p>
-                      </div>
-
-                      <div className="bg-[#bb9c30] text-white font-bold py-3 px-4 rounded-lg text-center text-sm cursor-default">
-                        1 Month
-                      </div>
-                      <p className="text-center text-[10px] text-gray-500 mt-1 uppercase tracking-wider">Deliver every</p>
+                  <div className="pl-8">
+                    <div className="text-sm text-gray-600 space-y-2 mb-4">
+                      <p className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Get an additional 20% off your first purchase and 10% off all recurring orders.
+                      </p>
+                      <p className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        No commitment. Cancel anytime
+                      </p>
                     </div>
-                  )}
+
+                    <div className="bg-[#bb9c30] text-white font-bold py-3 px-4 rounded-lg text-center text-sm cursor-default">
+                      1 Month
+                    </div>
+                    <p className="text-center text-[10px] text-gray-500 mt-1 uppercase tracking-wider">Deliver every</p>
+                  </div>
                 </div>
 
                 {/* One-time Option */}
