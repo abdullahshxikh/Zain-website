@@ -77,8 +77,8 @@ export default function ShopPage() {
   const router = useRouter();
   const { trackViewContent, trackAddToCart } = useMetaPixel();
 
-  const [selectedBundle, setSelectedBundle] = useState<number>(1);
-  const [subscribeMode, setSubscribeMode] = useState(true);
+  const [selectedBundle, setSelectedBundle] = useState<number>(2);
+  const [subscribeMode, setSubscribeMode] = useState(false);
   const [accountLoggedIn, setAccountLoggedIn] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
