@@ -38,10 +38,10 @@ const bundles: BundleOption[] = [
   {
     id: 1,
     title: 'Buy 1 Bottle',
-    price: '$31.25',
-    originalPrice: '$41.25',
+    price: '$31.99',
+    originalPrice: undefined,
     shipping: '+ $8.00 Shipping',
-    saveBadge: 'SAVE $10.00',
+    saveBadge: undefined,
     bonuses: [],
     pricePerBottle: 'Starter Pack',
   },
@@ -49,9 +49,9 @@ const bundles: BundleOption[] = [
     id: 2,
     title: 'Buy 2 Bottles',
     price: '$59.99',
-    originalPrice: '$82.50',
+    originalPrice: '$71.98',
     shipping: 'FREE SHIPPING',
-    saveBadge: 'SAVE $22.51',
+    saveBadge: 'SAVE $11.99',
     popular: true,
     bonuses: ['+FREE Comb'],
     pricePerBottle: 'Most Popular',
@@ -60,11 +60,11 @@ const bundles: BundleOption[] = [
     id: 3,
     title: 'Buy 3 Bottles',
     price: '$74.99',
-    originalPrice: '$123.75',
+    originalPrice: '$95.97',
     shipping: 'FREE SHIPPING',
-    saveBadge: 'SAVE $48.76',
+    saveBadge: 'SAVE $20.98',
     bestValue: true,
-    bonuses: ['+FREE Comb', '+PDF Guide'],
+    bonuses: ['+FREE Comb'],
     pricePerBottle: 'Best Value',
   },
 ];
@@ -640,7 +640,7 @@ export default function ShopPage() {
 
 const getSubscribePrice = (bundleId: number): string => {
   const prices: Record<number, string> = {
-    1: '$24.99',
+    1: '$25.59',
     2: '$47.99',
     3: '$59.99'
   };
