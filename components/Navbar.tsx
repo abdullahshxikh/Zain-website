@@ -12,7 +12,7 @@ import {
 } from '@/lib/shopifyAuth';
 
 const leftNavItems = ['Home', 'Shop Now', 'About Us', 'Contact Us'];
-const rightNavItems = ['Search', 'Account', 'Cart'];
+const rightNavItems = ['Account', 'Cart'];
 
 export default function Navbar() {
   const router = useRouter();
@@ -162,11 +162,6 @@ export default function Navbar() {
                     whileTap={{ scale: 0.95 }}
                     aria-label={item}
                   >
-                    {item === 'Search' && (
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    )}
                     {item === 'Cart' && (
                       <>
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -261,22 +256,6 @@ export default function Navbar() {
                       >
                         <span className="py-2 text-base font-medium text-gray-800 transition-colors hover:text-[#2d4a38] block text-left w-full">
                           {item} {itemCount > 0 && `(${itemCount})`}
-                        </span>
-                      </button>
-                    );
-                  }
-
-                  if (item === 'Search') {
-                    return (
-                      <button
-                        key={item}
-                        type="button"
-                        onClick={() => {
-                          setMobileMenuOpen(false);
-                        }}
-                      >
-                        <span className="py-2 text-base font-medium text-gray-800 transition-colors hover:text-[#2d4a38] block text-left w-full">
-                          {item}
                         </span>
                       </button>
                     );
