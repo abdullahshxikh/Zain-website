@@ -249,6 +249,39 @@ export default function Navbar() {
                     );
                   }
 
+                  if (item === 'Cart') {
+                    return (
+                      <button
+                        key={item}
+                        type="button"
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          openCart();
+                        }}
+                      >
+                        <span className="py-2 text-base font-medium text-gray-800 transition-colors hover:text-[#2d4a38] block text-left w-full">
+                          {item} {itemCount > 0 && `(${itemCount})`}
+                        </span>
+                      </button>
+                    );
+                  }
+
+                  if (item === 'Search') {
+                    return (
+                      <button
+                        key={item}
+                        type="button"
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                        }}
+                      >
+                        <span className="py-2 text-base font-medium text-gray-800 transition-colors hover:text-[#2d4a38] block text-left w-full">
+                          {item}
+                        </span>
+                      </button>
+                    );
+                  }
+
                   return (
                     <Link
                       key={item}
