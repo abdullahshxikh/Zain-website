@@ -255,7 +255,8 @@ export default function CartDrawer() {
             {items.length > 0 && (
               <div className="p-4 bg-white border-t border-gray-100 space-y-4">
                 {/* Upsell Card */}
-                {!items.some(item => item.variantId.includes('52395851645225') || item.title.toLowerCase().includes('comb')) && (
+                {!items.some(item => item.variantId.includes('52395851645225') || item.title.toLowerCase().includes('comb')) &&
+                 !items.some(item => item.variantId === '51383441326377' || item.variantId === '51383441359145') && (
                   <div className="bg-[#E5D178] rounded-xl p-4 flex items-center justify-between gap-3 shadow-sm border border-[#d9c063]">
                     <div className="relative w-12 h-12 bg-white rounded-lg overflow-hidden flex-shrink-0 border border-black/5">
                       <Image

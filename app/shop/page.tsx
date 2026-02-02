@@ -196,6 +196,19 @@ export default function ShopPage() {
       sellingPlanId: sellingPlanId
     });
 
+    // Auto-add comb for variant 2 or 3
+    if (selectedBundle === 2 || selectedBundle === 3) {
+      addToCart({
+        variantId: '52395851645225',
+        title: 'Zumfali Comb',
+        variantTitle: 'Default Title',
+        price: '$0.00',
+        quantity: 1,
+        image: '/zumfali-comb.png',
+        originalPrice: '$5.99'
+      });
+    }
+
     openCart();
   };
 
