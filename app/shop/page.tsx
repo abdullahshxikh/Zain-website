@@ -53,7 +53,7 @@ const bundles: BundleOption[] = [
     shipping: 'FREE SHIPPING',
     saveBadge: 'SAVE $11.99',
     popular: true,
-    bonuses: ['+FREE Comb'],
+    bonuses: ['+FREE Comb', 'FREE SHIPPING'],
     pricePerBottle: 'Most Popular',
   },
   {
@@ -64,7 +64,7 @@ const bundles: BundleOption[] = [
     shipping: 'FREE SHIPPING',
     saveBadge: 'SAVE $20.98',
     bestValue: true,
-    bonuses: ['+FREE Comb'],
+    bonuses: ['+FREE Comb', 'FREE SHIPPING'],
     pricePerBottle: 'Best Value',
   },
 ];
