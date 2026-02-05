@@ -51,7 +51,7 @@ const bundles: BundleOption[] = [
     shipping: 'FREE SHIPPING',
     saveBadge: 'SAVE $22.51',
     popular: true,
-    bonuses: ['FREE Hair Growth Guide (PDF)'],
+    bonuses: ['FREE_COMB', 'FREE Hair Growth Guide (PDF)'],
   },
   {
     id: 3,
@@ -61,7 +61,7 @@ const bundles: BundleOption[] = [
     shipping: 'FREE SHIPPING',
     saveBadge: 'SAVE $48.76',
     bestValue: true,
-    bonuses: ['Hair Growth Guide PDF', 'Scalp Massage Ebook'],
+    bonuses: ['FREE_COMB', 'Hair Growth Guide PDF', 'Scalp Massage Ebook'],
     pricePerBottle: '$25.00/bottle',
   },
 ];
@@ -336,12 +336,18 @@ export default function ProductPage() {
                         </div>
                         {bundle.bonuses && bundle.bonuses.length > 0 && (
                           <div className="mt-1 space-y-1">
-                            {bundle.bonuses.map((bonus, i) => (
+                            {bundle.bonuses.filter(b => b !== 'FREE_COMB').map((bonus, i) => (
                               <p key={i} className="text-xs text-[#bb9c30] font-bold flex items-center gap-1">
                                 <span className="w-1 h-1 rounded-full bg-[#bb9c30]" />
                                 {bonus}
                               </p>
                             ))}
+                            {bundle.bonuses.includes('FREE_COMB') && (
+                              <p className="text-xs text-[#bb9c30] font-bold flex items-center gap-1">
+                                <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                Free Styling Comb
+                              </p>
+                            )}
                           </div>
                         )}
                         <p className="text-xs text-gray-500 font-medium uppercase tracking-wide mt-1">
@@ -349,8 +355,16 @@ export default function ProductPage() {
                         </p>
                       </div>
 
+                      {/* Free Comb Image - Only for bundles 2 and 3 */}
+                      {(bundle.id === 2 || bundle.id === 3) && (
+                        <div className="flex flex-col items-center flex-shrink-0 -ml-4">
+                          <span className="text-[10px] font-bold text-green-600 uppercase">FREE</span>
+                          <Image src="/zumfali-comb.png" alt="Free Styling Comb" width={80} height={80} className="object-contain" />
+                        </div>
+                      )}
+
                       {/* Price */}
-                      <div className="text-right flex flex-col justify-center">
+                      <div className="text-right flex flex-col justify-center ml-auto">
                         {bundle.originalPrice && (
                           <div className="text-gray-400 line-through text-sm decoration-red-500/40 mb-1">{bundle.originalPrice}</div>
                         )}
@@ -431,7 +445,33 @@ export default function ProductPage() {
                 {subscribeMode ? 'Subscribe Now' : 'Buy Now'}
               </motion.button>
 
-              <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              {/* Trust Strip */}
+              <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs text-gray-500 mt-4 mb-3">
+                <span className="flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                  Secure Checkout
+                </span>
+                <span className="flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  Free Shipping on 2+ Bottles
+                </span>
+                <span className="flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  No Subscription Required
+                </span>
+              </div>
+
+              {/* 30-Day Money-Back Guarantee */}
+              <div className="flex items-center justify-center gap-2 text-xs text-gray-500 mb-3">
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                <div className="text-center">
+                  <span className="font-medium text-gray-600">30-Day Money-Back Guarantee</span>
+                  <span className="mx-1">·</span>
+                  <span>Try Zumfali risk-free. If you don't love it, get a full refund.</span>
+                </div>
+              </div>
+
+              <div className="mt-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <p className="text-xs text-gray-500">
                   You&apos;ll need a free Shopify customer account to manage your
                   orders.

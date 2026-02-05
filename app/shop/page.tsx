@@ -397,8 +397,16 @@ export default function ShopPage() {
                         )}
                       </div>
 
+                      {/* Free Comb Image - Only for bundles 2 and 3 */}
+                      {(bundle.id === 2 || bundle.id === 3) && (
+                        <div className="flex flex-col items-center flex-shrink-0 -ml-4">
+                          <span className="text-[10px] font-bold text-green-600 uppercase">FREE</span>
+                          <Image src="/zumfali-comb.png" alt="Free Styling Comb" width={80} height={80} className="object-contain" />
+                        </div>
+                      )}
+
                       {/* Price */}
-                      <div className="text-right flex flex-col justify-center flex-shrink-0 ml-2">
+                      <div className="text-right flex flex-col justify-center flex-shrink-0 ml-auto">
                         <div className="font-bold text-xl text-[#1a2f23]">
                           {subscribeMode ? getSubscribePrice(bundle.id) : bundle.price}
                         </div>
@@ -412,12 +420,16 @@ export default function ShopPage() {
                     {bundle.bonuses && bundle.bonuses.length > 0 && (
                       <div className="bg-[#1a2f23] px-5 py-2 mt-auto">
                         <div className="flex flex-col sm:flex-row sm:items-center gap-y-1 gap-x-4 text-white text-xs font-bold">
-                          {bundle.bonuses?.map((bonus, i) => (
-                            <div key={i} className="flex items-center gap-1">
-                              <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
-                              <span>{bonus}</span>
-                            </div>
-                          ))}
+                          {/* Free Comb */}
+                          <div className="flex items-center gap-1">
+                            <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                            <span>Free Styling Comb</span>
+                          </div>
+                          {/* FREE SHIPPING */}
+                          <div className="flex items-center gap-1">
+                            <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                            <span>FREE SHIPPING</span>
+                          </div>
                         </div>
                       </div>
                     )}
@@ -508,6 +520,32 @@ export default function ShopPage() {
               >
                 ADD TO CART
               </motion.button>
+
+              {/* Trust Strip */}
+              <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs text-gray-500 mb-4">
+                <span className="flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                  Secure Checkout
+                </span>
+                <span className="flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  Free Shipping on 2+ Bottles
+                </span>
+                <span className="flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  No Subscription Required
+                </span>
+              </div>
+
+              {/* 30-Day Money-Back Guarantee */}
+              <div className="flex items-center justify-center gap-2 text-xs text-gray-500 mb-4">
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                <div className="text-center">
+                  <span className="font-medium text-gray-600">30-Day Money-Back Guarantee</span>
+                  <span className="mx-1">·</span>
+                  <span>Try Zumfali risk-free. If you don't love it, get a full refund.</span>
+                </div>
+              </div>
 
               <p className="text-xs text-gray-500 text-center mb-8 flex items-center justify-center gap-2">
                 <svg className="w-3 h-3 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
