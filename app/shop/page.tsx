@@ -224,7 +224,7 @@ export default function ShopPage() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="relative"
+              className="relative z-10"
             >
               <div className="sticky top-32">
                 <div className="relative w-full aspect-square bg-white rounded-[2rem] overflow-hidden mb-4 group/main-image">
@@ -521,36 +521,35 @@ export default function ShopPage() {
                 ADD TO CART
               </motion.button>
 
-              {/* Trust Strip */}
-              <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs text-gray-500 mb-4">
-                <span className="flex items-center gap-1">
-                  <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                  Secure Checkout
-                </span>
-                <span className="flex items-center gap-1">
-                  <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  Free Shipping on 2+ Bottles
-                </span>
-                <span className="flex items-center gap-1">
-                  <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  No Subscription Required
-                </span>
-              </div>
-
-              {/* 30-Day Money-Back Guarantee */}
-              <div className="flex items-center justify-center gap-2 text-xs text-gray-500 mb-4">
-                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                <div className="text-center">
-                  <span className="font-medium text-gray-600">30-Day Money-Back Guarantee</span>
-                  <span className="mx-1">·</span>
-                  <span>Try Zumfali risk-free. If you don't love it, get a full refund.</span>
+              {/* Trust Running Banner */}
+              <div className="relative overflow-hidden py-3 bg-gradient-to-r from-[#1a2f23] to-[#2d4a38] rounded-r-lg mb-6" style={{ marginLeft: 'calc(-100% - 5rem)' }}>
+                <div className="flex whitespace-nowrap" style={{ animation: 'marquee 10s linear infinite' }}>
+                  {[...Array(2)].map((_, i) => (
+                    <div key={i} className="flex items-center gap-10 px-6 shrink-0">
+                      <span className="flex items-center gap-2 text-sm text-white/90 font-medium">
+                        <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                        Secure Checkout
+                      </span>
+                      <span className="flex items-center gap-2 text-sm text-white/90 font-medium">
+                        <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Free Shipping on 2+ Bottles
+                      </span>
+                      <span className="flex items-center gap-2 text-sm text-white/90 font-medium">
+                        <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        No Subscription Required
+                      </span>
+                      <span className="flex items-center gap-2 text-sm text-white/90 font-medium">
+                        <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                        30-Day Money-Back Guarantee · Try Zumfali risk-free. If you don&apos;t love it, get a full refund.
+                      </span>
+                      <span className="flex items-center gap-2 text-sm text-white/90 font-medium">
+                        <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        Shipping takes 8-12 business days
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
-
-              <p className="text-xs text-gray-500 text-center mb-8 flex items-center justify-center gap-2">
-                <svg className="w-3 h-3 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                Shipping takes 8-12 business days
-              </p>
 
               {/* Payment Icons */}
               <div className="flex justify-center mb-6">
