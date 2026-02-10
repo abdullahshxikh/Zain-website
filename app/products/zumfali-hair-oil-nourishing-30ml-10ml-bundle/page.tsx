@@ -253,7 +253,7 @@ export default function ProductPage() {
                 <span className="italic text-[#bb9c30]">Hair Growth Oil</span>
               </h1>
 
-              <div className="flex items-baseline gap-3 mb-6">
+              <div className="flex items-baseline gap-3 mb-4">
                 <span className="text-3xl font-bold text-[#1a2f23]">
                   {getDisplayPrice(selectedBundle)}
                 </span>
@@ -269,28 +269,14 @@ export default function ProductPage() {
                 )}
               </div>
 
-              <p className="text-gray-600 font-light mb-8 leading-relaxed text-lg">
+              <p className="text-gray-600 font-light mb-4 leading-relaxed text-lg">
                 Experience the ultimate in hair nourishment with the Zumfali 7-in-1 Oil—a powerful blend of natural ingredients designed to revitalize your scalp, strengthen strands, and restore natural shine.
               </p>
 
-              {/* Benefits List */}
-              <div className="space-y-3 mb-10">
-                {['Scalp nourishment and hydration', 'Strengthens hair from root to tip', 'Restores natural shine and vitality'].map((benefit, i) => (
-                  <div key={i} className="flex items-center gap-3 text-gray-700">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1a2f23]/5 flex items-center justify-center text-[#1a2f23]">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                    </span>
-                    <span className="font-medium">{benefit}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="h-px bg-gray-200 mb-8" />
-
-              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-6 text-center">Bundle & Save</h3>
+              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-4 text-center">Bundle & Save</h3>
 
               {/* Bundles Selector */}
-              <div className="space-y-4 mb-8">
+              <div className="space-y-3 mb-6">
                 {bundles.map((bundle) => (
                   <div
                     key={bundle.id}
@@ -378,10 +364,10 @@ export default function ProductPage() {
                 ))}
               </div>
 
-              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-6 text-center">Frequency</h3>
+              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-4 text-center">Frequency</h3>
 
               {/* Purchase Mode Toggle */}
-              <div className="border-2 rounded-xl overflow-hidden mb-8 bg-white border-gray-200">
+              <div className="border-2 rounded-xl overflow-hidden mb-6 bg-white border-gray-200">
                 <div
                   onClick={() => setSubscribeMode(false)}
                   className={`p-5 flex items-center cursor-pointer border-b border-gray-100 transition-colors ${!subscribeMode ? 'bg-gray-50' : 'bg-white'
@@ -445,33 +431,7 @@ export default function ProductPage() {
                 {subscribeMode ? 'Subscribe Now' : 'Buy Now'}
               </motion.button>
 
-              {/* Trust Running Banner */}
-              <div className="relative overflow-hidden py-3 bg-gradient-to-r from-[#1a2f23] to-[#2d4a38] rounded-r-lg mt-4 mb-3" style={{ marginLeft: 'calc(-100% - 5rem)' }}>
-                <div className="flex whitespace-nowrap" style={{ animation: 'marquee 10s linear infinite' }}>
-                  {[...Array(2)].map((_, i) => (
-                    <div key={i} className="flex items-center gap-10 px-6 shrink-0">
-                      <span className="flex items-center gap-2 text-sm text-white/90 font-medium">
-                        <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                        Secure Checkout
-                      </span>
-                      <span className="flex items-center gap-2 text-sm text-white/90 font-medium">
-                        <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                        Free Shipping on 2+ Bottles
-                      </span>
-                      <span className="flex items-center gap-2 text-sm text-white/90 font-medium">
-                        <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                        No Subscription Required
-                      </span>
-                      <span className="flex items-center gap-2 text-sm text-white/90 font-medium">
-                        <svg className="w-4 h-4 text-[#bb9c30]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                        30-Day Money-Back Guarantee · Try Zumfali risk-free. If you don&apos;t love it, get a full refund.
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mt-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <p className="text-xs text-gray-500">
                   You&apos;ll need a free Shopify customer account to manage your
                   orders.

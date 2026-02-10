@@ -55,12 +55,40 @@ export default function Navbar() {
 
   return (
     <div className="fixed inset-x-0 top-0 z-50">
-      {/* Top Banner */}
+      {/* Top Running Banner */}
       <div
-        className="w-full py-1.5 text-center text-white text-sm font-semibold"
-        style={{ backgroundColor: '#2d4a38' }}
+        className="w-full overflow-hidden"
+        style={{ backgroundColor: '#1a2f23' }}
       >
-        Sign up today and receive a free gift on us!
+        <div className="py-1.5">
+          <div className="relative flex items-center">
+            <div className="pointer-events-none z-10 absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-[#1a2f23] to-transparent" />
+            <div className="pointer-events-none z-10 absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-[#1a2f23] to-transparent" />
+            <div className="flex whitespace-nowrap" style={{ animation: 'marquee 12s linear infinite' }}>
+              {[...Array(2)].map((_, i) => (
+                <div key={i} className="flex items-center gap-8 px-4 shrink-0">
+                  {[
+                    'Secure Checkout',
+                    'Free Shipping on 2+ Bottles',
+                    '30-Day Money-Back Guarantee',
+                    'Sign up today & get a free gift on us',
+                    '7 Powerful Natural Ingredients',
+                    'Shipping takes 8-12 business days',
+                    'Rated 4.8/5 by 30,000+ Customers',
+                    'No Subscription Required',
+                    'Free Styling Comb with 2+ Bottles',
+                    'Made with Mustard, Coconut & Black Seed Oil',
+                  ].map((msg, j) => (
+                    <span key={j} className="flex items-center gap-1.5 text-xs text-white/90 font-medium">
+                      <span className="text-[#bb9c30] text-xs">✦</span>
+                      {msg}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Main Navbar */}
