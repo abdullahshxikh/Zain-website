@@ -57,10 +57,10 @@ export default function Navbar() {
     <div className="fixed inset-x-0 top-0 z-50">
       {/* Top Running Banner */}
       <div
-        className="w-full overflow-hidden"
-        style={{ backgroundColor: '#1a2f23' }}
+        className="w-full overflow-hidden relative z-10"
+        style={{ backgroundColor: '#1a2f23', marginBottom: '-6px' }}
       >
-        <div className="py-1.5">
+        <div className="py-2.5">
           <div className="relative flex items-center">
             <div className="pointer-events-none z-10 absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-[#1a2f23] to-transparent" />
             <div className="pointer-events-none z-10 absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-[#1a2f23] to-transparent" />
@@ -79,8 +79,8 @@ export default function Navbar() {
                     'Free Styling Comb with 2+ Bottles',
                     'Made with Mustard, Coconut & Black Seed Oil',
                   ].map((msg, j) => (
-                    <span key={j} className="flex items-center gap-1.5 text-xs text-white/90 font-medium">
-                      <span className="text-[#bb9c30] text-xs">✦</span>
+                    <span key={j} className="flex items-center gap-2 text-sm text-white/90 font-medium">
+                      <span className="text-[#bb9c30] text-sm">✦</span>
                       {msg}
                     </span>
                   ))}
