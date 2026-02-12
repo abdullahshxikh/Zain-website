@@ -64,7 +64,7 @@ export default function Navbar() {
           <div className="relative flex items-center">
             <div className="pointer-events-none z-10 absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-[#1a2f23] to-transparent" />
             <div className="pointer-events-none z-10 absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-[#1a2f23] to-transparent" />
-            <div className="flex whitespace-nowrap" style={{ animation: 'marquee 12s linear infinite' }}>
+            <div className="flex whitespace-nowrap" style={{ animation: 'marquee 18s linear infinite' }}>
               {[...Array(2)].map((_, i) => (
                 <div key={i} className="flex items-center gap-8 px-4 shrink-0">
                   {[
