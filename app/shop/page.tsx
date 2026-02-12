@@ -71,6 +71,26 @@ const bundles: BundleOption[] = [
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
+function AccordionItem({ title, content }: { title: string; content: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div className="border-b border-gray-200">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between py-5 text-left"
+      >
+        <span className="text-lg font-medium text-[#1a2f23]">{title}</span>
+        <span className="text-2xl text-[#1a2f23] leading-none">{isOpen ? '×' : '+'}</span>
+      </button>
+      {isOpen && (
+        <div className="pb-5 text-gray-600 text-base leading-relaxed">
+          {content}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function ShopPage() {
   const { addToCart, openCart } = useCart();
   const searchParams = useSearchParams();
@@ -220,10 +240,7 @@ export default function ShopPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
 
             {/* Left Column - Product Images */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
+            <div
               className="relative z-10"
             >
               <div className="sticky top-32">
@@ -288,13 +305,10 @@ export default function ShopPage() {
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Right Column - Product Details & Pricing */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+            <div
               className="flex flex-col"
             >
               {/* Reviews */}
@@ -309,12 +323,12 @@ export default function ShopPage() {
                 <span className="text-sm font-medium text-gray-500">Rated 4.8/5 by 30,000+ Customers</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl font-serif font-medium text-[#1a2f23] mb-4 leading-tight">
+              <h1 className="text-4xl sm:text-5xl font-serif font-medium text-[#1a2f23] mb-2 leading-tight">
                 Zumfali 7-in-1 Complete <br />
                 <span className="italic text-[#bb9c30]">Hair Growth Oil</span>
               </h1>
 
-              <div className="flex items-baseline gap-3 mb-6">
+              <div className="flex items-baseline gap-3 mb-3">
                 <span className="text-3xl font-bold text-[#1a2f23]">
                   {subscribeMode ? getSubscribePrice(selectedBundle) : bundles.find(b => b.id === selectedBundle)?.price}
                 </span>
@@ -330,11 +344,11 @@ export default function ShopPage() {
                 )}
               </div>
 
-              <p className="text-gray-600 font-light mb-4 leading-relaxed text-lg">
-                Experience the ultimate in hair nourishment with the Zumfali 7-in-1 Oil—a powerful blend of natural ingredients designed to revitalize your scalp, strengthen strands, and restore natural shine.
+              <p className="text-black text-sm mb-3 leading-relaxed">
+                A powerful 7-in-1 blend of natural oils designed to nourish your scalp and strengthen hair.
               </p>
 
-              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-4 text-center">CHOOSE YOUR PACK</h3>
+              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-3 text-center">CHOOSE YOUR PACK</h3>
 
               {/* Bundles Selector */}
               <div className="space-y-3 mb-6">
@@ -498,14 +512,12 @@ export default function ShopPage() {
               </div>
 
               {/* CTA Button - single, clean, Shopify-powered */}
-              <motion.button
+              <button
                 onClick={handleAddToCart}
                 className="w-full py-5 bg-[#1a2f23] text-white rounded-lg font-bold text-xl uppercase tracking-wider shadow-xl shadow-[#1a2f23]/20 hover:bg-[#2d4a38] transition-all transform hover:-translate-y-1 mb-4"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
               >
                 ADD TO CART
-              </motion.button>
+              </button>
 
               {/* Payment Icons */}
               <div className="flex justify-center mb-6">
@@ -539,7 +551,65 @@ export default function ShopPage() {
                 Secure 256-bit SSL Encryption
               </p>
 
-            </motion.div>
+              {/* Benefits Bullets */}
+              <div className="mt-8 space-y-3">
+                {[
+                  'Nourish and strengthen hair from root to tip.',
+                  'Reduce hair thinning and promote natural growth.',
+                  'Restore shine and softness with 7 powerful oils.',
+                ].map((benefit, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-[#1a2f23] flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                    </div>
+                    <span className="text-black text-base">{benefit}</span>
+                  </div>
+                ))}
+
+                <div className="mt-2 space-y-3">
+                  {[
+                    'Soothe dry, irritated scalp for lasting comfort.',
+                    'Lightweight, non-greasy formula absorbs quickly.',
+                  ].map((benefit, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <div className="w-5 h-5 rounded-full bg-[#1a2f23]/80 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                      </div>
+                      <span className="text-black text-base">{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Expandable Accordion */}
+              <div className="mt-8 border-t border-gray-200">
+                {[
+                  {
+                    title: 'Description',
+                    content: 'Experience the ultimate in hair nourishment with the Zumfali 7-in-1 Oil—a powerful blend of Mustard Oil, Coconut Oil, Black Seed Oil, Castor Oil, Argan Oil, Jojoba Oil, and Rosemary Oil. Designed to revitalize your scalp, strengthen strands, and restore natural shine.',
+                  },
+                  {
+                    title: 'Health Benefits',
+                    content: 'Promotes natural hair growth and reduces thinning. Strengthens hair from root to tip. Nourishes dry, irritated scalps. Restores shine and softness. Rich in vitamins, antioxidants, and essential fatty acids for overall hair health.',
+                  },
+                  {
+                    title: 'How to Use',
+                    content: 'Apply a small amount to your scalp and hair. Massage gently in circular motions for 2-3 minutes. Leave in for at least 30 minutes or overnight for best results. Wash out with your regular shampoo. Use 2-3 times per week for optimal results.',
+                  },
+                  {
+                    title: 'Shipping Info',
+                    content: 'Orders are processed within 1-2 business days. Standard shipping takes 8-12 business days. Free shipping on orders of 2 or more bottles. All orders include tracking information sent via email.',
+                  },
+                  {
+                    title: 'Product Guarantee',
+                    content: 'We offer a 30-day money-back guarantee. If you\'re not completely satisfied with your purchase, contact us for a full refund. No questions asked. Your satisfaction is our priority.',
+                  },
+                ].map((item, i) => (
+                  <AccordionItem key={i} title={item.title} content={item.content} />
+                ))}
+              </div>
+
+            </div>
           </div>
         </div>
 
