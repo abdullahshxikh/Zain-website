@@ -419,7 +419,7 @@ export default function ShopPage() {
                     {/* Footer / Bonuses - Green Bar */}
                     {bundle.bonuses && bundle.bonuses.length > 0 && (
                       <div className="bg-[#1a2f23] px-5 py-2 mt-auto">
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-y-1 gap-x-4 text-white text-xs font-bold">
+                        <div className="flex flex-row items-center gap-x-4 text-white text-xs font-bold">
                           {/* Free Comb */}
                           <div className="flex items-center gap-1">
                             <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
